@@ -62,7 +62,7 @@ namespace Uk.Co.Cygnets.UrlRouting
 				var maxIndex = -1;
 				foreach (Match match in matches)
 				{
-					var index = int.Parse(match.Captures[0].Value);
+					var index = int.Parse(match.Groups[1].Value);
 					if (indexSet.Contains(index)) throw new ArgumentException("Pattern contains more than one index of value " + index);
 					indexSet.Add(index);
 					if (index > maxIndex) maxIndex = index;

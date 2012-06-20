@@ -60,7 +60,7 @@ namespace Uk.Co.Cygnets.UrlRouting
 		private static string GetRouteUrl(AbstractUrlPattern url)
 		{
 			var range = Enumerable.Range(0, url.Arity);
-			var parameterNames = range.Select(i => url.ParameterName(i)).ToArray();
+			var parameterNames = range.Select(i => "{" + url.ParameterName(i) + "}").ToArray();
 			return string.Format(url.Pattern, (object[])parameterNames);
 		}
 
