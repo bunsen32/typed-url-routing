@@ -14,11 +14,14 @@ namespace test
 
 		public static readonly UrlPattern About = Path("about");
 
+		public static readonly UrlPattern<int, string> ShowParams = Path("{0}/{1}/show", Int, Slug);
+
 		public static void Register(RouteCollection routes)
 		{
 			routes.ForController<HomeController>()
 				.MapRoute(GetHome, c => c.Index)
-				.MapRoute(Get(About), c => c.About);
+				.MapRoute(Get(About), c => c.About)
+				.MapRoute(Get(ShowParams), c => c.ShowTwoParameters);
 		}
 	}
 }
