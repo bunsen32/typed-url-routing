@@ -6,13 +6,6 @@
 
 namespace Uk.Co.Cygnets.UrlRouting
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
-using Uk.Co.Cygnets.Formats;
-using System.Text.RegularExpressions;
-
 	/// <summary>
 	/// TODO: Update summary.
 	/// </summary>

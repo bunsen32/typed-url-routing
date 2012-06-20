@@ -3,20 +3,19 @@
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
-
 namespace Uk.Co.Cygnets.UrlRouting
 {
-	using Uk.Co.Cygnets.Formats;
+	using Uk.Co.Cygnets.UrlRouting.PathComponents;
 
 	public abstract class Urls
 	{
-		protected static readonly PathComponent<int> Int = new PathComponent<int>(IntFormat.Instance, @"[-+]?\d+");
+		protected static readonly PathComponent<int> Int = IntComponent.Instance;
 		protected static readonly PathComponent<string> Slug = String(@"[-_0-9a-zA-Z]+");
 		protected static readonly PathComponent<string> PathComponent = String(@"[-_0-9a-zA-Z~+.,]+");
 
 		protected static PathComponent<string> String(string regexPattern)
 		{
-			return new PathComponent<string>(StringFormat.Instance, regexPattern);
+			return new StringComponent(regexPattern);
 		}
 
 		public RequestPattern<UrlPattern> Home = Get(Path("/"));

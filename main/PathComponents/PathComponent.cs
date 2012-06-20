@@ -10,25 +10,17 @@ namespace Uk.Co.Cygnets.UrlRouting
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Text;
-	using Uk.Co.Cygnets.Formats;
 
 	/// <summary>
 	/// TODO: Update summary.
 	/// </summary>
-	public class PathComponent<T> : IPathComponent<T>, IFormat<T>
+	public abstract class PathComponent<T> : IPathComponent<T>
 	{
-		private readonly IFormat<T> stringFormat;
 		private readonly string regexString;
 
-		public PathComponent(IFormat<T> stringFormat, string regexString)
+		public PathComponent(string regexString)
 		{
-			this.stringFormat = stringFormat;
 			this.regexString = regexString;
-		}
-
-		public IFormat<T> StringFormat
-		{
-			get { return this.stringFormat; }
 		}
 
 		public string RegexString
@@ -36,14 +28,8 @@ namespace Uk.Co.Cygnets.UrlRouting
 			get { return this.regexString; }
 		}
 
-		public T FromString(string str)
-		{
-			return this.stringFormat.FromString(str);
-		}
+		public abstract T FromString(string str);
 
-		public string ToString(T value)
-		{
-			return this.stringFormat.ToString(value);
-		}
+		public abstract string ToString(T value);
 	}
 }

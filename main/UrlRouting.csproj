@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Cygnet.CoreUtils">
-      <HintPath>L:\Cygnet\CoreUtils\1.5.0\Cygnet.CoreUtils.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -72,6 +69,7 @@
     <Compile Include="Handlers\FuncRouteHandler.cs" />
     <Compile Include="Handlers\UrlPatternExtensions.cs" />
     <Compile Include="HttpMethod.cs" />
+    <Compile Include="PathComponents\IntComponent.cs" />
     <Compile Include="PathComponents\StringComponent.cs" />
     <Compile Include="PathComponents\IPathComponent.cs" />
     <Compile Include="PathComponents\PathComponent.cs" />
