@@ -68,6 +68,7 @@
     <Compile Include="Handlers\ControllerRouteHandler.cs" />
     <Compile Include="Handlers\FuncRouteHandler.cs" />
     <Compile Include="Handlers\UrlPatternExtensions.cs" />
+    <Compile Include="HtmlHelperExtensions.cs" />
     <Compile Include="HttpMethod.cs" />
     <Compile Include="PathComponents\IntComponent.cs" />
     <Compile Include="PathComponents\StringComponent.cs" />
