@@ -12,6 +12,7 @@ namespace Uk.Co.Cygnets.UrlRouting
 		protected static readonly PathComponent<int> Int = IntComponent.Instance;
 		protected static readonly PathComponent<string> Slug = String(@"[-_0-9a-zA-Z]+");
 		protected static readonly PathComponent<string> PathComponent = String(@"[-_0-9a-zA-Z~+.,]+");
+		protected static readonly PathComponent<string> AnyString = String(@".*");
 
 		protected static PathComponent<string> String(string regexPattern)
 		{
