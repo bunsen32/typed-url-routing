@@ -10,6 +10,7 @@ namespace Uk.Co.Cygnets.UrlRouting
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Text;
+	using System.Web;
 
 	/// <summary>
 	/// TODO: Update summary.
@@ -48,8 +49,7 @@ namespace Uk.Co.Cygnets.UrlRouting
 
 		public string With(T1 p1)
 		{
-			return string.Format(
-				this.Pattern,
+			return this.UrlStringWith(
 				this.Param1.ToString(p1));
 		}
 	}
@@ -77,8 +77,7 @@ namespace Uk.Co.Cygnets.UrlRouting
 
 		public string With(T1 p1, T2 p2)
 		{
-			return string.Format(
-				this.Pattern,
+			return this.UrlStringWith(
 				this.Param1.ToString(p1),
 				this.Param2.ToString(p2));
 		}
@@ -111,8 +110,7 @@ namespace Uk.Co.Cygnets.UrlRouting
 
 		public string With(T1 p1, T2 p2, T3 p3)
 		{
-			return string.Format(
-				this.Pattern,
+			return this.UrlStringWith(
 				this.Param1.ToString(p1),
 				this.Param2.ToString(p2),
 				this.Param3.ToString(p3));
@@ -150,8 +148,7 @@ namespace Uk.Co.Cygnets.UrlRouting
 
 		public string With(T1 p1, T2 p2, T3 p3, T4 p4)
 		{
-			return string.Format(
-				this.Pattern,
+			return UrlStringWith(
 				this.Param1.ToString(p1),
 				this.Param2.ToString(p2),
 				this.Param3.ToString(p3),

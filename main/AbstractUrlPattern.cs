@@ -11,6 +11,7 @@ namespace Uk.Co.Cygnets.UrlRouting
 	using System.Linq;
 	using System.Text;
 	using System.Text.RegularExpressions;
+	using System.Web;
 
 	/// <summary>
 	/// TODO: Update summary.
@@ -56,6 +57,20 @@ namespace Uk.Co.Cygnets.UrlRouting
 		public string PathPattern { get { return this.pathPattern; } }
 
 		public IList<string> ParameterPatterns { get { return this.regexStrings; } }
+
+		protected string UrlStringWith(params string[] p)
+		{
+			EncodeQueryParamsMutating(p);
+			return string.Format(this.Pattern, p);
+		}
+
+		private void EncodeQueryParamsMutating(string[] p)
+		{
+			for (int i = this.PathArity; i < this.Arity; i++)
+			{
+				p[i] = HttpUtility.UrlEncode(p[i]);
+			}
+		}
 
 		public string ParameterName(int index)
 		{
