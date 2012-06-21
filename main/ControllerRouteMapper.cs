@@ -76,6 +76,20 @@ namespace Uk.Co.Cygnets.UrlRouting
 			return this; // To allow for method chaining.
 		}
 
+		public ControllerRouteMapper<C> MapRoute<P1, P2, P3, P4>(RequestPattern<UrlPattern<P1, P2, P3, P4>> pattern, Expression<Func<C, Func<P1, P2, P3, P4, ActionResult>>> handler)
+		{
+			var method = GetMethodInfo(handler);
+			var methodFunc = handler.Compile();
+			var url = pattern.Url;
+			this.AddRouteHandler(pattern, method, (c, param) => methodFunc.Invoke(c).Invoke(
+				url.Param1.FromString(param[0]),
+				url.Param2.FromString(param[1]),
+				url.Param3.FromString(param[2]),
+				url.Param4.FromString(param[3])));
+
+			return this; // To allow for method chaining.
+		}
+
 		public void AddRouteHandler(AbstractRequestPattern pattern, MethodInfo method, Func<C, string[], ActionResult> handler)
 		{
 			var actionName = GetActionName(pattern.Method, method);
