@@ -48,7 +48,7 @@ namespace Uk.Co.Cygnets.UrlRouting
 		{
 			var route = new Route(
 				url: GetRouteUrl(pattern.Url),
-				defaults: new RouteValueDictionary(),
+				defaults: GetDefaults(pattern),
 				constraints: GetConstraints(pattern),
 				routeHandler: handler);
 			var routeName = pattern.Url.Pattern;
@@ -61,14 +61,14 @@ namespace Uk.Co.Cygnets.UrlRouting
 		{
 			var range = Enumerable.Range(0, url.Arity);
 			var parameterNames = range.Select(i => "{" + url.ParameterName(i) + "}").ToArray();
-			return string.Format(url.Pattern, (object[])parameterNames);
+			return string.Format(url.PathPattern, (object[])parameterNames);
 		}
 
 		private static RouteValueDictionary GetConstraints(AbstractRequestPattern requestPattern)
 		{
 			var url = requestPattern.Url;
 			var result = new RouteValueDictionary();
-			for (int i = 0; i < url.Arity; i++)
+			for (int i = 0; i < url.PathArity; i++)
 			{
 				result[url.ParameterName(i)] = url.ParameterPatterns[i];
 			}
@@ -80,6 +80,11 @@ namespace Uk.Co.Cygnets.UrlRouting
 			}
 
 			return result;
+		}
+
+		private static RouteValueDictionary GetDefaults(AbstractRequestPattern requestPattern)
+		{
+			return new RouteValueDictionary();
 		}
 
 		private static HttpMethodConstraint GetMethodConstraintsOrNull(HttpMethod methods)

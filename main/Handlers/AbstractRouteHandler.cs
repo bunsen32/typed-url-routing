@@ -56,9 +56,15 @@ namespace Uk.Co.Cygnets.UrlRouting.Handlers
 				var urlPattern = this.outer.UrlPattern;
 				var parameters = urlPattern.Arity == 0 ? null : new string[urlPattern.Arity];
 				var values = this.requestContext.RouteData.Values;
-				for (int i = 0; i < urlPattern.Arity; i++)
+				for (int i = 0; i < urlPattern.PathArity; i++)
 				{
 					parameters[i] = (values[urlPattern.ParameterName(i)] as string) ?? "";
+				}
+
+				var query = this.requestContext.HttpContext.Request.QueryString;
+				for (int i = urlPattern.PathArity; i < urlPattern.Arity; i++)
+				{
+					parameters[i] = (query[urlPattern.ParameterName(i)] as string) ?? "";
 				}
 
 				return parameters;
