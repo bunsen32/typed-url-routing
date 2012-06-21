@@ -16,12 +16,15 @@ namespace test
 
 		public static readonly UrlPattern<int, string> ShowParams = Path("{0}/{1}/show", Int, Slug);
 
+		public static readonly UrlPattern<int, string, string, string> ParamsPlusQuery = Path("{0}/{1}/query?bob={2};jeff={3}", Int, Slug, Slug, Slug);
+
 		public static void Register(RouteCollection routes)
 		{
 			routes.ForController<HomeController>()
 				.MapRoute(GetHome, c => c.Index)
 				.MapRoute(Get(About), c => c.About)
-				.MapRoute(Get(ShowParams), c => c.ShowTwoParameters);
+				.MapRoute(Get(ShowParams), c => c.ShowTwoParameters)
+				.MapRoute(Get(ParamsPlusQuery), c=>c.ShowTwoParametersPlusQuery);
 		}
 	}
 }

@@ -21,10 +21,12 @@ namespace test.Controllers
 
 		public ActionResult ShowTwoParameters(int first, string second)
 		{
-			dynamic model = (dynamic)new ExpandoObject();
-			model.First = first;
-			model.Second = second;
-			return View(model);
+			return View(new string[] { first.ToString(), second });
+		}
+
+		public ActionResult ShowTwoParametersPlusQuery(int first, string second, string third, string forth)
+		{
+			return View(new string[] { first.ToString(), second, third, forth });
 		}
 	}
 }
