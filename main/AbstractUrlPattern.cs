@@ -109,7 +109,7 @@ namespace Uk.Co.Cygnets.UrlRouting
 		}
 
 		private static readonly Regex ParameterMatcher = new Regex(@"^()$", RegexOptions.Compiled | RegexOptions.ExplicitCapture);
-		private static readonly char[] ParameterSeparator = new char[] { ';', '&' };
+		private const char ParameterSeparator = '&';
 		private static IList<string> GetQueryParameterNames(string queryPattern, int expectedArity)
 		{
 			var result = new List<string>(expectedArity);

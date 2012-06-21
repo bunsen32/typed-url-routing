@@ -16,7 +16,7 @@ namespace test
 
 		public static readonly UrlPattern<int, string> ShowParams = Path("{0}/{1}/show", Int, Slug);
 
-		public static readonly UrlPattern<int, string, string, string> ParamsPlusQuery = Path("{0}/{1}/query?bob={2};jeff={3}", Int, Slug, Slug, Slug);
+		public static readonly UrlPattern<int, string, string, string> ParamsPlusQuery = Path("{0}/{1}/query?bob={2}&jeff={3}", Int, Slug, AnyString, AnyString);
 
 		public static void Register(RouteCollection routes)
 		{
