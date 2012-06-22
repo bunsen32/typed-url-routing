@@ -61,7 +61,14 @@ namespace Uk.Co.Cygnets.UrlRouting
 		{
 			var range = Enumerable.Range(0, url.Arity);
 			var parameterNames = range.Select(i => "{" + url.ParameterName(i) + "}").ToArray();
-			return string.Format(url.PathPattern, (object[])parameterNames);
+			return string.Format(RemoveInitialSlash(url.PathPattern), (object[])parameterNames);
+		}
+
+		private static string RemoveInitialSlash(string urlPath)
+		{
+			if (string.IsNullOrEmpty(urlPath)) throw new ArgumentException("urlPath");
+			if (urlPath[0] != '/') throw new ArgumentException("Path needs to start with '/'.", "urlPath");
+			return urlPath.Substring(1);
 		}
 
 		private static RouteValueDictionary GetConstraints(AbstractRequestPattern requestPattern)

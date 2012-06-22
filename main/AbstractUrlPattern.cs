@@ -28,6 +28,9 @@ namespace Uk.Co.Cygnets.UrlRouting
 
 		public AbstractUrlPattern(string pattern, params string[] regexStrings)
 		{
+			if (pattern == null) throw new ArgumentNullException("pattern");
+			if (!pattern.StartsWith("/")) throw new ArgumentException("We only support absolute paths (include initial '/').");
+
 			string queryPattern;
 			SplitIntoPathAndQuery(pattern, out this.pathPattern, out queryPattern);
 			this.pathArity = PatternArity(this.pathPattern, 0);

@@ -10,13 +10,13 @@ namespace test
 {
 	public class SiteUrls : Urls
 	{
-		public static readonly RequestPattern<UrlPattern> GetHome = Get(Path(""));
+		public static readonly RequestPattern<UrlPattern> GetHome = Get(Path("/"));
 
-		public static readonly UrlPattern About = Path("about");
+		public static readonly UrlPattern About = Path("/about");
 
-		public static readonly UrlPattern<int, string> ShowParams = Path("{0}/{1}/show", Int, Slug);
+		public static readonly UrlPattern<int, string> ShowParams = Path("/{0}/{1}/show", Int, Slug);
 
-		public static readonly UrlPattern<int, string, string, string> ParamsPlusQuery = Path("{0}/{1}/query?bob={2}&jeff={3}", Int, Slug, AnyString, AnyString);
+		public static readonly UrlPattern<int, string, string, string> ParamsPlusQuery = Path("/{0}/{1}/query?bob={2}&jeff={3}", Int, Slug, AnyString, AnyString);
 
 		public static void Register(RouteCollection routes)
 		{
