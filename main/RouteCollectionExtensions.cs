@@ -51,7 +51,7 @@ namespace Uk.Co.Cygnets.UrlRouting
 				defaults: GetDefaults(pattern),
 				constraints: GetConstraints(pattern),
 				routeHandler: handler);
-			var routeName = pattern.Url.Pattern;
+			var routeName = pattern.Url.PathPattern;
 
 			routes.Add(routeName, route);
 			return route;

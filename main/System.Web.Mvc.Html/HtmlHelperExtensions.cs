@@ -17,7 +17,7 @@ namespace System.Web.Mvc.Html
 	/// </summary>
 	public static class HtmlHelperExtensions
 	{
-		public static MvcHtmlString Link(this HtmlHelper self, string linkText, string urlString, IDictionary<string, object> htmlAttributes = null)
+		public static MvcHtmlString Link(this HtmlHelper self, string linkText, Uri uri, object htmlAttributes = null)
 		{
 			if (String.IsNullOrEmpty(linkText))
 				throw new ArgumentException("Link text not allowed to be null or empty", "linkText");
@@ -33,7 +33,7 @@ namespace System.Web.Mvc.Html
 				tagBuilder.MergeAttributes(attributeDictionary);
 			}
 
-			tagBuilder.MergeAttribute("href", urlString);
+			tagBuilder.MergeAttribute("href", uri.ToString());
 			var linkString = tagBuilder.ToString(TagRenderMode.Normal);
 			return MvcHtmlString.Create(linkString);
 		}

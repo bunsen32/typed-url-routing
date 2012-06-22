@@ -61,6 +61,11 @@ namespace Uk.Co.Cygnets.UrlRouting
 
 		public IList<string> ParameterPatterns { get { return this.regexStrings; } }
 
+		protected Uri UriWith(params string[] p)
+		{
+			return new Uri(this.UrlStringWith(p), UriKind.Relative);
+		}
+
 		protected string UrlStringWith(params string[] p)
 		{
 			EncodeQueryParamsMutating(p);

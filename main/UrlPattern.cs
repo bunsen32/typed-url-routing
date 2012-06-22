@@ -47,9 +47,9 @@ namespace Uk.Co.Cygnets.UrlRouting
 
 		public IPathComponent<T1> Param1 { get { return this.param1; } }
 
-		public string With(T1 p1)
+		public Uri With(T1 p1)
 		{
-			return this.UrlStringWith(
+			return this.UriWith(
 				this.Param1.ToString(p1));
 		}
 	}
@@ -75,9 +75,9 @@ namespace Uk.Co.Cygnets.UrlRouting
 
 		public IPathComponent<T2> Param2 { get { return this.param2; } }
 
-		public string With(T1 p1, T2 p2)
+		public Uri With(T1 p1, T2 p2)
 		{
-			return this.UrlStringWith(
+			return this.UriWith(
 				this.Param1.ToString(p1),
 				this.Param2.ToString(p2));
 		}
@@ -108,9 +108,9 @@ namespace Uk.Co.Cygnets.UrlRouting
 
 		public IPathComponent<T3> Param3 { get { return this.param3; } }
 
-		public string With(T1 p1, T2 p2, T3 p3)
+		public Uri With(T1 p1, T2 p2, T3 p3)
 		{
-			return this.UrlStringWith(
+			return this.UriWith(
 				this.Param1.ToString(p1),
 				this.Param2.ToString(p2),
 				this.Param3.ToString(p3));
@@ -146,9 +146,9 @@ namespace Uk.Co.Cygnets.UrlRouting
 
 		public IPathComponent<T4> Param4 { get { return this.param4; } }
 
-		public string With(T1 p1, T2 p2, T3 p3, T4 p4)
+		public Uri With(T1 p1, T2 p2, T3 p3, T4 p4)
 		{
-			return UrlStringWith(
+			return this.UriWith(
 				this.Param1.ToString(p1),
 				this.Param2.ToString(p2),
 				this.Param3.ToString(p3),
