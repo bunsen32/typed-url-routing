@@ -9,6 +9,7 @@ namespace Uk.Co.Cygnets.UrlRouting.Handlers
 	using System;
 	using System.Web.Mvc;
 	using System.Web.Routing;
+using System.Collections.Specialized;
 
 	/// <summary>
 	/// TODO: Update summary.
@@ -19,9 +20,9 @@ namespace Uk.Co.Cygnets.UrlRouting.Handlers
 		private readonly AbstractRequestPattern pattern;
 		private readonly string controllerName, actionName;
 		private readonly Type controllerType;
-		private readonly Func<C, string[], ActionResult> handler;
+		private readonly Func<C, RequestContext, ActionResult> handler;
 
-		public ControllerRouteHandler(AbstractRequestPattern pattern, string controllerName, string actionName, Func<C, string[], ActionResult> handler)
+		public ControllerRouteHandler(AbstractRequestPattern pattern, string controllerName, string actionName, Func<C, RequestContext, ActionResult> handler)
 		{
 			this.pattern = pattern;
 			this.controllerName = controllerName;
@@ -30,14 +31,14 @@ namespace Uk.Co.Cygnets.UrlRouting.Handlers
 			this.handler = handler;
 		}
 
-		protected override void ProcessRequest(RequestContext context, params string[] parameters)
+		protected override void ProcessRequest(RequestContext context)
 		{
 			var controller = Activator.CreateInstance<C>();
 			try
 			{
 				var controllerContext = new ControllerContext(context, controller);
 				controller.ControllerContext = controllerContext;
-				var result = this.handler.Invoke(controller, parameters);
+				var result = this.handler.Invoke(controller, context);
 
 				controllerContext.RouteData.Values["controller"] = this.controllerName;
 				controllerContext.RouteData.Values["action"] = this.actionName;

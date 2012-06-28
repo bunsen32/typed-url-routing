@@ -68,16 +68,22 @@
     <Compile Include="Handlers\ControllerRouteHandler.cs" />
     <Compile Include="Handlers\FuncRouteHandler.cs" />
     <Compile Include="Handlers\UrlPatternExtensions.cs" />
+    <Compile Include="MvcUrlUtilities\UrlRewriterHelper.cs" />
+    <Compile Include="PathComponents\IPathComponent.cs" />
+    <Compile Include="PathComponents\QueryStringEncoding.cs" />
+    <Compile Include="MvcUrlUtilities\PathHelpers.cs" />
+    <Compile Include="PotentialUrl.cs" />
     <Compile Include="System.Web.Mvc.Html\HtmlHelperExtensions.cs" />
     <Compile Include="HttpMethod.cs" />
     <Compile Include="PathComponents\IntComponent.cs" />
     <Compile Include="PathComponents\StringComponent.cs" />
-    <Compile Include="PathComponents\IPathComponent.cs" />
+    <Compile Include="PathComponents\UrlArgument.cs" />
     <Compile Include="PathComponents\PathComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestPattern.cs" />
     <Compile Include="RouteCollectionExtensions.cs" />
     <Compile Include="UrlPattern.cs" />
+    <Compile Include="UrlPatternHandlerExtensions.cs" />
     <Compile Include="Urls.cs" />
   </ItemGroup>
   <ItemGroup>

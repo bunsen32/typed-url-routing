@@ -13,6 +13,7 @@ namespace Uk.Co.Cygnets.UrlRouting.Handlers
 	using System.Web;
 	using System.Web.Routing;
 	using System.Web.Mvc;
+using System.Collections.Specialized;
 
 	/// <summary>
 	/// TODO: Update summary.
@@ -24,7 +25,7 @@ namespace Uk.Co.Cygnets.UrlRouting.Handlers
 			return new ActionHandler(this, requestContext);
 		}
 
-		protected abstract void ProcessRequest(RequestContext context, params string[] parameters);
+		protected abstract void ProcessRequest(RequestContext context);
 
 		protected abstract AbstractUrlPattern UrlPattern { get; }
 
@@ -46,28 +47,7 @@ namespace Uk.Co.Cygnets.UrlRouting.Handlers
 
 			public void ProcessRequest(HttpContext context)
 			{
-				this.outer.ProcessRequest(
-					this.requestContext, 
-					this.UrlStringParameters());
-			}
-
-			private string[] UrlStringParameters()
-			{
-				var urlPattern = this.outer.UrlPattern;
-				var parameters = urlPattern.Arity == 0 ? null : new string[urlPattern.Arity];
-				var values = this.requestContext.RouteData.Values;
-				for (int i = 0; i < urlPattern.PathArity; i++)
-				{
-					parameters[i] = (values[urlPattern.ParameterName(i)] as string) ?? "";
-				}
-
-				var query = this.requestContext.HttpContext.Request.QueryString;
-				for (int i = urlPattern.PathArity; i < urlPattern.Arity; i++)
-				{
-					parameters[i] = (query[urlPattern.ParameterName(i)] as string) ?? "";
-				}
-
-				return parameters;
+				this.outer.ProcessRequest(this.requestContext);
 			}
 		}
 	}

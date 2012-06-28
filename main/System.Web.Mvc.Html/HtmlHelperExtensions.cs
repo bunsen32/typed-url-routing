@@ -11,18 +11,22 @@ namespace System.Web.Mvc.Html
 	using System.Linq;
 	using System.Text;
 	using System.Web.Mvc;
+	using Uk.Co.Cygnets.UrlRouting;
+	using Uk.Co.Cygnets.UrlRouting.MvcUrlUtilities;
 
 	/// <summary>
 	/// TODO: Update summary.
 	/// </summary>
 	public static class HtmlHelperExtensions
 	{
-		public static MvcHtmlString Link(this HtmlHelper self, string linkText, Uri uri, object htmlAttributes = null)
+		public static MvcHtmlString Link(this HtmlHelper self, string linkText, PotentialUrl location, object htmlAttributes = null)
 		{
+			var uri = PathHelpers.GenerateClientUrl(self.ViewContext.HttpContext, "~" + location.ToString());
+
 			if (String.IsNullOrEmpty(linkText))
 				throw new ArgumentException("Link text not allowed to be null or empty", "linkText");
 
-			TagBuilder tagBuilder = new TagBuilder("a")
+			var tagBuilder = new TagBuilder("a")
 			{
 				InnerHtml = (!String.IsNullOrEmpty(linkText)) ? HttpUtility.HtmlEncode(linkText) : String.Empty
 			};

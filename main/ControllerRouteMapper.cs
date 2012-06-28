@@ -7,12 +7,14 @@
 namespace Uk.Co.Cygnets.UrlRouting
 {
 	using System;
+	using System.Collections.Specialized;
 	using System.Linq;
 	using System.Linq.Expressions;
 	using System.Reflection;
 	using System.Web.Mvc;
 	using System.Web.Routing;
 	using Uk.Co.Cygnets.UrlRouting.Handlers;
+	using Uk.Co.Cygnets.UrlRouting.PathComponents;
 
 	/// <summary>
 	/// TODO: Update summary.
@@ -35,7 +37,7 @@ namespace Uk.Co.Cygnets.UrlRouting
 		{
 			var method = GetMethodInfo(handler);
 			var methodFunc = handler.Compile();
-			this.AddRouteHandler(pattern, method, (c, param) => methodFunc.Invoke(c).Invoke());
+			this.AddRouteHandler(pattern, method, (c, context) => methodFunc.Invoke(c).Invoke());
 			
 			return this; // To allow for method chaining.
 		}
@@ -45,8 +47,11 @@ namespace Uk.Co.Cygnets.UrlRouting
 			var method = GetMethodInfo(handler);
 			var methodFunc = handler.Compile();
 			var url = pattern.Url;
-			this.AddRouteHandler(pattern, method, (c, param) => methodFunc.Invoke(c).Invoke(
-				url.Param1.FromString(param[0])));
+			this.AddRouteHandler(pattern, method, (c, context) =>
+			{
+				var p = pattern.Url.ExtractParameters(context);
+				return methodFunc.Invoke(c).Invoke(p.Item1);
+			});
 
 			return this; // To allow for method chaining.
 		}
@@ -56,9 +61,11 @@ namespace Uk.Co.Cygnets.UrlRouting
 			var method = GetMethodInfo(handler);
 			var methodFunc = handler.Compile();
 			var url = pattern.Url;
-			this.AddRouteHandler(pattern, method, (c, param) => methodFunc.Invoke(c).Invoke(
-				url.Param1.FromString(param[0]),
-				url.Param2.FromString(param[1])));
+			this.AddRouteHandler(pattern, method, (c, context) =>
+			{
+				var p = pattern.Url.ExtractParameters(context);
+				return methodFunc.Invoke(c).Invoke(p.Item1, p.Item2);
+			});
 
 			return this; // To allow for method chaining.
 		}
@@ -68,10 +75,11 @@ namespace Uk.Co.Cygnets.UrlRouting
 			var method = GetMethodInfo(handler);
 			var methodFunc = handler.Compile();
 			var url = pattern.Url;
-			this.AddRouteHandler(pattern, method, (c, param) => methodFunc.Invoke(c).Invoke(
-				url.Param1.FromString(param[0]),
-				url.Param2.FromString(param[1]),
-				url.Param3.FromString(param[2])));
+			this.AddRouteHandler(pattern, method, (c, context) =>
+			{
+				var p = pattern.Url.ExtractParameters(context);
+				return methodFunc.Invoke(c).Invoke(p.Item1, p.Item2, p.Item3);
+			});
 
 			return this; // To allow for method chaining.
 		}
@@ -81,16 +89,30 @@ namespace Uk.Co.Cygnets.UrlRouting
 			var method = GetMethodInfo(handler);
 			var methodFunc = handler.Compile();
 			var url = pattern.Url;
-			this.AddRouteHandler(pattern, method, (c, param) => methodFunc.Invoke(c).Invoke(
-				url.Param1.FromString(param[0]),
-				url.Param2.FromString(param[1]),
-				url.Param3.FromString(param[2]),
-				url.Param4.FromString(param[3])));
+			this.AddRouteHandler(pattern, method, (c, context) => {
+				var p = pattern.Url.ExtractParameters(context);
+				return methodFunc.Invoke(c).Invoke(p.Item1, p.Item2, p.Item3, p.Item4);
+			});
 
 			return this; // To allow for method chaining.
 		}
 
-		public void AddRouteHandler(AbstractRequestPattern pattern, MethodInfo method, Func<C, string[], ActionResult> handler)
+		private static T DecodeLastParameter<T>(UrlArgument<T> descriptor, string[] parameterStrings, int index, NameValueCollection query)
+		{
+			var simple = (descriptor as PathComponent<T>);
+			var queryParam = (descriptor as QueryStringEncoding<T>);
+			if (simple == null && queryParam == null) throw new ArgumentException("Do not recognise UrlParameter subclass " + descriptor.GetType().Name);
+			if (simple != null)
+			{
+				return simple.FromString(parameterStrings[index]);
+			}
+			else
+			{
+				throw new NotImplementedException("Decode from query");
+			}
+		}
+
+		private void AddRouteHandler(AbstractRequestPattern pattern, MethodInfo method, Func<C, RequestContext, ActionResult> handler)
 		{
 			var actionName = GetActionName(pattern.Method, method);
 			this.routes.AddRoute(pattern, new ControllerRouteHandler<C>(pattern, this.controllerName, actionName, handler));

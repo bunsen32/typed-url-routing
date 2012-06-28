@@ -51,7 +51,7 @@ namespace Uk.Co.Cygnets.UrlRouting
 				defaults: GetDefaults(pattern),
 				constraints: GetConstraints(pattern),
 				routeHandler: handler);
-			var routeName = pattern.Url.PathPattern;
+			var routeName = pattern.Url.GetRouteName();
 
 			routes.Add(routeName, route);
 			return route;
@@ -59,7 +59,7 @@ namespace Uk.Co.Cygnets.UrlRouting
 
 		private static string GetRouteUrl(AbstractUrlPattern url)
 		{
-			var range = Enumerable.Range(0, url.Arity);
+			var range = Enumerable.Range(0, url.ParameterCount);
 			var parameterNames = range.Select(i => "{" + url.ParameterName(i) + "}").ToArray();
 			return string.Format(RemoveInitialSlash(url.PathPattern), (object[])parameterNames);
 		}
@@ -75,7 +75,7 @@ namespace Uk.Co.Cygnets.UrlRouting
 		{
 			var url = requestPattern.Url;
 			var result = new RouteValueDictionary();
-			for (int i = 0; i < url.PathArity; i++)
+			for (int i = 0; i < url.PathParameterCount; i++)
 			{
 				result[url.ParameterName(i)] = url.ParameterPatterns[i];
 			}

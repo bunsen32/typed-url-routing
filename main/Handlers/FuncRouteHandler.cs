@@ -10,6 +10,7 @@ namespace Uk.Co.Cygnets.UrlRouting.Handlers
 	using System.Web;
 	using System.Web.Mvc;
 	using System.Web.Routing;
+using System.Collections.Specialized;
 
 	/// <summary>
 	/// TODO: Update summary.
@@ -17,9 +18,9 @@ namespace Uk.Co.Cygnets.UrlRouting.Handlers
 	public class FuncRouteHandler : AbstractRouteHandler
 	{
 		private readonly AbstractRequestPattern pattern;
-		private readonly Func<HttpContextBase, string[], ActionResult> handler;
+		private readonly Func<RequestContext, ActionResult> handler;
 
-		public FuncRouteHandler(AbstractRequestPattern pattern, Func<HttpContextBase, string[], ActionResult> handler)
+		public FuncRouteHandler(AbstractRequestPattern pattern, Func<RequestContext, ActionResult> handler)
 		{
 			this.pattern = pattern;
 			this.handler = handler;
@@ -30,45 +31,42 @@ namespace Uk.Co.Cygnets.UrlRouting.Handlers
 			get { return pattern.Url; }
 		}
 
-		protected override void ProcessRequest(RequestContext context, params string[] parameters)
+		protected override void ProcessRequest(RequestContext context)
 		{
-			var result = this.handler.Invoke(context.HttpContext, parameters);
+			var result = this.handler.Invoke(context);
 			throw new NotImplementedException("Need to do something with the result. Needs a ControllerContext");
 		}
 
 		public static FuncRouteHandler Create(RequestPattern<UrlPattern> pattern, Func<HttpContextBase, ActionResult> handler)
 		{
-			return new FuncRouteHandler(pattern, (b, p) => handler(b));
+			return new FuncRouteHandler(pattern, (req) => handler(req.HttpContext));
 		}
 
 		public static FuncRouteHandler Create<P1>(RequestPattern<UrlPattern<P1>> pattern, Func<HttpContextBase, P1, ActionResult> handler)
 		{
-			var url = pattern.Url;
-			return new FuncRouteHandler(pattern, (b, p) =>
-				handler(
-					b,
-					url.Param1.FromString(p[0])));
+			return new FuncRouteHandler(pattern, (req) =>
+			{
+				var p = pattern.Url.ExtractParameters(req);
+				return handler.Invoke(req.HttpContext, p.Item1);
+			});
 		}
 
 		public static FuncRouteHandler Create<P1, P2>(RequestPattern<UrlPattern<P1, P2>> pattern, Func<HttpContextBase, P1, P2, ActionResult> handler)
 		{
-			var url = pattern.Url;
-			return new FuncRouteHandler(pattern, (b, p) =>
-				handler(
-					b,
-					url.Param1.FromString(p[0]),
-					url.Param2.FromString(p[1])));
+			return new FuncRouteHandler(pattern, (req) =>
+			{
+				var p = pattern.Url.ExtractParameters(req);
+				return handler.Invoke(req.HttpContext, p.Item1, p.Item2);
+			});
 		}
 
 		public static FuncRouteHandler Create<P1, P2, P3>(RequestPattern<UrlPattern<P1, P2, P3>> pattern, Func<HttpContextBase, P1, P2, P3, ActionResult> handler)
 		{
-			var url = pattern.Url;
-			return new FuncRouteHandler(pattern, (b, p) => 
-				handler(
-					b, 
-					url.Param1.FromString(p[0]),
-					url.Param2.FromString(p[1]),
-					url.Param3.FromString(p[2])));
+			return new FuncRouteHandler(pattern, (req) =>
+			{
+				var p = pattern.Url.ExtractParameters(req);
+				return handler.Invoke(req.HttpContext, p.Item1, p.Item2, p.Item3);
+			});
 		}
 	}
 }

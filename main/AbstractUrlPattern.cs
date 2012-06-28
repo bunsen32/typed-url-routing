@@ -12,6 +12,10 @@ namespace Uk.Co.Cygnets.UrlRouting
 	using System.Text;
 	using System.Text.RegularExpressions;
 	using System.Web;
+	using Uk.Co.Cygnets.UrlRouting.PathComponents;
+	using System.Collections.Specialized;
+	using System.Web.Routing;
+	using System.Globalization;
 
 	/// <summary>
 	/// TODO: Update summary.
@@ -26,21 +30,21 @@ namespace Uk.Co.Cygnets.UrlRouting
 		private readonly int pathArity;
 		private readonly IList<string> queryParameterNames;
 
-		public AbstractUrlPattern(string pattern, params string[] regexStrings)
+		public AbstractUrlPattern(string pattern, params UrlArgument[] parameters)
 		{
 			if (pattern == null) throw new ArgumentNullException("pattern");
 			if (!pattern.StartsWith("/")) throw new ArgumentException("We only support absolute paths (include initial '/').");
 
+			this.regexStrings = parameters.OfType<IPathComponent>().Select(p => p.RegexString).ToList().AsReadOnly();
 			string queryPattern;
 			SplitIntoPathAndQuery(pattern, out this.pathPattern, out queryPattern);
 			this.pathArity = PatternArity(this.pathPattern, 0);
 			var queryArity = PatternArity(queryPattern, this.pathArity);
 
-			var patternArity = this.pathArity + queryArity;
-			if (patternArity != this.Arity) throw new ArgumentException(string.Format("Wrong arity: {0} should be {1}", patternArity, this.Arity));
-
 			this.pattern = pattern;
-			this.regexStrings = regexStrings.ToList().AsReadOnly();
+			var patternArity = this.pathArity + queryArity;
+			if (this.ParameterCount > this.Arity) throw new ArgumentException(string.Format("Number of parameters ({0}) cannot be greater than arity {1}.", this.ParameterCount, this.Arity));
+			if (patternArity != this.ParameterCount) throw new ArgumentException(string.Format("Wrong number of regex parameters: {0} should be {1}", this.ParameterCount, patternArity));
 
 			this.queryParameterNames = GetQueryParameterNames(queryPattern, queryArity);
 
@@ -51,7 +55,9 @@ namespace Uk.Co.Cygnets.UrlRouting
 
 		public abstract int Arity { get; }
 
-		public int PathArity { get { return this.pathArity; } }
+		public int ParameterCount { get { return this.regexStrings.Count; } }
+
+		public int PathParameterCount { get { return this.pathArity; } }
 
 		public Regex PathRegex { get { return this.pathRegex; } }
 
@@ -61,30 +67,55 @@ namespace Uk.Co.Cygnets.UrlRouting
 
 		public IList<string> ParameterPatterns { get { return this.regexStrings; } }
 
-		protected Uri UriWith(params string[] p)
+		protected PotentialUrl PotentialUrlWith(RouteValueDictionary queryOrNull, params string[] p)
 		{
-			return new Uri(this.UrlStringWith(p), UriKind.Relative);
-		}
+			var routeValues = queryOrNull == null 
+				? new RouteValueDictionary() 
+				: new RouteValueDictionary(queryOrNull);
 
-		protected string UrlStringWith(params string[] p)
-		{
-			EncodeQueryParamsMutating(p);
-			return string.Format(this.Pattern, p);
-		}
-
-		private void EncodeQueryParamsMutating(string[] p)
-		{
-			for (int i = this.PathArity; i < this.Arity; i++)
+			for (int i = this.PathParameterCount; i < this.ParameterCount; i++)
 			{
-				p[i] = HttpUtility.UrlEncode(p[i]);
+				var value = p[i];
+				if (value != null)
+					routeValues[this.ParameterName(i)] = value;
 			}
+
+			var path = string.Format(this.PathPattern, (object[])p);
+
+			var querystring = new StringBuilder();
+			var firstParam = true;
+			foreach (var kv in routeValues)
+			{
+				if (!firstParam) querystring.Append('&');
+				firstParam = false;
+				querystring.Append(kv.Key);
+				querystring.Append('=');
+				querystring.Append(HttpUtility.UrlEncode(Convert.ToString(kv.Value, CultureInfo.InvariantCulture)));
+			}
+
+			return new PotentialUrl(path, querystring.ToString());
+		}
+
+		protected string Stringify<T>(UrlArgument<T> p, T value)
+		{
+			var stringifier = p as PathComponent<T>;
+			return stringifier != null
+				? stringifier.ToString(value)
+				: null;
+		}
+
+		protected RouteValueDictionary Querify<T>(UrlArgument<T> p, T value)
+		{
+			var querifier = p as QueryStringEncoding<T>;
+			if (querifier == null) return null;
+			return querifier.ToDictionary(value);
 		}
 
 		public string ParameterName(int index)
 		{
-			return index < this.PathArity 
+			return index < this.PathParameterCount 
 				? "__" + index
-				: this.queryParameterNames[index - this.PathArity];
+				: this.queryParameterNames[index - this.PathParameterCount];
 		}
 
 		private static readonly Regex PlaceholderMatcher = new Regex(@"\{(\d+)\}", RegexOptions.Compiled);

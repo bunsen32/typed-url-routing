@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Dynamic;
+using test.Models;
 
 namespace test.Controllers
 {
@@ -27,6 +28,12 @@ namespace test.Controllers
 		public ActionResult ShowTwoParametersPlusQuery(int first, string second, string third, string forth)
 		{
 			return View(new string[] { first.ToString(), second, third, forth });
+		}
+
+		[HttpGet]
+		public ActionResult ModelParameter(int? id, Abc abc = null)
+		{
+			return View(abc);
 		}
 	}
 }

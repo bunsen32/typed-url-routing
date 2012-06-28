@@ -5,6 +5,7 @@ using System.Web;
 using Uk.Co.Cygnets.UrlRouting;
 using System.Web.Routing;
 using test.Controllers;
+using test.Models;
 
 namespace test
 {
@@ -17,6 +18,8 @@ namespace test
 		public static readonly UrlPattern<int, string> ShowParams = Path("/{0}/{1}/show", Int, Slug);
 
 		public static readonly UrlPattern<int, string, string, string> ParamsPlusQuery = Path("/{0}/{1}/query?bob={2}&jeff={3}", Int, Slug, AnyString, AnyString);
+
+		public static readonly UrlPattern<Abc> Search = Path("/search", Query<Abc>());
 
 		public static void Register(RouteCollection routes)
 		{

@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Uk.Co.Cygnets.UrlRouting
+namespace Uk.Co.Cygnets.UrlRouting.PathComponents
 {
 	using System;
 	using System.Collections.Generic;
@@ -14,7 +14,7 @@ namespace Uk.Co.Cygnets.UrlRouting
 	/// <summary>
 	/// TODO: Update summary.
 	/// </summary>
-	public abstract class PathComponent<T> : IPathComponent<T>
+	public abstract class PathComponent<T> : UrlArgument<T>, IPathComponent
 	{
 		private readonly string regexString;
 

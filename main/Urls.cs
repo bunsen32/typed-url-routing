@@ -26,24 +26,29 @@ namespace Uk.Co.Cygnets.UrlRouting
 			return new UrlPattern(pattern);
 		}
 
-		protected static UrlPattern<P1> Path<P1>(string pattern, IPathComponent<P1> p1)
+		protected static UrlPattern<P1> Path<P1>(string pattern, UrlArgument<P1> p1)
 		{
 			return new UrlPattern<P1>(pattern, p1);
 		}
 
-		protected static UrlPattern<P1, P2> Path<P1, P2>(string pattern, IPathComponent<P1> p1, IPathComponent<P2> p2)
+		protected static UrlPattern<P1, P2> Path<P1, P2>(string pattern, PathComponent<P1> p1, UrlArgument<P2> p2)
 		{
 			return new UrlPattern<P1, P2>(pattern, p1, p2);
 		}
 
-		protected static UrlPattern<P1, P2, P3> Path<P1, P2, P3>(string pattern, IPathComponent<P1> p1, IPathComponent<P2> p2, IPathComponent<P3> p3)
+		protected static UrlPattern<P1, P2, P3> Path<P1, P2, P3>(string pattern, PathComponent<P1> p1, PathComponent<P2> p2, UrlArgument<P3> p3)
 		{
 			return new UrlPattern<P1, P2, P3>(pattern, p1, p2, p3);
 		}
 
-		protected static UrlPattern<P1, P2, P3, P4> Path<P1, P2, P3, P4>(string pattern, IPathComponent<P1> p1, IPathComponent<P2> p2, IPathComponent<P3> p3, IPathComponent<P4> p4)
+		protected static UrlPattern<P1, P2, P3, P4> Path<P1, P2, P3, P4>(string pattern, PathComponent<P1> p1, PathComponent<P2> p2, PathComponent<P3> p3, UrlArgument<P4> p4)
 		{
 			return new UrlPattern<P1, P2, P3, P4>(pattern, p1, p2, p3, p4);
+		}
+
+		protected static QueryStringEncoding<T> Query<T>()
+		{
+			return new QueryStringEncoding<T>();
 		}
 
 		protected static RequestPattern<U> Get<U>(U url) where U : AbstractUrlPattern

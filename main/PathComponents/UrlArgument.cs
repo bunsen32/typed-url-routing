@@ -4,18 +4,16 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Uk.Co.Cygnets.UrlRouting.PathComponents
+namespace Uk.Co.Cygnets.UrlRouting
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
+	public abstract class UrlArgument
+	{
+	}
 
 	/// <summary>
 	/// TODO: Update summary.
 	/// </summary>
-	public interface IPathComponent
+	public abstract class UrlArgument<T>: UrlArgument
 	{
-		string RegexString { get; }
 	}
 }
