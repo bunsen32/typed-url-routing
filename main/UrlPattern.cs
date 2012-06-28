@@ -6,12 +6,7 @@
 
 namespace Uk.Co.Cygnets.UrlRouting
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
-	using System.Web;
-using Uk.Co.Cygnets.UrlRouting.PathComponents;
+	using Uk.Co.Cygnets.UrlRouting.PathComponents;
 
 	/// <summary>
 	/// TODO: Update summary.

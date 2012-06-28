@@ -7,11 +7,7 @@
 namespace Uk.Co.Cygnets.UrlRouting.PathComponents
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
-using System.Web.Routing;
-	using System.Web.Mvc;
+	using System.Web.Routing;
 
 	/// <summary>
 	/// Kind of fake UrlComponent (since it does not do any direct conversion to/from strings). Placeholder in UrlPattern, always the last

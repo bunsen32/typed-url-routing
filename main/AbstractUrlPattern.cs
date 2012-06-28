@@ -8,14 +8,13 @@ namespace Uk.Co.Cygnets.UrlRouting
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Globalization;
 	using System.Linq;
 	using System.Text;
 	using System.Text.RegularExpressions;
 	using System.Web;
-	using Uk.Co.Cygnets.UrlRouting.PathComponents;
-	using System.Collections.Specialized;
 	using System.Web.Routing;
-	using System.Globalization;
+	using Uk.Co.Cygnets.UrlRouting.PathComponents;
 
 	/// <summary>
 	/// TODO: Update summary.

@@ -1,8 +1,5 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="UrlRewriterHelper.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
+﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
+// Cribbed (copied from MVC4. Licence for MVC4 applies.)
 
 namespace Uk.Co.Cygnets.UrlRouting.MvcUrlUtilities
 {
