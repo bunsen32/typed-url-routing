@@ -48,7 +48,7 @@ namespace Uk.Co.Cygnets.UrlRouting
 
 		protected static QueryStringEncoding<T> Query<T>()
 		{
-			return new QueryStringEncoding<T>();
+			return MvcQueryStringEncoding<T>.Default;
 		}
 
 		protected static RequestPattern<U> Get<U>(U url) where U : AbstractUrlPattern

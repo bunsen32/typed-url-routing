@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Dynamic;
-using test.Models;
-
-namespace test.Controllers
+﻿namespace test.Controllers
 {
+	using System.Web.Mvc;
+	using test.Models;
+
 	public class HomeController : Controller
 	{
 		public ActionResult Index()
@@ -31,7 +26,7 @@ namespace test.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult ModelParameter(int? id, Abc abc = null)
+		public ActionResult ModelParameter(Abc abc = null)
 		{
 			return View(abc);
 		}

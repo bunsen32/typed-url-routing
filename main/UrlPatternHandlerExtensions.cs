@@ -7,6 +7,7 @@
 namespace Uk.Co.Cygnets.UrlRouting
 {
 	using System;
+	using System.Linq;
 	using System.Web.Routing;
 	using Uk.Co.Cygnets.UrlRouting.PathComponents;
 
@@ -84,7 +85,7 @@ namespace Uk.Co.Cygnets.UrlRouting
 			}
 			else
 			{
-				throw new NotImplementedException("Decode from query");
+				return queryParam.FromDictionary(req.HttpContext.Request.QueryString);
 			}
 		}
 	}

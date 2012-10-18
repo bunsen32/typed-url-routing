@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Uk.Co.Cygnets.UrlRouting;
-using System.Web.Routing;
-using test.Controllers;
-using test.Models;
-
-namespace test
+﻿namespace test
 {
+	using System.Web.Routing;
+	using test.Controllers;
+	using test.Models;
+	using Uk.Co.Cygnets.UrlRouting;
+
 	public class SiteUrls : Urls
 	{
 		public static readonly RequestPattern<UrlPattern> GetHome = Get(Path("/"));
@@ -27,7 +23,8 @@ namespace test
 				.MapRoute(GetHome, c => c.Index)
 				.MapRoute(Get(About), c => c.About)
 				.MapRoute(Get(ShowParams), c => c.ShowTwoParameters)
-				.MapRoute(Get(ParamsPlusQuery), c=>c.ShowTwoParametersPlusQuery);
+				.MapRoute(Get(ParamsPlusQuery), c=>c.ShowTwoParametersPlusQuery)
+				.MapRoute(Get(Search), c=> c.ModelParameter);
 		}
 	}
 }

@@ -7,14 +7,12 @@
 namespace Uk.Co.Cygnets.UrlRouting
 {
 	using System;
-	using System.Collections.Specialized;
 	using System.Linq;
 	using System.Linq.Expressions;
 	using System.Reflection;
 	using System.Web.Mvc;
 	using System.Web.Routing;
 	using Uk.Co.Cygnets.UrlRouting.Handlers;
-	using Uk.Co.Cygnets.UrlRouting.PathComponents;
 
 	/// <summary>
 	/// TODO: Update summary.
@@ -95,21 +93,6 @@ namespace Uk.Co.Cygnets.UrlRouting
 			});
 
 			return this; // To allow for method chaining.
-		}
-
-		private static T DecodeLastParameter<T>(UrlArgument<T> descriptor, string[] parameterStrings, int index, NameValueCollection query)
-		{
-			var simple = (descriptor as PathComponent<T>);
-			var queryParam = (descriptor as QueryStringEncoding<T>);
-			if (simple == null && queryParam == null) throw new ArgumentException("Do not recognise UrlParameter subclass " + descriptor.GetType().Name);
-			if (simple != null)
-			{
-				return simple.FromString(parameterStrings[index]);
-			}
-			else
-			{
-				throw new NotImplementedException("Decode from query");
-			}
 		}
 
 		private void AddRouteHandler(AbstractRequestPattern pattern, MethodInfo method, Func<C, RequestContext, ActionResult> handler)

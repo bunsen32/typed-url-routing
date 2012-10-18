@@ -64,12 +64,11 @@
     <Compile Include="Handlers\AbstractRouteHandler.cs" />
     <Compile Include="AbstractUrlPattern.cs" />
     <Compile Include="ControllerRouteMapper.cs" />
-    <Compile Include="HandlerExtensions.cs" />
     <Compile Include="Handlers\ControllerRouteHandler.cs" />
     <Compile Include="Handlers\FuncRouteHandler.cs" />
-    <Compile Include="Handlers\UrlPatternExtensions.cs" />
     <Compile Include="MvcUrlUtilities\UrlRewriterHelper.cs" />
     <Compile Include="PathComponents\IPathComponent.cs" />
+    <Compile Include="PathComponents\MvcQueryStringEncoding.cs" />
     <Compile Include="PathComponents\QueryStringEncoding.cs" />
     <Compile Include="MvcUrlUtilities\PathHelpers.cs" />
     <Compile Include="PotentialUrl.cs" />
