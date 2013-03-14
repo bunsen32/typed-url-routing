@@ -1,9 +1,13 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="ControllerRouteHandler.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
+// <copyright file="ControllerRouteHandler.cs" company="Andrew Forrest">©2013 Andrew Forrest</copyright>
+//
+// Licensed under the Apache License, Version 2.0 (the "License"); you may
+// not use this file except in compliance with the License. Copy of
+// license at: http://www.apache.org/licenses/LICENSE-2.0
+//
+// This software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
+// OR CONDITIONS. See License for specific permissions and limitations.
 // -----------------------------------------------------------------------
-
 namespace Dysphoria.Net.UrlRouting.Handlers
 {
 	using System;
@@ -13,8 +17,8 @@ namespace Dysphoria.Net.UrlRouting.Handlers
 	/// <summary>
 	/// TODO: Update summary.
 	/// </summary>
-	public class ControllerRouteHandler<C>: AbstractRouteHandler
-		where C: ControllerBase
+	public class ControllerRouteHandler<C> : AbstractRouteHandler
+		where C : ControllerBase
 	{
 		private readonly AbstractRequestPattern pattern;
 		private readonly string controllerName, actionName;
@@ -28,6 +32,11 @@ namespace Dysphoria.Net.UrlRouting.Handlers
 			this.actionName = actionName;
 			this.controllerType = typeof(C);
 			this.handler = handler;
+		}
+
+		protected override AbstractUrlPattern UrlPattern
+		{
+			get { return this.pattern.Url; }
 		}
 
 		protected override void ProcessRequest(RequestContext context)
@@ -48,11 +57,6 @@ namespace Dysphoria.Net.UrlRouting.Handlers
 				var disposable = controller as IDisposable;
 				if (disposable != null) disposable.Dispose();
 			}
-		}
-
-		protected override AbstractUrlPattern UrlPattern
-		{
-			get { return this.pattern.Url; }
 		}
 	}
 }

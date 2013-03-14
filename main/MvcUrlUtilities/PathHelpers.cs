@@ -77,6 +77,7 @@ namespace Dysphoria.Net.UrlRouting.MvcUrlUtilities
 				// consistency across browsers.
 				relativeUrl = "./" + relativeUrl;
 			}
+
 			return relativeUrl;
 		}
 

@@ -1,9 +1,13 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="AbstractTypedRouteHandler.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
+// <copyright file="AbstractRouteHandler.cs" company="Andrew Forrest">©2013 Andrew Forrest</copyright>
+//
+// Licensed under the Apache License, Version 2.0 (the "License"); you may
+// not use this file except in compliance with the License. Copy of
+// license at: http://www.apache.org/licenses/LICENSE-2.0
+//
+// This software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
+// OR CONDITIONS. See License for specific permissions and limitations.
 // -----------------------------------------------------------------------
-
 namespace Dysphoria.Net.UrlRouting.Handlers
 {
 	using System.Web;
@@ -12,16 +16,16 @@ namespace Dysphoria.Net.UrlRouting.Handlers
 	/// <summary>
 	/// TODO: Update summary.
 	/// </summary>
-	public abstract class AbstractRouteHandler: IRouteHandler
+	public abstract class AbstractRouteHandler : IRouteHandler
 	{
+		protected abstract AbstractUrlPattern UrlPattern { get; }
+
 		public IHttpHandler GetHttpHandler(RequestContext requestContext)
 		{
 			return new ActionHandler(this, requestContext);
 		}
 
 		protected abstract void ProcessRequest(RequestContext context);
-
-		protected abstract AbstractUrlPattern UrlPattern { get; }
 
 		private class ActionHandler : IHttpHandler
 		{

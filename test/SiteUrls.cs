@@ -1,9 +1,9 @@
 ﻿namespace test
 {
 	using System.Web.Routing;
+	using Dysphoria.Net.UrlRouting;
 	using test.Controllers;
 	using test.Models;
-	using Dysphoria.Net.UrlRouting;
 
 	public class SiteUrls : Urls
 	{

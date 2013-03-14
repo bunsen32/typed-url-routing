@@ -38,6 +38,7 @@ namespace Dysphoria.Net.UrlRouting.MvcUrlUtilities
                     }
                 }
             }
+
             return _urlRewriterIsTurnedOnValue;
         }
 

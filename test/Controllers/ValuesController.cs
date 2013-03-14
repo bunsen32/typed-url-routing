@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Web.Http;
-
-namespace test.Controllers
+﻿namespace test.Controllers
 {
+	using System.Collections.Generic;
+	using System.Web.Http;
+
 	public class ValuesController : ApiController
 	{
 		// GET /api/values
