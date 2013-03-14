@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Uk.Co.Cygnets.UrlRouting.PathComponents
+namespace Dysphoria.Net.UrlRouting.PathComponents
 {
 	public abstract class UrlArgument
 	{

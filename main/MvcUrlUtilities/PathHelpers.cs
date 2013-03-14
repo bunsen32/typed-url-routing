@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
 // Cribbed (copied from MVC4. Licence for MVC4 applies.)
 
-namespace Uk.Co.Cygnets.UrlRouting.MvcUrlUtilities
+namespace Dysphoria.Net.UrlRouting.MvcUrlUtilities
 {
 	using System;
 	using System.Web;

@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Uk.Co.Cygnets.UrlRouting
+namespace Dysphoria.Net.UrlRouting
 {
 	/// <summary>
 	/// TODO: Update summary.

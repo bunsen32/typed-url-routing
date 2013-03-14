@@ -4,9 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Uk.Co.Cygnets.UrlRouting
+namespace Dysphoria.Net.UrlRouting
 {
-	using Uk.Co.Cygnets.UrlRouting.PathComponents;
+	using Dysphoria.Net.UrlRouting.PathComponents;
 
 	/// <summary>
 	/// TODO: Update summary.

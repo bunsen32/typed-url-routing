@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Uk.Co.Cygnets.UrlRouting
+namespace Dysphoria.Net.UrlRouting
 {
 	using System;
 	using System.Collections.Generic;
@@ -14,7 +14,7 @@ namespace Uk.Co.Cygnets.UrlRouting
 	using System.Text.RegularExpressions;
 	using System.Web;
 	using System.Web.Routing;
-	using Uk.Co.Cygnets.UrlRouting.PathComponents;
+	using Dysphoria.Net.UrlRouting.PathComponents;
 
 	/// <summary>
 	/// TODO: Update summary.

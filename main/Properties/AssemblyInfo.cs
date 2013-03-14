@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("main")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Typed URL Routing")]
+[assembly: AssemblyDescription("A library for adding statically-typed URL routing to MVC")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("main")]
-[assembly: AssemblyCopyright("Copyright ©  2012")]
+[assembly: AssemblyProduct("Typed URL Routing")]
+[assembly: AssemblyCopyright("Copyright © 2012 Andrew Forrest")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

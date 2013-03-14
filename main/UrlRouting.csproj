@@ -8,8 +8,8 @@
     <ProjectGuid>{493A9C73-319F-45C1-9B46-0DE1A8ABF0B1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Uk.Co.Cygnets.UrlRouting</RootNamespace>
-    <AssemblyName>Cygnet.UrlRouting</AssemblyName>
+    <RootNamespace>Dysphoria.Net.UrlRouting</RootNamespace>
+    <AssemblyName>Dysphoria.Net.UrlRouting</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

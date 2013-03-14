@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Uk.Co.Cygnets.UrlRouting.PathComponents
+namespace Dysphoria.Net.UrlRouting.PathComponents
 {
 	using System.Collections.Specialized;
 	using System.Web.Routing;

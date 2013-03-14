@@ -4,12 +4,12 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Uk.Co.Cygnets.UrlRouting
+namespace Dysphoria.Net.UrlRouting
 {
 	using System;
 	using System.Linq;
 	using System.Web.Routing;
-	using Uk.Co.Cygnets.UrlRouting.PathComponents;
+	using Dysphoria.Net.UrlRouting.PathComponents;
 
 	/// <summary>
 	/// TODO: Update summary.
