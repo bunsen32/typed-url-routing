@@ -13,3 +13,6 @@ Basically it lets you:
 * Define URL routes as strongly-typed, first-class-objects
 * Bind routes to controller actions, in such a way that the compiler catches parameter mismatches/misspellings
 * Generate links in your Razor code (a) succinctly and (b) fully statically type-checked.
+
+Oh and:
+* It all works at compile time. (You don’t need to run a program to generate code or anything like that.)
