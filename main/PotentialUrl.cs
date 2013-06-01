@@ -10,11 +10,13 @@
 // -----------------------------------------------------------------------
 namespace Dysphoria.Net.UrlRouting
 {
+	using System;
+
 	/// <summary>
 	/// (Frankly weird) abstraction of a URL's path and querystring.
 	/// Allows at least <see cref="HtmlHelperExtensions.Link"/> to be strongly typed.
 	/// </summary>
-	public class PotentialUrl
+	public class PotentialUrl: IEquatable<PotentialUrl>
 	{
 		private readonly string path;
 		private readonly string querystring;
@@ -42,6 +44,35 @@ namespace Dysphoria.Net.UrlRouting
 		public override string ToString()
 		{
 			return this.ApplicationAbsoluteUrl;
+		}
+
+		public override bool Equals(object obj)
+		{
+			return this.Equals(obj as PotentialUrl);
+		}
+
+		public static bool operator !=(PotentialUrl first, PotentialUrl second)
+		{
+			return !(first == second);
+		}
+
+		public static bool operator ==(PotentialUrl first, PotentialUrl second)
+		{
+			return (object)first == null
+				? (object)second == null
+				: first.Equals(second);
+		}
+
+		public bool Equals(PotentialUrl other)
+		{
+			return (object)other != null
+				&& this.Path == other.Path
+				&& this.Querystring == other.Querystring;
+		}
+
+		public override int GetHashCode()
+		{
+			return unchecked((this.Path.GetHashCode() * 41) ^ (this.Querystring ?? "").GetHashCode());
 		}
 	}
 }
