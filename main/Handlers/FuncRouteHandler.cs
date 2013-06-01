@@ -14,6 +14,7 @@ namespace Dysphoria.Net.UrlRouting.Handlers
 	using System.Web;
 	using System.Web.Mvc;
 	using System.Web.Routing;
+	using System.Web.SessionState;
 
 	/// <summary>
 	/// TODO: Update summary.
@@ -38,6 +39,11 @@ namespace Dysphoria.Net.UrlRouting.Handlers
 		{
 			var result = this.handler.Invoke(context);
 			throw new NotImplementedException("Need to do something with the result. Needs a ControllerContext");
+		}
+
+		protected override SessionStateBehavior GetSessionStateBehavior(RequestContext requestContext)
+		{
+			return SessionStateBehavior.Default;
 		}
 
 		public static FuncRouteHandler Create(RequestPattern<UrlPattern> pattern, Func<HttpContextBase, ActionResult> handler)

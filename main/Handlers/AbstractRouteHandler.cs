@@ -12,6 +12,8 @@ namespace Dysphoria.Net.UrlRouting.Handlers
 {
 	using System.Web;
 	using System.Web.Routing;
+	using System.Web.SessionState;
+	using System;
 
 	/// <summary>
 	/// TODO: Update summary.
@@ -22,12 +24,15 @@ namespace Dysphoria.Net.UrlRouting.Handlers
 
 		public IHttpHandler GetHttpHandler(RequestContext requestContext)
 		{
+			requestContext.HttpContext.SetSessionStateBehavior(GetSessionStateBehavior(requestContext));
 			return new ActionHandler(this, requestContext);
 		}
 
+		protected abstract SessionStateBehavior GetSessionStateBehavior(RequestContext requestContext);
+
 		protected abstract void ProcessRequest(RequestContext context);
 
-		private class ActionHandler : IHttpHandler
+		private class ActionHandler : IHttpHandler, IRequiresSessionState
 		{
 			private readonly AbstractRouteHandler outer;
 			private readonly RequestContext requestContext;

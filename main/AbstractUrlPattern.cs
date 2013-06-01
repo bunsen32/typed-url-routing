@@ -92,11 +92,14 @@ namespace Dysphoria.Net.UrlRouting
 			var firstParam = true;
 			foreach (var kv in routeValues)
 			{
-				if (!firstParam) querystring.Append('&');
-				firstParam = false;
-				querystring.Append(kv.Key);
-				querystring.Append('=');
-				querystring.Append(HttpUtility.UrlEncode(Convert.ToString(kv.Value, CultureInfo.InvariantCulture)));
+				if (kv.Value != null)
+				{
+					if (!firstParam) querystring.Append('&');
+					firstParam = false;
+					querystring.Append(kv.Key);
+					querystring.Append('=');
+					querystring.Append(HttpUtility.UrlEncode(Convert.ToString(kv.Value, CultureInfo.InvariantCulture)));
+				}
 			}
 
 			return new PotentialUrl(path, querystring.ToString());
