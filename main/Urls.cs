@@ -15,6 +15,8 @@ namespace Dysphoria.Net.UrlRouting
 	public abstract class Urls
 	{
 		protected static readonly PathComponent<int> Int = IntComponent.Instance;
+		protected static readonly PathComponent<int?> NullableInt = Nullable(Int);
+
 		protected static readonly PathComponent<string> Slug = String(@"[-_0-9a-zA-Z]+");
 		protected static readonly PathComponent<string> PathComponent = String(@"[-_0-9a-zA-Z~+.,]+");
 		protected static readonly PathComponent<string> AnyString = String(@".*");
@@ -22,6 +24,18 @@ namespace Dysphoria.Net.UrlRouting
 		protected static PathComponent<string> String(string regexPattern)
 		{
 			return new StringComponent(regexPattern);
+		}
+
+		protected static PathComponent<T?> Nullable<T>(PathComponent<T> basis)
+			where T : struct
+		{
+			return new NullableComponent<T>(basis);
+		}
+
+		protected static PathComponent<T?> Nullable<T>(PathComponent<T> basis, string nullValue)
+			where T : struct
+		{
+			return new NullableComponent<T>(basis, nullValue);
 		}
 
 		protected static UrlPattern Path(string pattern)
