@@ -11,6 +11,9 @@
 namespace Dysphoria.Net.UrlRouting
 {
 	using System;
+	using System.Web;
+	using Dysphoria.Net.UrlRouting;
+	using Dysphoria.Net.UrlRouting.MvcUrlUtilities;
 
 	/// <summary>
 	/// (Frankly weird) abstraction of a URL's path and querystring.
@@ -39,6 +42,11 @@ namespace Dysphoria.Net.UrlRouting
 					? this.Path
 					: this.Path + "?" + this.Querystring;
 			}
+		}
+
+		public string Resolved(HttpContextBase httpContext)
+		{
+			return PathHelpers.GenerateClientUrl(httpContext, "~" + this.ToString());
 		}
 
 		public override string ToString()

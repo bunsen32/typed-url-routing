@@ -14,16 +14,25 @@ namespace System.Web.Mvc.Html
 	using System.Collections.Generic;
 	using System.Web.Mvc;
 	using Dysphoria.Net.UrlRouting;
-	using Dysphoria.Net.UrlRouting.MvcUrlUtilities;
 
 	/// <summary>
 	/// Extension method for view code to be able to generate a link from an instantiated UrlPattern.
 	/// </summary>
-	public static class HtmlHelperExtensions
+	public static class HtmlHelper_Extensions
 	{
+		public static KeyValuePair<string, PotentialUrl> Link(this string linkText, PotentialUrl location)
+		{
+			return new KeyValuePair<string, PotentialUrl>(linkText, location);
+		}
+
+		public static MvcHtmlString Link(this HtmlHelper self, KeyValuePair<string, PotentialUrl> link, object htmlAttributes = null)
+		{
+			return self.Link(link.Key, link.Value, htmlAttributes);
+		}
+
 		public static MvcHtmlString Link(this HtmlHelper self, string linkText, PotentialUrl location, object htmlAttributes = null)
 		{
-			var uri = PathHelpers.GenerateClientUrl(self.ViewContext.HttpContext, "~" + location.ToString());
+			var uri = location.Resolved(self.ViewContext.HttpContext);
 
 			if (String.IsNullOrEmpty(linkText))
 				throw new ArgumentException("Link text not allowed to be null or empty", "linkText");
@@ -42,6 +51,11 @@ namespace System.Web.Mvc.Html
 			tagBuilder.MergeAttribute("href", uri);
 			var linkString = tagBuilder.ToString(TagRenderMode.Normal);
 			return MvcHtmlString.Create(linkString);
+		}
+
+		public static string Of(this UrlHelper self, PotentialUrl location)
+		{
+			return location.Resolved(self.RequestContext.HttpContext);
 		}
 	}
 }
