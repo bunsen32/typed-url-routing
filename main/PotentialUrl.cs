@@ -11,8 +11,8 @@
 namespace Dysphoria.Net.UrlRouting
 {
 	using System;
+	using System.Text;
 	using System.Web;
-	using Dysphoria.Net.UrlRouting;
 	using Dysphoria.Net.UrlRouting.MvcUrlUtilities;
 
 	/// <summary>
@@ -23,30 +23,57 @@ namespace Dysphoria.Net.UrlRouting
 	{
 		private readonly string path;
 		private readonly string querystring;
+		private readonly string fragmentIdentifier;
 
 		public PotentialUrl(string urlPath, string querystring)
+			: this(urlPath, querystring, null)
 		{
-			this.path = urlPath;
-			this.querystring = querystring;
+		}
+
+		public PotentialUrl(string urlPath, string querystring, string fragmentIdentifier)
+		{
+			this.path = urlPath ?? "";
+			this.querystring = querystring ?? "";
+			this.fragmentIdentifier = fragmentIdentifier ?? "";
 		}
 
 		public string Path { get { return this.path; } }
 
 		public string Querystring { get { return this.querystring; } }
 
+		public string FragmentIdentifier { get { return this.fragmentIdentifier; } }
+
 		public string ApplicationAbsoluteUrl
 		{
 			get
 			{
-				return string.IsNullOrEmpty(this.Querystring)
-					? this.Path
-					: this.Path + "?" + this.Querystring;
+				var result = new StringBuilder(this.Path);
+				if (!string.IsNullOrEmpty(this.Querystring))
+				{
+					result.Append("?");
+					result.Append(this.Querystring);
+				}
+
+				if (!string.IsNullOrEmpty(this.FragmentIdentifier))
+				{
+					result.Append("#");
+					result.Append(this.FragmentIdentifier);
+				}
+
+				return result.ToString();
 			}
 		}
 
 		public string Resolved(HttpContextBase httpContext)
 		{
 			return PathHelpers.GenerateClientUrl(httpContext, "~" + this.ToString());
+		}
+
+		public PotentialUrl WithFragment(string fragmentIdentifier)
+		{
+			return (fragmentIdentifier ?? "") == this.FragmentIdentifier
+				? this
+				: new PotentialUrl(this.Path, this.Querystring, fragmentIdentifier);
 		}
 
 		public override string ToString()
