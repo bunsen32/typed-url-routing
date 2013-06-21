@@ -29,9 +29,9 @@ namespace Dysphoria.Net.UrlRouting.Handlers
 		private readonly AbstractRequestPattern pattern;
 		private readonly string controllerName, actionName;
 		private readonly Type controllerType;
-		private readonly Func<C, RequestContext, ActionResult> handler;
+		private readonly Func<C, ControllerContext, ActionResult> handler;
 
-		public ControllerRouteHandler(AbstractRequestPattern pattern, string controllerName, string actionName, Func<C, RequestContext, ActionResult> handler)
+		public ControllerRouteHandler(AbstractRequestPattern pattern, string controllerName, string actionName, Func<C, ControllerContext, ActionResult> handler)
 		{
 			this.pattern = pattern;
 			this.controllerName = controllerName;
@@ -69,7 +69,7 @@ namespace Dysphoria.Net.UrlRouting.Handlers
 				}
 				else
 				{
-					ProcessRequestMinimally(context, controller);
+					ProcessRequestMinimally(new ControllerContext(context, controller), controller);
 				}
 			}
 			finally
@@ -82,12 +82,11 @@ namespace Dysphoria.Net.UrlRouting.Handlers
 		/// Processes request, but without involving any filters. Therefore authentication
 		/// will probably not work. This is only practically any use for testing.
 		/// </summary>
-		private void ProcessRequestMinimally(RequestContext context, C controller)
+		private void ProcessRequestMinimally(ControllerContext controllerContext, C controller)
 		{
-			var controllerContext = new ControllerContext(context, controller);
 			this.SetUpRouteData(controllerContext.RouteData);
 			controller.ControllerContext = controllerContext;
-			var result = this.handler.Invoke(controller, context);
+			var result = this.handler.Invoke(controller, controllerContext);
 
 			result.ExecuteResult(controllerContext);
 		}
@@ -125,7 +124,7 @@ namespace Dysphoria.Net.UrlRouting.Handlers
 			{
 				return outer.handler.Invoke(
 					(C)controllerContext.Controller,
-					controllerContext.RequestContext);
+					controllerContext);
 			}
 		}
 	}

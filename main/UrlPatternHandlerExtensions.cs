@@ -14,6 +14,7 @@ namespace Dysphoria.Net.UrlRouting
 	using System.Linq;
 	using System.Web.Routing;
 	using Dysphoria.Net.UrlRouting.PathComponents;
+	using System.Web.Mvc;
 
 	/// <summary>
 	/// TODO: Update summary.
@@ -25,33 +26,33 @@ namespace Dysphoria.Net.UrlRouting
 			return pattern.PathPattern;
 		}
 
-		public static Tuple<T0> ExtractParameters<T0>(this UrlPattern<T0> url, RequestContext req)
+		public static Tuple<T0> ExtractParameters<T0>(this UrlPattern<T0> url, ControllerContext req)
 		{
-			var p = UrlStringParameters(url, req);
+			var p = UrlStringParameters(url, req.RequestContext);
 			return Tuple.Create(
 				DecodeLastParameter(url.Param0, p, 0, req));
 		}
 
-		public static Tuple<T0, T1> ExtractParameters<T0, T1>(this UrlPattern<T0, T1> url, RequestContext req)
+		public static Tuple<T0, T1> ExtractParameters<T0, T1>(this UrlPattern<T0, T1> url, ControllerContext req)
 		{
-			var p = UrlStringParameters(url, req);
+			var p = UrlStringParameters(url, req.RequestContext);
 			return Tuple.Create(
 				url.Param0.FromString(p[0]),
 				DecodeLastParameter(url.Param1, p, 1, req));
 		}
 
-		public static Tuple<T0, T1, T2> ExtractParameters<T0, T1, T2>(this UrlPattern<T0, T1, T2> url, RequestContext req)
+		public static Tuple<T0, T1, T2> ExtractParameters<T0, T1, T2>(this UrlPattern<T0, T1, T2> url, ControllerContext req)
 		{
-			var p = UrlStringParameters(url, req);
+			var p = UrlStringParameters(url, req.RequestContext);
 			return Tuple.Create(
 				url.Param0.FromString(p[0]),
 				url.Param1.FromString(p[1]),
 				DecodeLastParameter(url.Param2, p, 2, req));
 		}
 
-		public static Tuple<T0, T1, T2, T3> ExtractParameters<T0, T1, T2, T3>(this UrlPattern<T0, T1, T2, T3> url, RequestContext req)
+		public static Tuple<T0, T1, T2, T3> ExtractParameters<T0, T1, T2, T3>(this UrlPattern<T0, T1, T2, T3> url, ControllerContext req)
 		{
-			var p = UrlStringParameters(url, req);
+			var p = UrlStringParameters(url, req.RequestContext);
 			return Tuple.Create(
 				url.Param0.FromString(p[0]),
 				url.Param1.FromString(p[1]),
@@ -77,7 +78,7 @@ namespace Dysphoria.Net.UrlRouting
 			return parameters;
 		}
 
-		private static T DecodeLastParameter<T>(UrlArgument<T> descriptor, string[] parameterStrings, int index, RequestContext req)
+		private static T DecodeLastParameter<T>(UrlArgument<T> descriptor, string[] parameterStrings, int index, ControllerContext req)
 		{
 			var query = req.HttpContext.Request.QueryString;
 			var simple = (descriptor as PathComponent<T>);
@@ -89,7 +90,7 @@ namespace Dysphoria.Net.UrlRouting
 			}
 			else
 			{
-				return queryParam.FromDictionary(req.HttpContext.Request.QueryString);
+				return queryParam.FromDictionary(req, req.HttpContext.Request.QueryString);
 			}
 		}
 	}

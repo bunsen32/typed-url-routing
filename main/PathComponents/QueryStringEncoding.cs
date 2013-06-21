@@ -11,6 +11,7 @@
 namespace Dysphoria.Net.UrlRouting.PathComponents
 {
 	using System.Collections.Specialized;
+	using System.Web.Mvc;
 	using System.Web.Routing;
 
 	/// <summary>
@@ -21,6 +22,6 @@ namespace Dysphoria.Net.UrlRouting.PathComponents
 	{
 		public abstract RouteValueDictionary ToDictionary(T value);
 
-		public abstract T FromDictionary(NameValueCollection dict);
+		public abstract T FromDictionary(ControllerContext cx, NameValueCollection dict);
 	}
 }

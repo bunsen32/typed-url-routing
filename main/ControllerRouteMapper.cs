@@ -99,7 +99,7 @@ namespace Dysphoria.Net.UrlRouting
 			return this; // To allow for method chaining.
 		}
 
-		private void AddRouteHandler(AbstractRequestPattern pattern, MethodInfo method, Func<C, RequestContext, ActionResult> handler)
+		private void AddRouteHandler(AbstractRequestPattern pattern, MethodInfo method, Func<C, ControllerContext, ActionResult> handler)
 		{
 			var actionName = GetActionName(pattern.Method, method);
 			this.routes.AddRoute(pattern, new ControllerRouteHandler<C>(pattern, this.controllerName, actionName, handler));

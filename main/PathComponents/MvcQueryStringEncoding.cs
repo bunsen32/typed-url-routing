@@ -23,21 +23,6 @@ namespace Dysphoria.Net.UrlRouting.PathComponents
 	{
 		public static readonly MvcQueryStringEncoding<T> Default = new DefaultEncoding();
 
-
-		public sealed override RouteValueDictionary ToDictionary(T value)
-		{
-			return this.ToDictionary(null, value);
-		}
-
-		public sealed override T FromDictionary(NameValueCollection dict)
-		{
-			return this.FromDictionary(null, dict);
-		}
-		
-		public abstract RouteValueDictionary ToDictionary(ControllerContext cx, T value);
-
-		public abstract T FromDictionary(ControllerContext cx, NameValueCollection dict);
-
 		private class DefaultEncoding : MvcQueryStringEncoding<T>
 		{
 			private static ModelBinderDictionary binderDictionary = new ModelBinderDictionary();
@@ -49,7 +34,7 @@ namespace Dysphoria.Net.UrlRouting.PathComponents
 				this.binder = binderDictionary.GetBinder(typeof(T), fallbackToDefault: true);
 			}
 
-			public override RouteValueDictionary ToDictionary(ControllerContext cx, T value)
+			public override RouteValueDictionary ToDictionary(T value)
 			{
 				return (value as RouteValueDictionary) ?? new RouteValueDictionary(value);
 			}

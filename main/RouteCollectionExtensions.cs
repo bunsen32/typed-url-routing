@@ -28,6 +28,7 @@ namespace Dysphoria.Net.UrlRouting
 			return new ControllerRouteMapper<Ctrl>(routes);
 		}
 
+		/*
 		public static Route MapRoute(this RouteCollection routes, RequestPattern<UrlPattern> pattern, Func<HttpContextBase, ActionResult> handler)
 		{
 			return routes.AddRoute(pattern, FuncRouteHandler.Create(pattern, handler));
@@ -47,6 +48,7 @@ namespace Dysphoria.Net.UrlRouting
 		{
 			return routes.AddRoute(pattern, FuncRouteHandler.Create(pattern, handler));
 		}
+		*/
 
 		internal static Route AddRoute(this RouteCollection routes, AbstractRequestPattern pattern, AbstractRouteHandler handler)
 		{
