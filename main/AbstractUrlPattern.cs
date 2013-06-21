@@ -116,7 +116,7 @@ namespace Dysphoria.Net.UrlRouting
 			}
 			catch (InvalidUrlComponentValueException problem)
 			{
-				throw new ArgumentException(string.Format("Invalid argument {{{0}}} to construct URL “{1}”", position, this.Pattern), problem);
+				throw new InvalidUrlArgumentException(string.Format("Invalid argument {{{0}}} to construct URL “{1}”", position, this.Pattern), problem);
 			}
 		}
 
