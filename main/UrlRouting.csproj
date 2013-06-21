@@ -66,6 +66,7 @@
     <Compile Include="ControllerRouteMapper.cs" />
     <Compile Include="Handlers\ControllerRouteHandler.cs" />
     <Compile Include="Handlers\FuncRouteHandler.cs" />
+    <Compile Include="InvalidUrlComponentValueException.cs" />
     <Compile Include="MvcUrlUtilities\UrlRewriterHelper.cs" />
     <Compile Include="PathComponents\IPathComponent.cs" />
     <Compile Include="PathComponents\MvcQueryStringEncoding.cs" />

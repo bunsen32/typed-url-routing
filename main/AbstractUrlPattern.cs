@@ -105,12 +105,19 @@ namespace Dysphoria.Net.UrlRouting
 			return new PotentialUrl(path, querystring.ToString());
 		}
 
-		protected string Stringify<T>(UrlArgument<T> p, T value)
+		protected string Stringify<T>(UrlArgument<T> p, T value, int position)
 		{
-			var stringifier = p as PathComponent<T>;
-			return stringifier != null
-				? stringifier.ToString(value)
-				: null;
+			try
+			{
+				var stringifier = p as PathComponent<T>;
+				return stringifier != null
+					? stringifier.ToString(value)
+					: null;
+			}
+			catch (InvalidUrlComponentValueException problem)
+			{
+				throw new ArgumentException(string.Format("Invalid argument {{{0}}} to construct URL “{1}”", position, this.Pattern), problem);
+			}
 		}
 
 		protected RouteValueDictionary Querify<T>(UrlArgument<T> p, T value)

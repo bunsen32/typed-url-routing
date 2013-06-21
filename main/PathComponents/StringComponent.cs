@@ -34,7 +34,7 @@ namespace Dysphoria.Net.UrlRouting.PathComponents
 
 		public override string ToString(string value)
 		{
-			if (!this.regex.IsMatch(value)) throw new ArgumentException(string.Format("Provided value ({0}) violates constraint: {1}", value, this.RegexString));
+			if (!this.regex.IsMatch(value)) throw new InvalidUrlComponentValueException(string.Format("Provided value “{0}” violates constraint: {1}", value, this.RegexString));
 			return value;
 		}
 	}

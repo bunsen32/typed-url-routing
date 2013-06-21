@@ -17,16 +17,22 @@ namespace Dysphoria.Net.UrlRouting
 	/// </summary>
 	public class UrlPattern : AbstractUrlPattern
 	{
-		private static readonly string[] NoStrings = new string[0];
+		private readonly PotentialUrl url;
 
 		public UrlPattern(string pattern)
 			: base(pattern)
 		{
+			this.url = new PotentialUrl(pattern, "");
 		}
 
 		public override int Arity
 		{
 			get { return 0; }
+		}
+
+		public PotentialUrl Url
+		{
+			get { return this.url; }
 		}
 	}
 
@@ -54,7 +60,7 @@ namespace Dysphoria.Net.UrlRouting
 		{
 			return this.PotentialUrlWith(
 				Querify(this.Param0, p0),
-				Stringify(this.Param0, p0));
+				Stringify(this.Param0, p0, 0));
 		}
 	}
 
@@ -86,8 +92,8 @@ namespace Dysphoria.Net.UrlRouting
 		{
 			return this.PotentialUrlWith(
 				Querify(this.param1, p1),
-				Stringify(this.Param0, p0),
-				Stringify(this.Param1, p1));
+				Stringify(this.Param0, p0, 0),
+				Stringify(this.Param1, p1, 1));
 		}
 	}
 
@@ -123,9 +129,9 @@ namespace Dysphoria.Net.UrlRouting
 		{
 			return this.PotentialUrlWith(
 				Querify(this.Param2, p2),
-				Stringify(this.Param0, p0),
-				Stringify(this.Param1, p1),
-				Stringify(this.Param2, p2));
+				Stringify(this.Param0, p0, 0),
+				Stringify(this.Param1, p1, 1),
+				Stringify(this.Param2, p2, 2));
 		}
 	}
 
@@ -165,10 +171,10 @@ namespace Dysphoria.Net.UrlRouting
 		{
 			return this.PotentialUrlWith(
 				Querify(this.Param3, p3),
-				Stringify(this.Param0, p0),
-				Stringify(this.Param1, p1),
-				Stringify(this.Param2, p2),
-				Stringify(this.Param3, p3));
+				Stringify(this.Param0, p0, 0),
+				Stringify(this.Param1, p1, 1),
+				Stringify(this.Param2, p2, 2),
+				Stringify(this.Param3, p3, 3));
 		}
 	}
 }
