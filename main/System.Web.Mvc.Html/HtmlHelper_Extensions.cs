@@ -20,6 +20,11 @@ namespace System.Web.Mvc.Html
 	/// </summary>
 	public static class HtmlHelper_Extensions
 	{
+		public static KeyValuePair<string, PotentialUrl> Link(this string linkText, UrlPattern pathWithoutParameters)
+		{
+			return linkText.Link(pathWithoutParameters.Url);
+		}
+
 		public static KeyValuePair<string, PotentialUrl> Link(this string linkText, PotentialUrl location)
 		{
 			return new KeyValuePair<string, PotentialUrl>(linkText, location);
@@ -28,6 +33,11 @@ namespace System.Web.Mvc.Html
 		public static MvcHtmlString Link(this HtmlHelper self, KeyValuePair<string, PotentialUrl> link, object htmlAttributes = null)
 		{
 			return self.Link(link.Key, link.Value, htmlAttributes);
+		}
+
+		public static MvcHtmlString Link(this HtmlHelper self, string linkText, UrlPattern pathWithoutParameters, object htmlAttributes = null)
+		{
+			return self.Link(linkText, pathWithoutParameters.Url, htmlAttributes);
 		}
 
 		public static MvcHtmlString Link(this HtmlHelper self, string linkText, PotentialUrl location, object htmlAttributes = null)
@@ -51,6 +61,11 @@ namespace System.Web.Mvc.Html
 			tagBuilder.MergeAttribute("href", uri);
 			var linkString = tagBuilder.ToString(TagRenderMode.Normal);
 			return MvcHtmlString.Create(linkString);
+		}
+
+		public static string Of(this UrlHelper self, UrlPattern pathWithoutParameters)
+		{
+			return self.Of(pathWithoutParameters.Url);
 		}
 
 		public static string Of(this UrlHelper self, PotentialUrl location)
