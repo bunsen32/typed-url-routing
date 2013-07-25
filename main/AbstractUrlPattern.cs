@@ -50,7 +50,7 @@ namespace Dysphoria.Net.UrlRouting
 			this.pattern = pattern;
 			var patternArity = this.pathArity + queryArity;
 			if (this.ParameterCount > this.Arity) throw new ArgumentException(string.Format("Number of parameters ({0}) cannot be greater than arity {1}.", this.ParameterCount, this.Arity));
-			if (patternArity != this.ParameterCount) throw new ArgumentException(string.Format("Wrong number of regex parameters: {0} should be {1}", this.ParameterCount, patternArity));
+			if (patternArity != this.ParameterCount) throw new ArgumentException(string.Format("Wrong number of regex parameters: {0} should be {1} in '{2}'", this.ParameterCount, patternArity, pattern));
 
 			this.queryParameterNames = GetQueryParameterNames(queryPattern, queryArity);
 
