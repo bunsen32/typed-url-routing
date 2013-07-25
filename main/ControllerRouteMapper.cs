@@ -43,6 +43,11 @@ namespace Dysphoria.Net.UrlRouting
 			return this.AddRouteHandler(pattern, handler, (c, context) => methodFunc.Invoke(c).Invoke());
 		}
 
+		public ControllerRouteMapper<C> MapRoute<BodyType>(RequestPattern<UrlPattern, BodyType> pattern, Expression<Func<C, Func<BodyType, ActionResult>>> handler)
+		{
+			throw new NotImplementedException("Don't yet support (API) actions with body type parameter.");
+		}
+
 		// 1-argument URL patterns
 
 		public ControllerRouteMapper<C> MapRoute<P1>(RequestPattern<UrlPattern<P1>> pattern, Expression<Func<C, Func<P1, ActionResult>>> handler)
@@ -53,6 +58,11 @@ namespace Dysphoria.Net.UrlRouting
 				var p = pattern.Url.ExtractParameters(context);
 				return methodFunc.Invoke(c).Invoke(p.Item1);
 			});
+		}
+
+		public ControllerRouteMapper<C> MapRoute<P1, BodyType>(RequestPattern<UrlPattern<P1>, BodyType> pattern, Expression<Func<C, Func<P1, BodyType, ActionResult>>> handler)
+		{
+			throw new NotImplementedException("Don't yet support (API) actions with body type parameter.");
 		}
 
 		// 2-argument URL patterns
@@ -67,6 +77,11 @@ namespace Dysphoria.Net.UrlRouting
 			});
 		}
 
+		public ControllerRouteMapper<C> MapRoute<P1, P2, BodyType>(RequestPattern<UrlPattern<P1, P2>, BodyType> pattern, Expression<Func<C, Func<P1, P2, BodyType, ActionResult>>> handler)
+		{
+			throw new NotImplementedException("Don't yet support (API) actions with body type parameter.");
+		}
+
 		// 3-argument URL patterns
 
 		public ControllerRouteMapper<C> MapRoute<P1, P2, P3>(RequestPattern<UrlPattern<P1, P2, P3>> pattern, Expression<Func<C, Func<P1, P2, P3, ActionResult>>> handler)
@@ -79,6 +94,11 @@ namespace Dysphoria.Net.UrlRouting
 			});
 		}
 
+		public ControllerRouteMapper<C> MapRoute<P1, P2, P3, BodyType>(RequestPattern<UrlPattern<P1, P2, P3>, BodyType> pattern, Expression<Func<C, Func<P1, P2, P3, BodyType, ActionResult>>> handler)
+		{
+			throw new NotImplementedException("Don't yet support (API) actions with body type parameter.");
+		}
+
 		// 4-argument URL patterns
 
 		public ControllerRouteMapper<C> MapRoute<P1, P2, P3, P4>(RequestPattern<UrlPattern<P1, P2, P3, P4>> pattern, Expression<Func<C, Func<P1, P2, P3, P4, ActionResult>>> handler)
@@ -88,6 +108,11 @@ namespace Dysphoria.Net.UrlRouting
 				var p = pattern.Url.ExtractParameters(context);
 				return methodFunc.Invoke(c).Invoke(p.Item1, p.Item2, p.Item3, p.Item4);
 			});
+		}
+
+		public ControllerRouteMapper<C> MapRoute<P1, P2, P3, P4, BodyType>(RequestPattern<UrlPattern<P1, P2, P3, P4>, BodyType> pattern, Expression<Func<C, Func<P1, P2, P3, P4, BodyType, ActionResult>>> handler)
+		{
+			throw new NotImplementedException("Don't yet support (API) actions with body type parameter.");
 		}
 
 
