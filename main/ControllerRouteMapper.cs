@@ -35,74 +35,71 @@ namespace Dysphoria.Net.UrlRouting
 
 		public RouteCollection Routes { get { return this.routes; } }
 
+		// 0-argument URL patterns
+
 		public ControllerRouteMapper<C> MapRoute(RequestPattern<UrlPattern> pattern, Expression<Func<C, Func<ActionResult>>> handler)
 		{
-			var method = GetMethodInfo(handler);
 			var methodFunc = handler.Compile();
-			this.AddRouteHandler(pattern, method, (c, context) => methodFunc.Invoke(c).Invoke());
-			
-			return this; // To allow for method chaining.
+			return this.AddRouteHandler(pattern, handler, (c, context) => methodFunc.Invoke(c).Invoke());
 		}
+
+		// 1-argument URL patterns
 
 		public ControllerRouteMapper<C> MapRoute<P1>(RequestPattern<UrlPattern<P1>> pattern, Expression<Func<C, Func<P1, ActionResult>>> handler)
 		{
-			var method = GetMethodInfo(handler);
 			var methodFunc = handler.Compile();
-			var url = pattern.Url;
-			this.AddRouteHandler(pattern, method, (c, context) =>
+			return this.AddRouteHandler(pattern, handler, (c, context) =>
 			{
 				var p = pattern.Url.ExtractParameters(context);
 				return methodFunc.Invoke(c).Invoke(p.Item1);
 			});
-
-			return this; // To allow for method chaining.
 		}
+
+		// 2-argument URL patterns
 
 		public ControllerRouteMapper<C> MapRoute<P1, P2>(RequestPattern<UrlPattern<P1, P2>> pattern, Expression<Func<C, Func<P1, P2, ActionResult>>> handler)
 		{
-			var method = GetMethodInfo(handler);
 			var methodFunc = handler.Compile();
-			var url = pattern.Url;
-			this.AddRouteHandler(pattern, method, (c, context) =>
+			return this.AddRouteHandler(pattern, handler, (c, context) =>
 			{
 				var p = pattern.Url.ExtractParameters(context);
 				return methodFunc.Invoke(c).Invoke(p.Item1, p.Item2);
 			});
-
-			return this; // To allow for method chaining.
 		}
+
+		// 3-argument URL patterns
 
 		public ControllerRouteMapper<C> MapRoute<P1, P2, P3>(RequestPattern<UrlPattern<P1, P2, P3>> pattern, Expression<Func<C, Func<P1, P2, P3, ActionResult>>> handler)
 		{
-			var method = GetMethodInfo(handler);
 			var methodFunc = handler.Compile();
-			var url = pattern.Url;
-			this.AddRouteHandler(pattern, method, (c, context) =>
+			return this.AddRouteHandler(pattern, handler, (c, context) =>
 			{
 				var p = pattern.Url.ExtractParameters(context);
 				return methodFunc.Invoke(c).Invoke(p.Item1, p.Item2, p.Item3);
 			});
-
-			return this; // To allow for method chaining.
 		}
+
+		// 4-argument URL patterns
 
 		public ControllerRouteMapper<C> MapRoute<P1, P2, P3, P4>(RequestPattern<UrlPattern<P1, P2, P3, P4>> pattern, Expression<Func<C, Func<P1, P2, P3, P4, ActionResult>>> handler)
 		{
-			var method = GetMethodInfo(handler);
 			var methodFunc = handler.Compile();
-			var url = pattern.Url;
-			this.AddRouteHandler(pattern, method, (c, context) => {
+			return this.AddRouteHandler(pattern, handler, (c, context) => {
 				var p = pattern.Url.ExtractParameters(context);
 				return methodFunc.Invoke(c).Invoke(p.Item1, p.Item2, p.Item3, p.Item4);
 			});
-
-			return this; // To allow for method chaining.
 		}
 
-		private void AddRouteHandler(AbstractRequestPattern pattern, MethodInfo method, Func<C, ControllerContext, ActionResult> handler)
+
+		private ControllerRouteMapper<C> AddRouteHandler<FunctionType>(AbstractRequestPattern pattern, Expression<FunctionType> handler, Func<C, ControllerContext, ActionResult> handlerFunction)
 		{
-			var actionName = GetActionName(pattern.Method, method);
-			this.routes.AddRoute(pattern, new ControllerRouteHandler<C>(pattern, this.controllerName, actionName, handler));
+			var method = GetMethodInfo(handler);
+			var actionName = method.Name;
+			this.routes.AddRoute(
+				pattern,
+				new ControllerRouteHandler<C>(pattern, this.controllerName, actionName, handlerFunction));
+
+			return this; // To allow for method chaining.
 		}
 
 		internal static string GetControllerName(Type controller)
@@ -113,16 +110,6 @@ namespace Dysphoria.Net.UrlRouting
 			return endsWithSuffix
 					? wholeName.Substring(0, wholeName.Length - suffix.Length)
 					: wholeName;
-		}
-
-		internal static string GetActionName(HttpMethod verb, MethodInfo method)
-		{
-			var verbString = verb.ToString();
-			var methodName = method.Name;
-			var startsWithVerb = methodName.Length > verbString.Length && methodName.StartsWith(verbString, ignoreCase: true, culture: null);
-			return startsWithVerb 
-				? methodName.Substring(verbString.Length) 
-				: methodName;
 		}
 
 		private static MethodInfo GetMethodInfo(Expression method)
