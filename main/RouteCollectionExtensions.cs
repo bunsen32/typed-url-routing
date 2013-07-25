@@ -57,10 +57,15 @@ namespace Dysphoria.Net.UrlRouting
 				defaults: GetDefaults(pattern),
 				constraints: GetConstraints(pattern),
 				routeHandler: handler);
-			var routeName = pattern.Url.GetRouteName();
+			var routeName = GetRouteName(pattern);
 
 			routes.Add(routeName, route);
 			return route;
+		}
+
+		private static string GetRouteName(AbstractRequestPattern pattern)
+		{
+			return pattern.Method + pattern.Url.ToString();
 		}
 
 		private static string GetRouteUrl(AbstractUrlPattern url)
