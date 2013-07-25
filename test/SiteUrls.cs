@@ -17,6 +17,10 @@
 
 		public static readonly UrlPattern<Abc> Search = Path("/search", Query<Abc>());
 
+		public static readonly UrlPattern<int?> NullableIntPath = Path("/nullable/int/{0}", Int.Or("nothing"));
+
+		public static readonly UrlPattern<string> NullableStringPath = Path("/nullable/str/{0}", Slug.OrNull("nothing"));
+
 		public static void Register(RouteCollection routes)
 		{
 			routes.ForController<HomeController>()

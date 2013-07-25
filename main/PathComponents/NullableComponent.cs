@@ -11,40 +11,43 @@
 namespace Dysphoria.Net.UrlRouting.PathComponents
 {
 	using System.Text.RegularExpressions;
+	using System;
 
 	/// <summary>
 	/// TODO: Update summary.
 	/// </summary>
-	public class NullableComponent<T> : PathComponent<T?>
-		where T : struct
+	public abstract class NullableComponent<BaseType, NullType> : PathComponent<NullType>
 	{
-		private readonly string nullValue;
-		private readonly PathComponent<T> basis;
+		private readonly NullType nullValue;
+		private readonly string nullValueString;
+		private readonly PathComponent<BaseType> basis;
 
-		public NullableComponent(PathComponent<T> basis)
-			: this(basis, string.Empty)
-		{
-		}
-
-		public NullableComponent(PathComponent<T> basis, string nullValue)
-			: base(Regex.Escape(nullValue) + "|" + basis.RegexString)
+		public NullableComponent(PathComponent<BaseType> basis, string nullValueString, NullType nullValue)
+			: base(Regex.Escape(nullValueString) + "|" + basis.RegexString)
 		{
 			this.basis = basis;
+			this.nullValueString = nullValueString;
 			this.nullValue = nullValue;
 		}
 
-		public override T? FromString(string str)
+		public override NullType FromString(string str)
 		{
-			return (str ?? "") == this.nullValue
-				? (T?)null
-				: this.basis.FromString(str);
+			return (str ?? "") == this.nullValueString
+				? this.nullValue
+				: this.ToNullType(this.basis.FromString(str));
 		}
 
-		public override string ToString(T? value)
+		public override string ToString(NullType value)
 		{
-			return value == null
-				? this.nullValue
-				: this.basis.ToString(value.Value);
+			return this.IsNull(value)
+				? this.nullValueString
+				: this.basis.ToString(ToBaseType(value));
 		}
+
+		protected abstract NullType ToNullType(BaseType value);
+
+		protected abstract BaseType ToBaseType(NullType nonNullValue);
+
+		protected abstract bool IsNull(NullType possiblyNullValue);
 	}
 }

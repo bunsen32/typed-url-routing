@@ -29,13 +29,13 @@ namespace Dysphoria.Net.UrlRouting
 		protected static PathComponent<T?> Nullable<T>(PathComponent<T> basis)
 			where T : struct
 		{
-			return new NullableComponent<T>(basis);
+			return new NullableValueComponent<T>(basis);
 		}
 
 		protected static PathComponent<T?> Nullable<T>(PathComponent<T> basis, string nullValue)
 			where T : struct
 		{
-			return new NullableComponent<T>(basis, nullValue);
+			return new NullableValueComponent<T>(basis, nullValue);
 		}
 
 		protected static UrlPattern Path(string pattern)
