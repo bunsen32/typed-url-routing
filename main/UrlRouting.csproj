@@ -87,6 +87,7 @@
     <Compile Include="RequestPattern.cs" />
     <Compile Include="RouteCollectionExtensions.cs" />
     <Compile Include="System.Web.Mvc\Controller_Extensions.cs" />
+    <Compile Include="TypeWitness.cs" />
     <Compile Include="UrlPattern.cs" />
     <Compile Include="UrlPatternHandlerExtensions.cs" />
     <Compile Include="Urls.cs" />

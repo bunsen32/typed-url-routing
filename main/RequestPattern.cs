@@ -37,12 +37,9 @@ namespace Dysphoria.Net.UrlRouting
 	public class RequestPattern<UrlPatternType, PayloadType> : RequestPattern<UrlPatternType>
 		where UrlPatternType : AbstractUrlPattern
 	{
-		private readonly object payloadType;
-
-		public RequestPattern(HttpMethod method, UrlPatternType url, object payloadType)
+		public RequestPattern(HttpMethod method, UrlPatternType url)
 			: base(method, url)
 		{
-			this.payloadType = payloadType;
 		}
 	}
 }

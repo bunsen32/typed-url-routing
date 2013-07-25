@@ -78,14 +78,29 @@ namespace Dysphoria.Net.UrlRouting
 			return new RequestPattern<U>(HttpMethod.POST, url);
 		}
 
+		protected static RequestPattern<U, BodyType> Post<BodyType, U>(TypeWitness<BodyType> body, U url) where U : AbstractUrlPattern
+		{
+			return new RequestPattern<U, BodyType>(HttpMethod.POST, url);
+		}
+
 		protected static RequestPattern<U> Put<U>(U url) where U : AbstractUrlPattern
 		{
 			return new RequestPattern<U>(HttpMethod.PUT, url);
 		}
 
+		protected static RequestPattern<U, BodyType> Put<BodyType, U>(TypeWitness<BodyType> body, U url) where U : AbstractUrlPattern
+		{
+			return new RequestPattern<U, BodyType>(HttpMethod.PUT, url);
+		}
+
 		protected static RequestPattern<U> Delete<U>(U url) where U : AbstractUrlPattern
 		{
 			return new RequestPattern<U>(HttpMethod.DELETE, url);
+		}
+
+		protected static TypeWitness<T> Body<T>()
+		{
+			return TypeWitness<T>.Instance;
 		}
 	}
 }
