@@ -65,7 +65,7 @@ namespace Dysphoria.Net.UrlRouting
 
 		private static string GetRouteName(AbstractRequestPattern pattern)
 		{
-			return pattern.Method + pattern.Url.ToString();
+			return pattern.Method + pattern.Url.Pattern;
 		}
 
 		private static string GetRouteUrl(AbstractUrlPattern url)
