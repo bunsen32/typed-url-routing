@@ -17,11 +17,11 @@ namespace Dysphoria.Net.UrlRouting
 		protected static readonly PathComponent<int> Int = IntComponent.Instance;
 		protected static readonly PathComponent<int?> NullableInt = Nullable(Int);
 
-		protected static readonly PathComponent<string> Slug = String(@"[-_0-9a-zA-Z]+");
-		protected static readonly PathComponent<string> PathComponent = String(@"[-_0-9a-zA-Z~+.,]+");
-		protected static readonly PathComponent<string> AnyString = String(@".*");
+		protected static readonly StringComponent Slug = String(@"[-_0-9a-zA-Z]+");
+		protected static readonly StringComponent PathComponent = String(@"[-_0-9a-zA-Z~+.,]+");
+		protected static readonly StringComponent AnyString = String(@".*");
 
-		protected static PathComponent<string> String(string regexPattern)
+		protected static StringComponent String(string regexPattern)
 		{
 			return new StringComponent(regexPattern);
 		}

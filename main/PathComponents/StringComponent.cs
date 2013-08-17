@@ -27,6 +27,8 @@ namespace Dysphoria.Net.UrlRouting.PathComponents
 			this.regex = new Regex("^" + regexString + "$", RegexOptions.Compiled);
 		}
 
+		public Regex Regex { get { return this.regex; } }
+
 		public override string FromString(string str)
 		{
 			return str;
