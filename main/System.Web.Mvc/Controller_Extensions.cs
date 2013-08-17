@@ -13,6 +13,11 @@ namespace System.Web.Mvc
 	/// </summary>
 	public static class Controller_Extensions
 	{
+		public static ActionResult RedirectTo(this ControllerBase self, UrlPattern zeroArgumentPath, bool permanent = false)
+		{
+			return self.RedirectTo(zeroArgumentPath.Url, permanent);
+		}
+
 		public static ActionResult RedirectTo(this ControllerBase self, PotentialUrl location, bool permanent = false)
 		{
 			var uri = location.Resolved(self.ControllerContext.HttpContext);
