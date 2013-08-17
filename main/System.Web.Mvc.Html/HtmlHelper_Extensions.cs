@@ -12,6 +12,7 @@ namespace System.Web.Mvc.Html
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Reflection;
 	using System.Web.Mvc;
 	using Dysphoria.Net.UrlRouting;
 
@@ -20,6 +21,9 @@ namespace System.Web.Mvc.Html
 	/// </summary>
 	public static class HtmlHelper_Extensions
 	{
+		// For calling (internal) ViewContext.FormIdGenerator (as per bclcontrib project for .NET BCL)
+		private static readonly PropertyInfo FormIdGeneratorPropertyInfo = typeof(ViewContext).GetProperty("FormIdGenerator", BindingFlags.NonPublic | BindingFlags.Instance);
+
 		public static KeyValuePair<string, PotentialUrl> Link(this string linkText, UrlPattern pathWithoutParameters)
 		{
 			return linkText.Link(pathWithoutParameters.Url);
@@ -71,6 +75,53 @@ namespace System.Web.Mvc.Html
 		public static string Of(this UrlHelper self, PotentialUrl location)
 		{
 			return location.Resolved(self.RequestContext.HttpContext);
+		}
+
+		public static MvcForm BeginForm(this HtmlHelper self, UrlPattern location, FormMethod method = FormMethod.Post, object htmlAttributes = null)
+		{
+			return self.BeginForm(location.Url, method, htmlAttributes);
+		}
+
+		public static MvcForm BeginForm(this HtmlHelper self, PotentialUrl location, FormMethod method = FormMethod.Post, object htmlAttributes = null)
+		{
+			var viewContext = self. ViewContext;
+			var actionUri = location.Resolved(viewContext.HttpContext);
+			var tagBuilder = new TagBuilder("form");
+			if (htmlAttributes != null)
+			{
+				var attributeDictionary = (htmlAttributes as IDictionary<string, object>) ?? HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
+				tagBuilder.MergeAttributes(attributeDictionary);
+			}
+
+			// action is implicitly generated, so htmlAttributes take precedence.
+			tagBuilder.MergeAttribute("action", actionUri);
+			// method is an explicit parameter, so it takes precedence over the htmlAttributes.
+			tagBuilder.MergeAttribute("method", HtmlHelper.GetFormMethodString(method), true);
+
+			bool traditionalJavascriptEnabled = viewContext.ClientValidationEnabled &&
+												!viewContext.UnobtrusiveJavaScriptEnabled;
+
+			if (traditionalJavascriptEnabled)
+			{
+				// forms must have an ID for client validation
+				tagBuilder.GenerateId(GetFormIdGenerator(viewContext));
+			}
+
+			viewContext.Writer.Write(tagBuilder.ToString(TagRenderMode.StartTag));
+			var form = new MvcForm(viewContext);
+
+			if (traditionalJavascriptEnabled)
+			{
+				viewContext.FormContext.FormId = tagBuilder.Attributes["id"];
+			}
+
+			return form;
+		}
+
+		// Calls (internal) ViewContext.FormIdGenerator (as per bclcontrib project for .NET BCL)
+		private static string GetFormIdGenerator(ViewContext viewContext)
+		{
+			return ((Func<string>)FormIdGeneratorPropertyInfo.GetValue(viewContext, null))();
 		}
 	}
 }
