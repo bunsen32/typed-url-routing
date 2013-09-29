@@ -13,6 +13,6 @@
     ---world
 
 	<p>@Html.Link("Query one", SiteUrls.ParamsPlusQuery.With(42, "a", "b", "c=&"))</p>
-	<p>@Html.ActionLink("Query two", "ModelParameter", routeValues: new Abc() {A = 42, B="Question", C="Answers?" })</p>
+	<p>@Html.ActionLink("Query two", "ModelParameter", "Home", routeValues: new Abc() {A = 42, B="Question", C="Answers?" }, htmlAttributes: null)</p>
 </body>
 </html>

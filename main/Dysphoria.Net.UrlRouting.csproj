@@ -65,13 +65,17 @@
     <Compile Include="InvalidUrlComponentValueException.cs" />
     <Compile Include="MvcUrlUtilities\UrlRewriterHelper.cs" />
     <Compile Include="PathComponentExtensions.cs" />
+    <Compile Include="PathComponents\IQueryArg.cs" />
+    <Compile Include="PathComponents\ISimpleUrlComponent.cs" />
     <Compile Include="PathComponents\NullableComponent.cs" />
     <Compile Include="PathComponents\NullableRefComponent.cs" />
     <Compile Include="PathComponents\IPathComponent.cs" />
     <Compile Include="PathComponents\MvcQueryStringEncoding.cs" />
     <Compile Include="PathComponents\NullableValueComponent.cs" />
+    <Compile Include="PathComponents\QueryArg.cs" />
     <Compile Include="PathComponents\QueryStringEncoding.cs" />
     <Compile Include="MvcUrlUtilities\PathHelpers.cs" />
+    <Compile Include="PathComponents\SimpleUrlComponent.cs" />
     <Compile Include="PotentialUrl.cs" />
     <Compile Include="System.Web.Mvc.Html\HtmlHelper_Extensions.cs" />
     <Compile Include="HttpMethod.cs" />

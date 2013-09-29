@@ -62,15 +62,15 @@ namespace Dysphoria.Net.UrlRouting
 
 		private static string[] UrlStringParameters(AbstractUrlPattern url, RequestContext req)
 		{
-			var parameters = url.ParameterCount == 0 ? null : new string[url.ParameterCount];
+			var parameters = url.SimpleParameterCount == 0 ? null : new string[url.SimpleParameterCount];
 			var values = req.RouteData.Values;
-			for (int i = 0; i < url.PathParameterCount; i++)
+			for (int i = 0; i < url.PathArity; i++)
 			{
 				parameters[i] = (values[url.ParameterName(i)] as string) ?? "";
 			}
 
 			var query =req.HttpContext.Request.QueryString;
-			for (int i = url.PathParameterCount; i < url.ParameterCount; i++)
+			for (int i = url.PathArity; i < url.SimpleParameterCount; i++)
 			{
 				parameters[i] = (query[url.ParameterName(i)] as string) ?? "";
 			}
@@ -81,7 +81,7 @@ namespace Dysphoria.Net.UrlRouting
 		private static T DecodeLastParameter<T>(UrlArgument<T> descriptor, string[] parameterStrings, int index, ControllerContext req)
 		{
 			var query = req.HttpContext.Request.QueryString;
-			var simple = (descriptor as PathComponent<T>);
+			var simple = (descriptor as SimpleUrlComponent<T>);
 			var queryParam = (descriptor as QueryStringEncoding<T>);
 			if (simple == null && queryParam == null) throw new ArgumentException("Do not recognise UrlParameter subclass " + descriptor.GetType().Name);
 			if (simple != null)

@@ -65,12 +65,12 @@ namespace Dysphoria.Net.UrlRouting
 
 		private static string GetRouteName(AbstractRequestPattern pattern)
 		{
-			return pattern.Method + pattern.Url.Pattern;
+			return pattern.Method + pattern.Url.Description;
 		}
 
 		private static string GetRouteUrl(AbstractUrlPattern url)
 		{
-			var range = Enumerable.Range(0, url.ParameterCount);
+			var range = Enumerable.Range(0, url.SimpleParameterCount);
 			var parameterNames = range.Select(i => "{" + url.ParameterName(i) + "}").ToArray();
 			return string.Format(RemoveInitialSlash(url.PathPattern), (object[])parameterNames);
 		}
@@ -86,9 +86,9 @@ namespace Dysphoria.Net.UrlRouting
 		{
 			var url = requestPattern.Url;
 			var result = new RouteValueDictionary();
-			for (int i = 0; i < url.PathParameterCount; i++)
+			for (int i = 0; i < url.PathArity; i++)
 			{
-				result[url.ParameterName(i)] = url.ParameterPatterns[i];
+				result[url.ParameterName(i)] = url.ParameterRegexes[i];
 			}
 
 			var methodConstraints = GetMethodConstraintsOrNull(requestPattern.Method);

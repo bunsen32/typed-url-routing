@@ -32,7 +32,6 @@ namespace Dysphoria.Net.UrlRouting
 		private readonly IList<string> regexStrings;
 
 		private readonly Regex pathRegex;
-		private readonly string pathPattern;
 		private readonly int pathArity;
 		private readonly IList<string> queryParameterNames;
 
@@ -40,38 +39,59 @@ namespace Dysphoria.Net.UrlRouting
 		{
 			if (pattern == null) throw new ArgumentNullException("pattern");
 			if (!pattern.StartsWith("/")) throw new ArgumentException("We only support absolute paths (include initial '/').");
-
-			this.regexStrings = parameters.OfType<IPathComponent>().Select(p => p.RegexString).ToList().AsReadOnly();
-			string queryPattern;
-			SplitIntoPathAndQuery(pattern, out this.pathPattern, out queryPattern);
-			this.pathArity = PatternArity(this.pathPattern, 0);
-			var queryArity = PatternArity(queryPattern, this.pathArity);
-
+			if (pattern.Contains('?')) throw new ArgumentException("Cannot include querystring part in URL pattern.");
 			this.pattern = pattern;
-			var patternArity = this.pathArity + queryArity;
-			if (this.ParameterCount > this.Arity) throw new ArgumentException(string.Format("Number of parameters ({0}) cannot be greater than arity {1}.", this.ParameterCount, this.Arity));
-			if (patternArity != this.ParameterCount) throw new ArgumentException(string.Format("Wrong number of regex parameters: {0} should be {1} in '{2}'", this.ParameterCount, patternArity, pattern));
 
-			this.queryParameterNames = GetQueryParameterNames(queryPattern, queryArity);
+			if (parameters.Length != this.Arity)
+				throw new ArgumentException(string.Format("Should get exactly {0} 'parameters', but got {1}", this.Arity, parameters.Length));
+
+			this.regexStrings = parameters.OfType<ISimpleUrlComponent>().Select(p => p.RegexString).ToList().AsReadOnly();
+			this.queryParameterNames = parameters.OfType<IQueryArg>().Select(a => a.Name).ToList();
+
+			this.pathArity = PatternArity(this.pattern, 0);
+			var pathComponentsCount = parameters.OfType<IPathComponent>().Count();
+			if (pathComponentsCount != this.pathArity)
+				throw new ArgumentException(string.Format("Wrong number of path components: {0} should be {1} in '{2}'", pathComponentsCount, pathArity, pattern));
 
 			var bracketedRegexes = regexStrings.Select((r, index) => string.Format("(?<{0}>{1})", ParameterName(index), r)).ToArray();
-			var regexString = string.Format(this.pathPattern, (object[])bracketedRegexes);
+			var regexString = string.Format(this.pattern, (object[])bracketedRegexes);
 			this.pathRegex = new Regex("^" + regexString + "$", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.ExplicitCapture);
 		}
 
 		public abstract int Arity { get; }
 
-		public int ParameterCount { get { return this.regexStrings.Count; } }
+		public int PathArity { get { return this.pathArity; } }
 
-		public int PathParameterCount { get { return this.pathArity; } }
+		public bool HasQueryParameters { get { return this.Arity > this.PathArity; } }
+
+		public int SimpleParameterCount { get { return this.regexStrings.Count; } }
+
+		public string PathPattern { get { return this.pattern; } }
 
 		public Regex PathRegex { get { return this.pathRegex; } }
 
-		public string Pattern { get { return this.pattern; } }
+		public IList<string> ParameterRegexes { get { return this.regexStrings; } }
 
-		public string PathPattern { get { return this.pathPattern; } }
+		public string Description
+		{
+			get
+			{
+				var result = new StringBuilder();
+				result.AppendFormat(this.PathPattern, Enumerable.Repeat((object)"?", this.pathArity).ToArray());
+				if (this.HasQueryParameters)
+				{
+					result.Append('?');
+					for (var i = 0; i < this.queryParameterNames.Count; i++)
+					{
+						if (i > 0) result.Append('&');
+						result.Append(this.queryParameterNames[i]);
+						result.Append("=?");
+					}
+				}
 
-		public IList<string> ParameterPatterns { get { return this.regexStrings; } }
+				return result.ToString();
+			}
+		}
 
 		protected PotentialUrl PotentialUrlWith(RouteValueDictionary queryOrNull, params string[] p)
 		{
@@ -79,7 +99,7 @@ namespace Dysphoria.Net.UrlRouting
 				? new RouteValueDictionary() 
 				: new RouteValueDictionary(queryOrNull);
 
-			for (int i = this.PathParameterCount; i < this.ParameterCount; i++)
+			for (int i = this.PathArity; i < this.SimpleParameterCount; i++)
 			{
 				var value = p[i];
 				if (value != null)
@@ -116,7 +136,7 @@ namespace Dysphoria.Net.UrlRouting
 			}
 			catch (InvalidUrlComponentValueException problem)
 			{
-				throw new InvalidUrlArgumentException(string.Format("Invalid argument {{{0}}} to construct URL “{1}”", position, this.Pattern), problem);
+				throw new InvalidUrlArgumentException(string.Format("Invalid argument {{{0}}} to construct URL “{1}”", position, this.Description), problem);
 			}
 		}
 
@@ -129,9 +149,9 @@ namespace Dysphoria.Net.UrlRouting
 
 		public string ParameterName(int index)
 		{
-			return index < this.PathParameterCount 
+			return index < this.PathArity 
 				? "__" + index
-				: this.queryParameterNames[index - this.PathParameterCount];
+				: this.queryParameterNames[index - this.PathArity];
 		}
 
 		private static readonly Regex PlaceholderMatcher = new Regex(@"\{(\d+)\}", RegexOptions.Compiled);
@@ -163,41 +183,17 @@ namespace Dysphoria.Net.UrlRouting
 			}
 		}
 
-		private const char ParameterSeparator = '&';
-		private static IList<string> GetQueryParameterNames(string queryPattern, int expectedArity)
-		{
-			var result = new List<string>(expectedArity);
-			var parts = queryPattern.Split(ParameterSeparator);
-			foreach (var part in parts)
-			{
-				var eq = part.IndexOf('=');
-				if (eq != -1)
-				{
-					var name = part.Substring(0, eq);
-					var value = part.Substring(eq + 1);
-					if (PlaceholderMatcher.IsMatch(value))
-					{
-						result.Add(name);
-					}
-				}
-			}
-
-			return result;
-		}
-
-		private static void SplitIntoPathAndQuery(string url, out string path, out string query)
+		private static string PathPatternOf(string url)
 		{
 			var q = url.IndexOf('?');
 			if (q == -1)
-			{
-				path = url;
-				query = "";
-			}
-			else
-			{
-				path = url.Substring(0, q);
-				query = url.Substring(q + 1);
-			}
+				return url;
+
+			var path = url.Substring(0, q);
+			var querystring = url.Substring(q + 1);
+			if (PlaceholderMatcher.IsMatch(querystring))
+				throw new ArgumentException("Not allowed to include placeholders in querystring. Use Urls.Arg/QueryArg instead.");
+			return path;
 		}
 	}
 }

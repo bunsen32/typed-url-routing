@@ -15,22 +15,11 @@ namespace Dysphoria.Net.UrlRouting.PathComponents
 	/// As distinct from a <seealso cref="QueryStringEncoding`1"/> which is decoded
 	/// from zero or more query parameters.
 	/// </summary>
-	public abstract class PathComponent<T> : UrlArgument<T>, IPathComponent
+	public abstract class PathComponent<T> : SimpleUrlComponent<T>, IPathComponent
 	{
-		private readonly string regexString;
-
 		public PathComponent(string regexString)
+			: base(regexString)
 		{
-			this.regexString = regexString;
 		}
-
-		public string RegexString
-		{
-			get { return this.regexString; }
-		}
-
-		public abstract T FromString(string str);
-
-		public abstract string ToString(T value);
 	}
 }

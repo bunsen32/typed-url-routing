@@ -13,8 +13,7 @@ namespace Dysphoria.Net.UrlRouting.PathComponents
 	/// <summary>
 	/// TODO: Update summary.
 	/// </summary>
-	public interface IPathComponent
+	public interface IPathComponent : ISimpleUrlComponent
 	{
-		string RegexString { get; }
 	}
 }

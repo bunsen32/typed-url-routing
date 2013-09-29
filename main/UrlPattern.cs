@@ -69,10 +69,10 @@ namespace Dysphoria.Net.UrlRouting
 	/// </summary>
 	public class UrlPattern<T0, T1> : AbstractUrlPattern
 	{
-		private readonly PathComponent<T0> param0;
+		private readonly SimpleUrlComponent<T0> param0;
 		private readonly UrlArgument<T1> param1;
 
-		public UrlPattern(string pattern, PathComponent<T0> param0, UrlArgument<T1> param1)
+		public UrlPattern(string pattern, SimpleUrlComponent<T0> param0, UrlArgument<T1> param1)
 			: base(pattern, param0, param1)
 		{
 			this.param0 = param0;
@@ -84,7 +84,7 @@ namespace Dysphoria.Net.UrlRouting
 			get { return 2; }
 		}
 
-		public PathComponent<T0> Param0 { get { return this.param0; } }
+		public SimpleUrlComponent<T0> Param0 { get { return this.param0; } }
 
 		public UrlArgument<T1> Param1 { get { return this.param1; } }
 
@@ -102,11 +102,11 @@ namespace Dysphoria.Net.UrlRouting
 	/// </summary>
 	public class UrlPattern<T0, T1, T2> : AbstractUrlPattern
 	{
-		private readonly PathComponent<T0> param0;
-		private readonly PathComponent<T1> param1;
+		private readonly SimpleUrlComponent<T0> param0;
+		private readonly SimpleUrlComponent<T1> param1;
 		private readonly UrlArgument<T2> param2;
 
-		public UrlPattern(string pattern, PathComponent<T0> param0, PathComponent<T1> param1, UrlArgument<T2> param2)
+		public UrlPattern(string pattern, SimpleUrlComponent<T0> param0, SimpleUrlComponent<T1> param1, UrlArgument<T2> param2)
 			: base(pattern, param0, param1, param2)
 		{
 			this.param0 = param0;
@@ -119,9 +119,9 @@ namespace Dysphoria.Net.UrlRouting
 			get { return 3; }
 		}
 
-		public PathComponent<T0> Param0 { get { return this.param0; } }
+		public SimpleUrlComponent<T0> Param0 { get { return this.param0; } }
 
-		public PathComponent<T1> Param1 { get { return this.param1; } }
+		public SimpleUrlComponent<T1> Param1 { get { return this.param1; } }
 
 		public UrlArgument<T2> Param2 { get { return this.param2; } }
 
@@ -140,12 +140,12 @@ namespace Dysphoria.Net.UrlRouting
 	/// </summary>
 	public class UrlPattern<T0, T1, T2, T3> : AbstractUrlPattern
 	{
-		private readonly PathComponent<T0> param0;
-		private readonly PathComponent<T1> param1;
-		private readonly PathComponent<T2> param2;
+		private readonly SimpleUrlComponent<T0> param0;
+		private readonly SimpleUrlComponent<T1> param1;
+		private readonly SimpleUrlComponent<T2> param2;
 		private readonly UrlArgument<T3> param3;
 
-		public UrlPattern(string pattern, PathComponent<T0> param0, PathComponent<T1> param1, PathComponent<T2> param2, UrlArgument<T3> param3)
+		public UrlPattern(string pattern, SimpleUrlComponent<T0> param0, SimpleUrlComponent<T1> param1, SimpleUrlComponent<T2> param2, UrlArgument<T3> param3)
 			: base(pattern, param0, param1, param2, param3)
 		{
 			this.param0 = param0;
@@ -159,11 +159,11 @@ namespace Dysphoria.Net.UrlRouting
 			get { return 4; }
 		}
 
-		public PathComponent<T0> Param0 { get { return this.param0; } }
+		public SimpleUrlComponent<T0> Param0 { get { return this.param0; } }
 
-		public PathComponent<T1> Param1 { get { return this.param1; } }
+		public SimpleUrlComponent<T1> Param1 { get { return this.param1; } }
 
-		public PathComponent<T2> Param2 { get { return this.param2; } }
+		public SimpleUrlComponent<T2> Param2 { get { return this.param2; } }
 
 		public UrlArgument<T3> Param3 { get { return this.param3; } }
 
