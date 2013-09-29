@@ -1,7 +1,7 @@
-﻿namespace test.Controllers
+﻿namespace Dysphoria.Net.UrlRouting.Test.Controllers
 {
 	using System.Web.Mvc;
-	using test.Models;
+	using Dysphoria.Net.UrlRouting.Test.Models;
 
 	public class HomeController : Controller
 	{
