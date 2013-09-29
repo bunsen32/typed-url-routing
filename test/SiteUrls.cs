@@ -22,6 +22,8 @@
 
 		public static readonly UrlPattern<Abc> Search = Path("/search", Query<Abc>());
 
+		public static readonly RequestPattern<UrlPattern, Abc> PostSearch = Post(Body<Abc>(), Path("/search"));
+
 		public static readonly UrlPattern<int?> NullableIntPath = Path("/nullable/int/{0}", Int.Or("nothing"));
 
 		public static readonly UrlPattern<string> NullableStringPath = Path("/nullable/str/{0}", Slug.OrNull("nothing"));
@@ -32,8 +34,9 @@
 				.MapRoute(GetHome, c => c.Index)
 				.MapRoute(Get(About), c => c.About)
 				.MapRoute(Get(ShowParams), c => c.ShowTwoParameters)
-				.MapRoute(Get(ParamsPlusQuery), c=>c.ShowTwoParametersPlusQuery)
-				.MapRoute(Get(Search), c=> c.ModelParameter);
+				.MapRoute(Get(ParamsPlusQuery), c => c.ShowTwoParametersPlusQuery)
+				.MapRoute(Get(Search), c=> c.ModelParameter)
+				.MapRoute(PostSearch, c => c.PostSearch);
 		}
 	}
 }

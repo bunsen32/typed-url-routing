@@ -19,40 +19,23 @@ namespace Dysphoria.Net.UrlRouting.PathComponents
 	/// <summary>
 	/// TODO: Update summary.
 	/// </summary>
-	public abstract class MvcQueryStringEncoding<T> : QueryStringEncoding<T>
+	public class MvcQueryStringEncoding<T> : QueryStringEncoding<T>
 	{
-		public static readonly MvcQueryStringEncoding<T> Default = new DefaultEncoding();
+		public static readonly MvcQueryStringEncoding<T> Instance = new MvcQueryStringEncoding<T>();
+		private readonly MvcEncoderDecoder<T> encodeDecode = MvcEncoderDecoder<T>.Instance;
 
-		private class DefaultEncoding : MvcQueryStringEncoding<T>
+		private MvcQueryStringEncoding()
 		{
-			private static ModelBinderDictionary binderDictionary = new ModelBinderDictionary();
+		}
 
-			private readonly IModelBinder binder;
+		public override RouteValueDictionary ToDictionary(T value)
+		{
+			return encodeDecode.ToDictionary(value);
+		}
 
-			public DefaultEncoding()
-			{
-				this.binder = binderDictionary.GetBinder(typeof(T), fallbackToDefault: true);
-			}
-
-			public override RouteValueDictionary ToDictionary(T value)
-			{
-				return (value as RouteValueDictionary) ?? new RouteValueDictionary(value);
-			}
-
-			public override T FromDictionary(ControllerContext cx, NameValueCollection dict)
-			{
-				if (cx == null) throw new ArgumentNullException("Needs to run in a Controller context. ControllerContext parameter is required.");
-				var bindingContext = new ModelBindingContext()
-				{
-					FallbackToEmptyPrefix = true, // TODO
-					ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(null, typeof(T)),
-					ModelName = "",
-					ModelState = new ModelStateDictionary(),
-					PropertyFilter = (s) => true,
-					ValueProvider = new NameValueCollectionValueProvider(dict, CultureInfo.InvariantCulture),
-				};
-				return (T)this.binder.BindModel(cx, bindingContext);
-			}
+		public override T FromDictionary(ControllerContext cx, NameValueCollection dict)
+		{
+			return encodeDecode.FromDictionary(cx, dict);
 		}
 	}
 }

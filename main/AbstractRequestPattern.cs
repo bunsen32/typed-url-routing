@@ -10,6 +10,9 @@
 // -----------------------------------------------------------------------
 namespace Dysphoria.Net.UrlRouting
 {
+	using System.Web.Mvc;
+	using System;
+
 	/// <summary>
 	/// TODO: Update summary.
 	/// </summary>
@@ -27,5 +30,20 @@ namespace Dysphoria.Net.UrlRouting
 		protected abstract AbstractUrlPattern AbstractUrlPattern { get; }
 
 		public AbstractUrlPattern Url { get { return this.AbstractUrlPattern; } }
+
+		public FormMethod FormMethod
+		{
+			get
+			{
+				switch (this.Method)
+				{
+					case HttpMethod.GET: return FormMethod.Get;
+					case HttpMethod.POST: return FormMethod.Post;
+					default:
+						throw new NotSupportedException("Not an HTML form method: " + this.Method);
+				}
+			}
+		}
+
 	}
 }

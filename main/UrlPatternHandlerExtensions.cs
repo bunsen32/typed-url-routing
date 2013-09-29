@@ -93,5 +93,12 @@ namespace Dysphoria.Net.UrlRouting
 				return queryParam.FromDictionary(req, req.HttpContext.Request.QueryString);
 			}
 		}
+
+		public static B DecodeBody<U, B>(this RequestPattern<U, B> pattern, ControllerContext req)
+			where U : AbstractUrlPattern
+		{
+			var form = req.HttpContext.Request.Form;
+			return MvcEncoderDecoder<B>.Instance.FromDictionary(req, form);
+		}
 	}
 }

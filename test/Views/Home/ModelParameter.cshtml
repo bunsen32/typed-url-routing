@@ -1,5 +1,6 @@
 ﻿@model Abc
 @using Dysphoria.Net.UrlRouting.Test.Models
+@using Dysphoria.Net.UrlRouting.Test
 @{
     ViewBag.Title = "ModelParameter";
 }
@@ -9,4 +10,19 @@
 <p>@Model.B</p>
 <p>@Model.C</p>
 
-
+@using (Html.BeginForm(SiteUrls.PostSearch))
+{
+	<ul>
+		<li>
+			A: <input name="A" />
+		</li>
+		<li>
+			B: <input name="B" />
+		</li>
+		<li>
+			C: <input name="C" />
+		</li>
+	</ul>
+	
+	<input type="submit" value="Go!" />
+}

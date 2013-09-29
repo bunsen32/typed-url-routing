@@ -28,6 +28,7 @@ namespace Dysphoria.Net.UrlRouting
 	/// </summary>
 	public abstract class AbstractUrlPattern
 	{
+		private readonly int arity;
 		private readonly string pattern;
 		private readonly IList<string> regexStrings;
 
@@ -35,8 +36,11 @@ namespace Dysphoria.Net.UrlRouting
 		private readonly int pathArity;
 		private readonly IList<string> queryParameterNames;
 
-		public AbstractUrlPattern(string pattern, params UrlArgument[] parameters)
+		public AbstractUrlPattern(int arity, string pattern, params UrlArgument[] parameters)
 		{
+			if (arity < 0) throw new ArgumentOutOfRangeException("arity");
+			this.arity = arity;
+
 			if (pattern == null) throw new ArgumentNullException("pattern");
 			if (!pattern.StartsWith("/")) throw new ArgumentException("We only support absolute paths (include initial '/').");
 			if (pattern.Contains('?')) throw new ArgumentException("Cannot include querystring part in URL pattern.");
@@ -58,7 +62,7 @@ namespace Dysphoria.Net.UrlRouting
 			this.pathRegex = new Regex("^" + regexString + "$", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.ExplicitCapture);
 		}
 
-		public abstract int Arity { get; }
+		public int Arity { get { return this.arity; } }
 
 		public int PathArity { get { return this.pathArity; } }
 

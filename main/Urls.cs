@@ -70,7 +70,7 @@ namespace Dysphoria.Net.UrlRouting
 
 		protected static QueryStringEncoding<T> Query<T>()
 		{
-			return MvcQueryStringEncoding<T>.Default;
+			return MvcQueryStringEncoding<T>.Instance;
 		}
 
 		protected static RequestPattern<U> Get<U>(U url) where U : AbstractUrlPattern

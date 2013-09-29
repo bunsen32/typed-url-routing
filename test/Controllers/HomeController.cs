@@ -30,5 +30,11 @@
 		{
 			return View(abc);
 		}
+
+		[HttpPost]
+		public ActionResult PostSearch(Abc abc)
+		{
+			return View("ModelParameter", abc);
+		}
 	}
 }

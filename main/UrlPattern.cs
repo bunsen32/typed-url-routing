@@ -20,14 +20,9 @@ namespace Dysphoria.Net.UrlRouting
 		private readonly AppLocalUrl url;
 
 		public UrlPattern(string pattern)
-			: base(pattern)
+			: base(0, pattern)
 		{
 			this.url = new AppLocalUrl(pattern);
-		}
-
-		public override int Arity
-		{
-			get { return 0; }
 		}
 
 		public AppLocalUrl Url
@@ -44,14 +39,9 @@ namespace Dysphoria.Net.UrlRouting
 		private readonly UrlArgument<T0> param0;
 
 		public UrlPattern(string pattern, UrlArgument<T0> param0)
-			: base(pattern, param0)
+			: base(1, pattern, param0)
 		{
 			this.param0 = param0;
-		}
-
-		public override int Arity
-		{
-			get { return 1; }
 		}
 
 		public UrlArgument<T0> Param0 { get { return this.param0; } }
@@ -73,15 +63,10 @@ namespace Dysphoria.Net.UrlRouting
 		private readonly UrlArgument<T1> param1;
 
 		public UrlPattern(string pattern, SimpleUrlComponent<T0> param0, UrlArgument<T1> param1)
-			: base(pattern, param0, param1)
+			: base(2, pattern, param0, param1)
 		{
 			this.param0 = param0;
 			this.param1 = param1;
-		}
-
-		public override int Arity
-		{
-			get { return 2; }
 		}
 
 		public SimpleUrlComponent<T0> Param0 { get { return this.param0; } }
@@ -107,16 +92,11 @@ namespace Dysphoria.Net.UrlRouting
 		private readonly UrlArgument<T2> param2;
 
 		public UrlPattern(string pattern, SimpleUrlComponent<T0> param0, SimpleUrlComponent<T1> param1, UrlArgument<T2> param2)
-			: base(pattern, param0, param1, param2)
+			: base(3, pattern, param0, param1, param2)
 		{
 			this.param0 = param0;
 			this.param1 = param1;
 			this.param2 = param2;
-		}
-
-		public override int Arity
-		{
-			get { return 3; }
 		}
 
 		public SimpleUrlComponent<T0> Param0 { get { return this.param0; } }
@@ -146,17 +126,12 @@ namespace Dysphoria.Net.UrlRouting
 		private readonly UrlArgument<T3> param3;
 
 		public UrlPattern(string pattern, SimpleUrlComponent<T0> param0, SimpleUrlComponent<T1> param1, SimpleUrlComponent<T2> param2, UrlArgument<T3> param3)
-			: base(pattern, param0, param1, param2, param3)
+			: base(4, pattern, param0, param1, param2, param3)
 		{
 			this.param0 = param0;
 			this.param1 = param1;
 			this.param2 = param2;
 			this.param3 = param3;
-		}
-
-		public override int Arity
-		{
-			get { return 4; }
 		}
 
 		public SimpleUrlComponent<T0> Param0 { get { return this.param0; } }

@@ -77,6 +77,18 @@ namespace System.Web.Mvc.Html
 			return location.Resolved(self.RequestContext.HttpContext);
 		}
 
+		public static MvcForm BeginForm<U>(this HtmlHelper self, RequestPattern<U> route, Func<U, AppLocalUrl> instantiate, object htmlAttributes = null)
+			where U : AbstractUrlPattern
+		{
+			var location = instantiate(route.Url);
+			return self.BeginForm(location, route.FormMethod, htmlAttributes);
+		}
+
+		public static MvcForm BeginForm(this HtmlHelper self, RequestPattern<UrlPattern> route, object htmlAttributes = null)
+		{
+			return self.BeginForm(route.Url.Url, route.FormMethod, htmlAttributes);
+		}
+
 		public static MvcForm BeginForm(this HtmlHelper self, UrlPattern location, FormMethod method = FormMethod.Post, object htmlAttributes = null)
 		{
 			return self.BeginForm(location.Url, method, htmlAttributes);
