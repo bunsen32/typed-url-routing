@@ -24,17 +24,17 @@ namespace System.Web.Mvc.Html
 		// For calling (internal) ViewContext.FormIdGenerator (as per bclcontrib project for .NET BCL)
 		private static readonly PropertyInfo FormIdGeneratorPropertyInfo = typeof(ViewContext).GetProperty("FormIdGenerator", BindingFlags.NonPublic | BindingFlags.Instance);
 
-		public static KeyValuePair<string, PotentialUrl> Link(this string linkText, UrlPattern pathWithoutParameters)
+		public static KeyValuePair<string, AppLocalUrl> Link(this string linkText, UrlPattern pathWithoutParameters)
 		{
 			return linkText.Link(pathWithoutParameters.Url);
 		}
 
-		public static KeyValuePair<string, PotentialUrl> Link(this string linkText, PotentialUrl location)
+		public static KeyValuePair<string, AppLocalUrl> Link(this string linkText, AppLocalUrl location)
 		{
-			return new KeyValuePair<string, PotentialUrl>(linkText, location);
+			return new KeyValuePair<string, AppLocalUrl>(linkText, location);
 		}
 
-		public static MvcHtmlString Link(this HtmlHelper self, KeyValuePair<string, PotentialUrl> link, object htmlAttributes = null)
+		public static MvcHtmlString Link(this HtmlHelper self, KeyValuePair<string, AppLocalUrl> link, object htmlAttributes = null)
 		{
 			return self.Link(link.Key, link.Value, htmlAttributes);
 		}
@@ -44,7 +44,7 @@ namespace System.Web.Mvc.Html
 			return self.Link(linkText, pathWithoutParameters.Url, htmlAttributes);
 		}
 
-		public static MvcHtmlString Link(this HtmlHelper self, string linkText, PotentialUrl location, object htmlAttributes = null)
+		public static MvcHtmlString Link(this HtmlHelper self, string linkText, AppLocalUrl location, object htmlAttributes = null)
 		{
 			var uri = location.Resolved(self.ViewContext.HttpContext);
 
@@ -72,7 +72,7 @@ namespace System.Web.Mvc.Html
 			return self.Of(pathWithoutParameters.Url);
 		}
 
-		public static string Of(this UrlHelper self, PotentialUrl location)
+		public static string Of(this UrlHelper self, AppLocalUrl location)
 		{
 			return location.Resolved(self.RequestContext.HttpContext);
 		}
@@ -82,7 +82,7 @@ namespace System.Web.Mvc.Html
 			return self.BeginForm(location.Url, method, htmlAttributes);
 		}
 
-		public static MvcForm BeginForm(this HtmlHelper self, PotentialUrl location, FormMethod method = FormMethod.Post, object htmlAttributes = null)
+		public static MvcForm BeginForm(this HtmlHelper self, AppLocalUrl location, FormMethod method = FormMethod.Post, object htmlAttributes = null)
 		{
 			var viewContext = self. ViewContext;
 			var actionUri = location.Resolved(viewContext.HttpContext);

@@ -93,7 +93,7 @@ namespace Dysphoria.Net.UrlRouting
 			}
 		}
 
-		protected PotentialUrl PotentialUrlWith(RouteValueDictionary queryOrNull, params string[] p)
+		protected AppLocalUrl PotentialUrlWith(RouteValueDictionary queryOrNull, params string[] p)
 		{
 			var routeValues = queryOrNull == null 
 				? new RouteValueDictionary() 
@@ -122,7 +122,7 @@ namespace Dysphoria.Net.UrlRouting
 				}
 			}
 
-			return new PotentialUrl(path, querystring.ToString());
+			return new AppLocalUrl(path, querystring.ToString());
 		}
 
 		protected string Stringify<T>(UrlArgument<T> p, T value, int position)

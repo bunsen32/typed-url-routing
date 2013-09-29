@@ -76,7 +76,7 @@
     <Compile Include="PathComponents\QueryStringEncoding.cs" />
     <Compile Include="MvcUrlUtilities\PathHelpers.cs" />
     <Compile Include="PathComponents\SimpleUrlComponent.cs" />
-    <Compile Include="PotentialUrl.cs" />
+    <Compile Include="AppLocalUrl.cs" />
     <Compile Include="System.Web.Mvc.Html\HtmlHelper_Extensions.cs" />
     <Compile Include="HttpMethod.cs" />
     <Compile Include="PathComponents\IntComponent.cs" />

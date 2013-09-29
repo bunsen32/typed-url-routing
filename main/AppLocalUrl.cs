@@ -16,23 +16,23 @@ namespace Dysphoria.Net.UrlRouting
 	using Dysphoria.Net.UrlRouting.MvcUrlUtilities;
 
 	/// <summary>
-	/// (Frankly weird) abstraction of a URL's path and querystring.
-	/// Allows at least <see cref="HtmlHelperExtensions.Link"/> to be strongly typed.
+	/// Abstraction of a URL which is relative to an app. Can be converted into
+	/// a real URL via the <see cref="#Resolved()"/> method.
+	/// <para>This is what you get when you fill out the parameters of a <see cref="UrlPattern"/>.
+	/// </para>
+	/// Allows <see cref="HtmlHelperExtensions.Link"/> to be strongly typed.
 	/// </summary>
-	public class PotentialUrl: IEquatable<PotentialUrl>
+	public class AppLocalUrl: IEquatable<AppLocalUrl>
 	{
 		private readonly string path;
 		private readonly string querystring;
 		private readonly string fragmentIdentifier;
 
-		public PotentialUrl(string urlPath, string querystring)
-			: this(urlPath, querystring, null)
+		public AppLocalUrl(string urlPath, string querystring = null, string fragmentIdentifier = null)
 		{
-		}
+			if (urlPath == null) throw new ArgumentNullException("urlPath");
 
-		public PotentialUrl(string urlPath, string querystring, string fragmentIdentifier)
-		{
-			this.path = urlPath ?? "";
+			this.path = urlPath;
 			this.querystring = querystring ?? "";
 			this.fragmentIdentifier = fragmentIdentifier ?? "";
 		}
@@ -69,11 +69,11 @@ namespace Dysphoria.Net.UrlRouting
 			return PathHelpers.GenerateClientUrl(httpContext, "~" + this.ToString());
 		}
 
-		public PotentialUrl WithFragment(string fragmentIdentifier)
+		public AppLocalUrl WithFragment(string fragmentIdentifier)
 		{
 			return (fragmentIdentifier ?? "") == this.FragmentIdentifier
 				? this
-				: new PotentialUrl(this.Path, this.Querystring, fragmentIdentifier);
+				: new AppLocalUrl(this.Path, this.Querystring, fragmentIdentifier);
 		}
 
 		public override string ToString()
@@ -83,22 +83,22 @@ namespace Dysphoria.Net.UrlRouting
 
 		public override bool Equals(object obj)
 		{
-			return this.Equals(obj as PotentialUrl);
+			return this.Equals(obj as AppLocalUrl);
 		}
 
-		public static bool operator !=(PotentialUrl first, PotentialUrl second)
+		public static bool operator !=(AppLocalUrl first, AppLocalUrl second)
 		{
 			return !(first == second);
 		}
 
-		public static bool operator ==(PotentialUrl first, PotentialUrl second)
+		public static bool operator ==(AppLocalUrl first, AppLocalUrl second)
 		{
 			return (object)first == null
 				? (object)second == null
 				: first.Equals(second);
 		}
 
-		public bool Equals(PotentialUrl other)
+		public bool Equals(AppLocalUrl other)
 		{
 			return (object)other != null
 				&& this.Path == other.Path

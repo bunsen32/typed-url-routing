@@ -18,7 +18,7 @@ namespace System.Web.Mvc
 			return self.RedirectTo(zeroArgumentPath.Url, permanent);
 		}
 
-		public static ActionResult RedirectTo(this ControllerBase self, PotentialUrl location, bool permanent = false)
+		public static ActionResult RedirectTo(this ControllerBase self, AppLocalUrl location, bool permanent = false)
 		{
 			var uri = location.Resolved(self.ControllerContext.HttpContext);
 			return new RedirectResult(uri, permanent);

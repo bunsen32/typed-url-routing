@@ -17,12 +17,12 @@ namespace Dysphoria.Net.UrlRouting
 	/// </summary>
 	public class UrlPattern : AbstractUrlPattern
 	{
-		private readonly PotentialUrl url;
+		private readonly AppLocalUrl url;
 
 		public UrlPattern(string pattern)
 			: base(pattern)
 		{
-			this.url = new PotentialUrl(pattern, "");
+			this.url = new AppLocalUrl(pattern);
 		}
 
 		public override int Arity
@@ -30,7 +30,7 @@ namespace Dysphoria.Net.UrlRouting
 			get { return 0; }
 		}
 
-		public PotentialUrl Url
+		public AppLocalUrl Url
 		{
 			get { return this.url; }
 		}
@@ -56,7 +56,7 @@ namespace Dysphoria.Net.UrlRouting
 
 		public UrlArgument<T0> Param0 { get { return this.param0; } }
 
-		public PotentialUrl With(T0 p0)
+		public AppLocalUrl With(T0 p0)
 		{
 			return this.PotentialUrlWith(
 				Querify(this.Param0, p0),
@@ -88,7 +88,7 @@ namespace Dysphoria.Net.UrlRouting
 
 		public UrlArgument<T1> Param1 { get { return this.param1; } }
 
-		public PotentialUrl With(T0 p0, T1 p1)
+		public AppLocalUrl With(T0 p0, T1 p1)
 		{
 			return this.PotentialUrlWith(
 				Querify(this.param1, p1),
@@ -125,7 +125,7 @@ namespace Dysphoria.Net.UrlRouting
 
 		public UrlArgument<T2> Param2 { get { return this.param2; } }
 
-		public PotentialUrl With(T0 p0, T1 p1, T2 p2)
+		public AppLocalUrl With(T0 p0, T1 p1, T2 p2)
 		{
 			return this.PotentialUrlWith(
 				Querify(this.Param2, p2),
@@ -167,7 +167,7 @@ namespace Dysphoria.Net.UrlRouting
 
 		public UrlArgument<T3> Param3 { get { return this.param3; } }
 
-		public PotentialUrl With(T0 p0, T1 p1, T2 p2, T3 p3)
+		public AppLocalUrl With(T0 p0, T1 p1, T2 p2, T3 p3)
 		{
 			return this.PotentialUrlWith(
 				Querify(this.Param3, p3),
