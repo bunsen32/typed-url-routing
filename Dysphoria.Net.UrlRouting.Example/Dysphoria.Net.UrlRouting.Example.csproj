@@ -134,7 +134,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\main\Dysphoria.Net.UrlRouting.csproj">
+    <ProjectReference Include="..\Dysphoria.Net.UrlRouting\Dysphoria.Net.UrlRouting.csproj">
       <Project>{493A9C73-319F-45C1-9B46-0DE1A8ABF0B1}</Project>
       <Name>Dysphoria.Net.UrlRouting</Name>
     </ProjectReference>

@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dysphoria.Net.UrlRouting", "main\Dysphoria.Net.UrlRouting.csproj", "{493A9C73-319F-45C1-9B46-0DE1A8ABF0B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dysphoria.Net.UrlRouting", "Dysphoria.Net.UrlRouting\Dysphoria.Net.UrlRouting.csproj", "{493A9C73-319F-45C1-9B46-0DE1A8ABF0B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dysphoria.Net.UrlRouting.Example", "test\Dysphoria.Net.UrlRouting.Example.csproj", "{C61534D8-B17D-4B87-9990-9F6CDB77A108}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dysphoria.Net.UrlRouting.Example", "Dysphoria.Net.UrlRouting.Example\Dysphoria.Net.UrlRouting.Example.csproj", "{C61534D8-B17D-4B87-9990-9F6CDB77A108}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dysphoria.Net.UrlRouting.Test", "TestProject1\Dysphoria.Net.UrlRouting.Test.csproj", "{74F3B121-7D70-42C0-9D40-70B2A6C12667}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dysphoria.Net.UrlRouting.Test", "Dysphoria.Net.UrlRouting.Test\Dysphoria.Net.UrlRouting.Test.csproj", "{74F3B121-7D70-42C0-9D40-70B2A6C12667}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{852F5538-3276-44C0-A058-2F344FDEB1A8}"
 	ProjectSection(SolutionItems) = preProject
