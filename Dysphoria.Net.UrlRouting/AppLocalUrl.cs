@@ -43,7 +43,7 @@ namespace Dysphoria.Net.UrlRouting
 
 		public string FragmentIdentifier { get { return this.fragmentIdentifier; } }
 
-		public string ApplicationAbsoluteUrl
+		public string ApplicationRelativeUrl
 		{
 			get
 			{
@@ -66,7 +66,7 @@ namespace Dysphoria.Net.UrlRouting
 
 		public string Resolved(HttpContextBase httpContext)
 		{
-			return PathHelpers.GenerateClientUrl(httpContext, "~" + this.ToString());
+			return PathHelpers.GenerateClientUrl(httpContext, "~/" + this.ApplicationRelativeUrl);
 		}
 
 		public AppLocalUrl WithFragment(string fragmentIdentifier)
@@ -78,7 +78,7 @@ namespace Dysphoria.Net.UrlRouting
 
 		public override string ToString()
 		{
-			return this.ApplicationAbsoluteUrl;
+			return this.ApplicationRelativeUrl;
 		}
 
 		public override bool Equals(object obj)

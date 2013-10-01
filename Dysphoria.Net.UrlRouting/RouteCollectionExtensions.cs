@@ -72,14 +72,14 @@ namespace Dysphoria.Net.UrlRouting
 		{
 			var range = Enumerable.Range(0, url.SimpleParameterCount);
 			var parameterNames = range.Select(i => "{" + url.ParameterName(i) + "}").ToArray();
-			return string.Format(RemoveInitialSlash(url.PathPattern), (object[])parameterNames);
+			return string.Format(NoInitialSlash(url.PathPattern), (object[])parameterNames);
 		}
 
-		private static string RemoveInitialSlash(string urlPath)
+		private static string NoInitialSlash(string urlPath)
 		{
-			if (string.IsNullOrEmpty(urlPath)) throw new ArgumentException("urlPath");
-			if (urlPath[0] != '/') throw new ArgumentException("Path needs to start with '/'.", "urlPath");
-			return urlPath.Substring(1);
+			if (urlPath == null) throw new ArgumentNullException("urlPath");
+			if (urlPath.StartsWith("/")) throw new ArgumentException("Path cannot start with '/'.", "urlPath");
+			return urlPath;
 		}
 
 		private static RouteValueDictionary GetConstraints(AbstractRequestPattern requestPattern)

@@ -42,7 +42,8 @@ namespace Dysphoria.Net.UrlRouting
 			this.arity = arity;
 
 			if (pattern == null) throw new ArgumentNullException("pattern");
-			if (!pattern.StartsWith("/")) throw new ArgumentException("We only support absolute paths (include initial '/').");
+			if (pattern.StartsWith("/")) throw new ArgumentException("Paths must not start with '/'.");
+			if (pattern.StartsWith("~")) throw new ArgumentException("Paths must not start with '~'.");
 			if (pattern.Contains('?')) throw new ArgumentException("Cannot include querystring part in URL pattern.");
 			this.pattern = pattern;
 

@@ -7,26 +7,26 @@
 
 	public class SiteUrls : Urls
 	{
-		public static readonly RequestPattern<UrlPattern> GetHome = Get(Path("/"));
+		public static readonly RequestPattern<UrlPattern> GetHome = Get(Path(""));
 
-		public static readonly UrlPattern About = Path("/about");
+		public static readonly UrlPattern About = Path("about");
 
-		public static readonly UrlPattern<int, string> ShowParams = Path("/{0}/{1}/show", Int, Slug);
+		public static readonly UrlPattern<int, string> ShowParams = Path("{0}/{1}/show", Int, Slug);
 
 		public static readonly UrlPattern<int, string, string, string> ParamsPlusQuery = Path(
-			"/{0}/{1}/query",
+			"{0}/{1}/query",
 			Int,
 			Slug,
 			Arg("bob", AnyString),
 			Arg("jeff", AnyString));
 
-		public static readonly UrlPattern<Abc> Search = Path("/search", Query<Abc>());
+		public static readonly UrlPattern<Abc> Search = Path("search", Query<Abc>());
 
-		public static readonly RequestPattern<UrlPattern, Abc> PostSearch = Post(Body<Abc>(), Path("/search"));
+		public static readonly RequestPattern<UrlPattern, Abc> PostSearch = Post(Body<Abc>(), Path("search"));
 
-		public static readonly UrlPattern<int?> NullableIntPath = Path("/nullable/int/{0}", Int.Or("nothing"));
+		public static readonly UrlPattern<int?> NullableIntPath = Path("nullable/int/{0}", Int.Or("nothing"));
 
-		public static readonly UrlPattern<string> NullableStringPath = Path("/nullable/str/{0}", Slug.OrNull("nothing"));
+		public static readonly UrlPattern<string> NullableStringPath = Path("nullable/str/{0}", Slug.OrNull("nothing"));
 
 		public static void Register(RouteCollection routes)
 		{

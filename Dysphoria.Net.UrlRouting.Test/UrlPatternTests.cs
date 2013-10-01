@@ -20,27 +20,33 @@
 		}
 
 		[TestMethod, ExpectedException(typeof(ArgumentException))]
-		public void RejectsPathStartingWithoutSlash()
+		public void RejectsPathStartingWithSlash()
 		{
-			new TestUrlPattern(0, "bob");
+			new TestUrlPattern(0, "/bob");
 		}
 
 		[TestMethod, ExpectedException(typeof(ArgumentException))]
 		public void RejectsPatternArityTooSmall()
 		{
-			new TestUrlPattern(1, "/bob", Int);
+			new TestUrlPattern(1, "bob", Int);
 		}
 
 		[TestMethod, ExpectedException(typeof(ArgumentException))]
 		public void RejectsPatternArityTooLarge()
 		{
-			new TestUrlPattern(1, "/bob{0}/{1}", Int);
+			new TestUrlPattern(1, "bob{0}/{1}", Int);
 		}
 
 		[TestMethod, ExpectedException(typeof(ArgumentException))]
 		public void RejectsWrongNumberOfPathComponents()
 		{
-			new TestUrlPattern(2, "/bob{0}/{1}", Int, Arg("named", Int));
+			new TestUrlPattern(2, "bob{0}/{1}", Int, Arg("named", Int));
+		}
+
+		[TestMethod]
+		public void AcceptsPatternWithCorrectParameters()
+		{
+			new TestUrlPattern(2, "bob/{0}", Int, Arg("named", Int));
 		}
 
 		private class TestUrlPattern : AbstractUrlPattern
