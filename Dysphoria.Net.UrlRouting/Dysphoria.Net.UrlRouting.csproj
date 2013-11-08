@@ -66,6 +66,7 @@
     <Compile Include="MvcEncoderDecoder.cs" />
     <Compile Include="MvcUrlUtilities\UrlRewriterHelper.cs" />
     <Compile Include="PathComponentExtensions.cs" />
+    <Compile Include="PathComponents\BoolComponent.cs" />
     <Compile Include="PathComponents\IQueryArg.cs" />
     <Compile Include="PathComponents\ISimpleUrlComponent.cs" />
     <Compile Include="PathComponents\NullableComponent.cs" />

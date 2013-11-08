@@ -14,28 +14,29 @@ namespace Dysphoria.Net.UrlRouting
 
 	public abstract class Urls
 	{
+		protected static readonly PathComponent<bool> Bool = BoolComponent.Default;
 		protected static readonly PathComponent<int> Int = IntComponent.Instance;
-		protected static readonly PathComponent<int?> NullableInt = Nullable(Int);
+		protected static readonly PathComponent<int?> NullableInt = Int.Or("");
 
+		/// <summary>
+		/// A 'slug' is an identifier code, alphanumeric (upper or lower case) plus hyphens 
+		/// (-) and underscores (_). Useful for identifications codes.
+		/// </summary>
 		protected static readonly StringComponent Slug = String(@"[-_0-9a-zA-Z]+");
+
+		/// <summary>
+		/// A 'path component' is anthing allowed between slashes in a URL.
+		/// </summary>
 		protected static readonly StringComponent PathComponent = String(@"[-_0-9a-zA-Z~+.,]+");
+
+		/// <summary>
+		/// An unconstrained string, including spaces, control characters, slashes, and whatever else.
+		/// </summary>
 		protected static readonly StringComponent AnyString = String(@".*");
 
 		protected static StringComponent String(string regexPattern)
 		{
 			return new StringComponent(regexPattern);
-		}
-
-		protected static PathComponent<T?> Nullable<T>(PathComponent<T> basis)
-			where T : struct
-		{
-			return new NullableValueComponent<T>(basis);
-		}
-
-		protected static PathComponent<T?> Nullable<T>(PathComponent<T> basis, string nullValue)
-			where T : struct
-		{
-			return new NullableValueComponent<T>(basis, nullValue);
 		}
 
 		protected static UrlPattern Path(string pattern)
