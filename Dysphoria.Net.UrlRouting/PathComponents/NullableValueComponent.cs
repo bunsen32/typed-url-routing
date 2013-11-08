@@ -19,12 +19,7 @@ namespace Dysphoria.Net.UrlRouting.PathComponents
 	public class NullableValueComponent<T> : NullableComponent<T, T?>
 		where T : struct
 	{
-		public NullableValueComponent(PathComponent<T> basis)
-			: this(basis, string.Empty)
-		{
-		}
-
-		public NullableValueComponent(PathComponent<T> basis, string nullValueString)
+		public NullableValueComponent(PathComponent<T> basis, string nullValueString = "")
 			: base(basis, nullValueString, (T?)null)
 		{
 		}
