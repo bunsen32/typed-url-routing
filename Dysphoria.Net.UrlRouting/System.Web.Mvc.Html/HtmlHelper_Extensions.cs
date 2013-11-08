@@ -24,11 +24,6 @@ namespace System.Web.Mvc.Html
 		// For calling (internal) ViewContext.FormIdGenerator (as per bclcontrib project for .NET BCL)
 		private static readonly PropertyInfo FormIdGeneratorPropertyInfo = typeof(ViewContext).GetProperty("FormIdGenerator", BindingFlags.NonPublic | BindingFlags.Instance);
 
-		public static KeyValuePair<string, AppLocalUrl> Link(this string linkText, UrlPattern pathWithoutParameters)
-		{
-			return linkText.Link(pathWithoutParameters.Url);
-		}
-
 		public static KeyValuePair<string, AppLocalUrl> Link(this string linkText, AppLocalUrl location)
 		{
 			return new KeyValuePair<string, AppLocalUrl>(linkText, location);
@@ -37,11 +32,6 @@ namespace System.Web.Mvc.Html
 		public static MvcHtmlString Link(this HtmlHelper self, KeyValuePair<string, AppLocalUrl> link, object htmlAttributes = null)
 		{
 			return self.Link(link.Key, link.Value, htmlAttributes);
-		}
-
-		public static MvcHtmlString Link(this HtmlHelper self, string linkText, UrlPattern pathWithoutParameters, object htmlAttributes = null)
-		{
-			return self.Link(linkText, pathWithoutParameters.Url, htmlAttributes);
 		}
 
 		public static MvcHtmlString Link(this HtmlHelper self, string linkText, AppLocalUrl location, object htmlAttributes = null)
@@ -67,11 +57,6 @@ namespace System.Web.Mvc.Html
 			return MvcHtmlString.Create(linkString);
 		}
 
-		public static string Of(this UrlHelper self, UrlPattern pathWithoutParameters)
-		{
-			return self.Of(pathWithoutParameters.Url);
-		}
-
 		public static string Of(this UrlHelper self, AppLocalUrl location)
 		{
 			return location.Resolved(self.RequestContext.HttpContext);
@@ -87,11 +72,6 @@ namespace System.Web.Mvc.Html
 		public static MvcForm BeginForm(this HtmlHelper self, RequestPattern<UrlPattern> route, object htmlAttributes = null)
 		{
 			return self.BeginForm(route.Url.Url, route.FormMethod, htmlAttributes);
-		}
-
-		public static MvcForm BeginForm(this HtmlHelper self, UrlPattern location, FormMethod method = FormMethod.Post, object htmlAttributes = null)
-		{
-			return self.BeginForm(location.Url, method, htmlAttributes);
 		}
 
 		public static MvcForm BeginForm(this HtmlHelper self, AppLocalUrl location, FormMethod method = FormMethod.Post, object htmlAttributes = null)

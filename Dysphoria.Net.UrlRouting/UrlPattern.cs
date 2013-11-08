@@ -29,6 +29,11 @@ namespace Dysphoria.Net.UrlRouting
 		{
 			get { return this.url; }
 		}
+
+		public static implicit operator AppLocalUrl(UrlPattern p)
+		{
+			return p.Url;
+		}
 	}
 
 	/// <summary>
@@ -51,6 +56,11 @@ namespace Dysphoria.Net.UrlRouting
 			return this.PotentialUrlWith(
 				Querify(this.Param0, p0),
 				Stringify(this.Param0, p0, 0));
+		}
+
+		public AppLocalUrl this[T0 p0]
+		{
+			get { return this.With(p0); }
 		}
 	}
 
@@ -79,6 +89,11 @@ namespace Dysphoria.Net.UrlRouting
 				Querify(this.param1, p1),
 				Stringify(this.Param0, p0, 0),
 				Stringify(this.Param1, p1, 1));
+		}
+
+		public AppLocalUrl this[T0 p0, T1 p1]
+		{
+			get { return this.With(p0, p1); }
 		}
 	}
 
@@ -112,6 +127,11 @@ namespace Dysphoria.Net.UrlRouting
 				Stringify(this.Param0, p0, 0),
 				Stringify(this.Param1, p1, 1),
 				Stringify(this.Param2, p2, 2));
+		}
+
+		public AppLocalUrl this[T0 p0, T1 p1, T2 p2]
+		{
+			get { return this.With(p0, p1, p2); }
 		}
 	}
 
@@ -150,6 +170,11 @@ namespace Dysphoria.Net.UrlRouting
 				Stringify(this.Param1, p1, 1),
 				Stringify(this.Param2, p2, 2),
 				Stringify(this.Param3, p3, 3));
+		}
+
+		public AppLocalUrl this[T0 p0, T1 p1, T2 p2, T3 p3]
+		{
+			get { return this.With(p0, p1, p2, p3); }
 		}
 	}
 }
