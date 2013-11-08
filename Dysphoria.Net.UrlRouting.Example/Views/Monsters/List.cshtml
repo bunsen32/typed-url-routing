@@ -1,0 +1,36 @@
+@model Tuple<IEnumerable<Monster>, string>
+@using Dysphoria.Net.UrlRouting.Test
+@using Dysphoria.Net.UrlRouting.Test.Models
+
+@if (!string.IsNullOrEmpty(Model.Item2))
+{
+	<h2>Category: @Model.Item2</h2>
+}
+
+(@Html.Link("Add a monster", SiteUrls.NewMonster))
+<table>
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Name</th>
+			<th>Description</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach(var monster in Model.Item1.OrderBy(m => m.Name))
+		{
+			<tr>
+				<td>@monster.Id</td>
+				<td>@Html.Link(monster.Name, SiteUrls.MonsterDetail[monster.Id])</td>
+				<td>@monster.Description.</td>
+				<td>
+					@using(Html.BeginForm(SiteUrls.DoDeleteMonster, u => u[monster.Id]))
+					{
+						<button type="submit">Delete</button>
+					}
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

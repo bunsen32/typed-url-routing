@@ -7,36 +7,45 @@
 
 	public class SiteUrls : Urls
 	{
-		public static readonly RequestPattern<UrlPattern> GetHome = Get(Path(""));
+		public static readonly UrlPattern 
+			Home = Path("");
 
-		public static readonly UrlPattern About = Path("about");
+		public static readonly UrlPattern 
+			MonsterList = Path("monsters/");
 
-		public static readonly UrlPattern<int, string> ShowParams = Path("{0}/{1}/show", Int, Slug);
+		public static readonly UrlPattern<string>
+			MonstersInCategory = Path("monsters/category/{0}", Slug);
 
-		public static readonly UrlPattern<int, string, string, string> ParamsPlusQuery = Path(
-			"{0}/{1}/query",
-			Int,
-			Slug,
-			Arg("bob", AnyString),
-			Arg("jeff", AnyString));
+		public static readonly UrlPattern<int?> 
+			MonsterDetail = Path("monsters/{0}/", Int.Or("new"));
 
-		public static readonly UrlPattern<Abc> Search = Path("search", Query<Abc>());
+		public static readonly AppLocalUrl
+			NewMonster = MonsterDetail[null];
 
-		public static readonly RequestPattern<UrlPattern, Abc> PostSearch = Post(Body<Abc>(), Path("search"));
+		public static readonly RequestPattern<UrlPattern<int>> 
+			DoDeleteMonster = Post(Path("monsters/{0}/delete", Int));
 
-		public static readonly UrlPattern<int?> NullableIntPath = Path("nullable/int/{0}", Int.Or("nothing"));
+		public static readonly RequestPattern<UrlPattern<int?>, Monster> 
+			AddEditMonster = Post(Body<Monster>(), MonsterDetail);
 
-		public static readonly UrlPattern<string> NullableStringPath = Path("nullable/str/{0}", Slug.OrNull("nothing"));
+		public static readonly UrlPattern<string, AdvancedSearchOptions>
+			AdvancedSearch = Path(
+				"search+",
+				Arg("q", AnyString),
+				Query<AdvancedSearchOptions>());
 
 		public static void Register(RouteCollection routes)
 		{
 			routes.ForController<HomeController>()
-				.MapRoute(GetHome, c => c.Index)
-				.MapRoute(Get(About), c => c.About)
-				.MapRoute(Get(ShowParams), c => c.ShowTwoParameters)
-				.MapRoute(Get(ParamsPlusQuery), c => c.ShowTwoParametersPlusQuery)
-				.MapRoute(Get(Search), c=> c.ModelParameter)
-				.MapRoute(PostSearch, c => c.PostSearch);
+				.MapRoute(Get(Home), c => c.Index);
+
+			routes.ForController<MonstersController>()
+				.MapRoute(Get(MonsterList), c => c.List)
+				.MapRoute(Get(MonstersInCategory), c => c.ListCategory)
+				.MapRoute(Get(MonsterDetail), c => c.ShowNewOrExisting)
+				.MapRoute(AddEditMonster, c => c.SaveNewOrExisting)
+				.MapRoute(DoDeleteMonster, c => c.Delete)
+				.MapRoute(Get(AdvancedSearch), c => c.Search);
 		}
 	}
 }

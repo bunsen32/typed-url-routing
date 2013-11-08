@@ -127,7 +127,8 @@ namespace Dysphoria.Net.UrlRouting
 		public ControllerRouteMapper<C> MapRoute<P1, P2, P3, P4>(RequestPattern<UrlPattern<P1, P2, P3, P4>> pattern, Expression<Func<C, Func<P1, P2, P3, P4, ActionResult>>> handler)
 		{
 			var methodFunc = handler.Compile();
-			return this.AddRouteHandler(pattern, handler, (c, context) => {
+			return this.AddRouteHandler(pattern, handler, (c, context) =>
+			{
 				var p = pattern.Url.ExtractParameters(context);
 				return methodFunc.Invoke(c).Invoke(p.Item1, p.Item2, p.Item3, p.Item4);
 			});

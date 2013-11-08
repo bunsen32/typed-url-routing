@@ -1,0 +1,51 @@
+﻿@using Dysphoria.Net.UrlRouting.Test.ViewModels
+@model SearchFormModel
+@using Dysphoria.Net.UrlRouting.Test
+<h2>Search</h2>
+
+@using(Html.BeginForm(SiteUrls.AdvancedSearch[null, null], FormMethod.Get))
+{
+	var searchCategories = Model.Options.Categories ?? new string[0];
+	<table>
+		<tr>
+			<th><label for="SearchString">Search for:</label></th>
+			<td><input type="text" id="SearchString" name="q" value="@Model.SearchString" /></td>
+		</tr>
+		<tr>
+			<th><label for="IsDangerous">Only dangerous beasts?:</label></th>
+			<td><input type="checkbox" id="IsDangerous" name="IsDangerous" checked="@Model.Options.IsDangerous" value="true" /></td>
+		</tr>
+		<tr>
+			<th><label for="Categories">In all of these categories:</label></th>
+			<td>
+				<select name="Categories" multiple="multiple">
+					@foreach (string c in ViewBag.AllCategories)
+					{
+						<option selected="@searchCategories.Contains(c)" value="@c">@c</option>
+					}
+				</select>
+			</td>
+		</tr>
+	</table>
+	<input type="submit" value="Search again" />
+}
+
+@if (Model.Results != null)
+{
+	<h3>Results!</h3>
+	if (!Model.Results.Any())
+	{
+		<p>No results. Sad face :(</p>
+	}
+	else
+	{
+		<ul>
+			@foreach(var m in Model.Results)
+			{
+				<li>
+					@Html.Link(m.Name, SiteUrls.MonsterDetail[m.Id])
+				</li>
+			}
+		</ul>
+	}
+}

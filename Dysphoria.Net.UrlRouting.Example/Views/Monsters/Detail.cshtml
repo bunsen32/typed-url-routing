@@ -1,0 +1,36 @@
+@model Monster
+@using Dysphoria.Net.UrlRouting.Test
+@using Dysphoria.Net.UrlRouting.Test.Models
+
+@Html.ValidationSummary(false, null, new { @class = "error" })
+@using(Html.BeginForm(SiteUrls.AddEditMonster, url => url[Model.IdOrNull]))
+{
+	@Html.HiddenFor(m => m.Id)
+	<table>
+		<tr>
+			<th>Name:</th>
+			<td>
+				@Html.TextBoxFor(m => m.Name)
+			</td>
+		</tr>
+		<tr>
+			<th>Description:</th>
+			<td>
+				@Html.TextAreaFor(m => m.Description)
+			</td>
+		</tr>
+		<tr>
+			<th>Is Dangerous?:</th>
+			<td>
+				@Html.CheckBoxFor(m => m.IsDangerous)
+			</td>
+		</tr>
+		<tr>
+			<th>Categories:</th>
+			<td>
+				@Html.ListBoxFor(m => m.Categories, ((IEnumerable<string>)ViewBag.AllCategories).Select(c => new SelectListItem() { Value = c, Text = c }))
+			</td>
+		</tr>
+	</table>
+	<input type="submit" value="Save" />
+}

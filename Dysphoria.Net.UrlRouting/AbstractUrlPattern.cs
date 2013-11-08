@@ -29,7 +29,7 @@ namespace Dysphoria.Net.UrlRouting
 	public abstract class AbstractUrlPattern
 	{
 		private readonly int arity;
-		private readonly string pattern;
+		private readonly string pathPattern;
 		private readonly IList<string> regexStrings;
 
 		private readonly Regex pathRegex;
@@ -45,7 +45,7 @@ namespace Dysphoria.Net.UrlRouting
 			if (pattern.StartsWith("/")) throw new ArgumentException("Paths must not start with '/'.");
 			if (pattern.StartsWith("~")) throw new ArgumentException("Paths must not start with '~'.");
 			if (pattern.Contains('?')) throw new ArgumentException("Cannot include querystring part in URL pattern.");
-			this.pattern = pattern;
+			this.pathPattern = pattern;
 
 			if (parameters.Length != this.Arity)
 				throw new ArgumentException(string.Format("Should get exactly {0} 'parameters', but got {1}", this.Arity, parameters.Length));
@@ -53,13 +53,13 @@ namespace Dysphoria.Net.UrlRouting
 			this.regexStrings = parameters.OfType<ISimpleUrlComponent>().Select(p => p.RegexString).ToList().AsReadOnly();
 			this.queryParameterNames = parameters.OfType<IQueryArg>().Select(a => a.Name).ToList();
 
-			this.pathArity = PatternArity(this.pattern, 0);
+			this.pathArity = PatternArity(this.pathPattern, 0);
 			var pathComponentsCount = parameters.OfType<IPathComponent>().Count();
 			if (pathComponentsCount != this.pathArity)
 				throw new ArgumentException(string.Format("Wrong number of path components: {0} should be {1} in '{2}'", pathComponentsCount, pathArity, pattern));
 
 			var bracketedRegexes = regexStrings.Select((r, index) => string.Format("(?<{0}>{1})", ParameterName(index), r)).ToArray();
-			var regexString = string.Format(this.pattern, (object[])bracketedRegexes);
+			var regexString = string.Format(this.pathPattern, (object[])bracketedRegexes);
 			this.pathRegex = new Regex("^" + regexString + "$", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.ExplicitCapture);
 		}
 
@@ -71,7 +71,7 @@ namespace Dysphoria.Net.UrlRouting
 
 		public int SimpleParameterCount { get { return this.regexStrings.Count; } }
 
-		public string PathPattern { get { return this.pattern; } }
+		public string PathPattern { get { return this.pathPattern; } }
 
 		public Regex PathRegex { get { return this.pathRegex; } }
 

@@ -100,14 +100,18 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\MonstersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Abc.cs" />
+    <Compile Include="Models\AdvancedSearchOptions.cs" />
+    <Compile Include="Models\Monster.cs" />
+    <Compile Include="Models\MonstersRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SiteUrls.cs" />
+    <Compile Include="ViewModels\SearchFormModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Site.css" />
@@ -143,13 +147,13 @@
     <Content Include="Views\Home\About.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\ShowTwoParameters.cshtml" />
+    <Content Include="Views\Monsters\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\ShowTwoParametersPlusQuery.cshtml" />
+    <Content Include="Views\Monsters\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\ModelParameter.cshtml" />
+    <Content Include="Views\Monsters\Search.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
@@ -168,7 +172,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>59083</DevelopmentServerPort>
+          <DevelopmentServerPort>55707</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
