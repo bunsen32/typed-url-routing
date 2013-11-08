@@ -25,6 +25,8 @@ namespace Dysphoria.Net.UrlRouting.PathComponents
 		public NullableComponent(PathComponent<BaseType> basis, string nullValueString, NullType nullValue)
 			: base(Regex.Escape(nullValueString) + "|" + basis.RegexString)
 		{
+			if (nullValueString == null) throw new ArgumentNullException("nullValueString cannot be 'null'!");
+
 			this.basis = basis;
 			this.nullValueString = nullValueString;
 			this.nullValue = nullValue;
