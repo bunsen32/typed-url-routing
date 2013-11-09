@@ -79,6 +79,7 @@
     <Compile Include="MvcUrlUtilities\PathHelpers.cs" />
     <Compile Include="PathComponents\SimpleUrlComponent.cs" />
     <Compile Include="AppLocalUrl.cs" />
+    <Compile Include="System.Web.Mvc\UrlHelper_Extensions.cs" />
     <Compile Include="System.Web.Mvc.Html\HtmlHelper_Extensions.cs" />
     <Compile Include="HttpMethod.cs" />
     <Compile Include="PathComponents\IntComponent.cs" />

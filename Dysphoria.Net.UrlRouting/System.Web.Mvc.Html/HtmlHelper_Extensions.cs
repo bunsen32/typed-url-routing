@@ -24,7 +24,14 @@ namespace System.Web.Mvc.Html
 		// For calling (internal) ViewContext.FormIdGenerator (as per bclcontrib project for .NET BCL)
 		private static readonly PropertyInfo FormIdGeneratorPropertyInfo = typeof(ViewContext).GetProperty("FormIdGenerator", BindingFlags.NonPublic | BindingFlags.Instance);
 
-		public static KeyValuePair<string, AppLocalUrl> Link(this string linkText, AppLocalUrl location)
+		/// <summary>
+		/// Creates a first class 'link' object (okay really a key-value-pair of a string and a URL).
+		/// This can be useful if, for example, you need to pass a collection of links to your view.
+		/// </summary>
+		/// <param name="linkText">The (plain) text of the link</param>
+		/// <param name="location">The destination of the link</param>
+		/// <returns>Pair of: text and URL</returns>
+		public static KeyValuePair<string, AppLocalUrl> LinkTo(this string linkText, AppLocalUrl location)
 		{
 			return new KeyValuePair<string, AppLocalUrl>(linkText, location);
 		}
@@ -55,11 +62,6 @@ namespace System.Web.Mvc.Html
 			tagBuilder.MergeAttribute("href", uri);
 			var linkString = tagBuilder.ToString(TagRenderMode.Normal);
 			return MvcHtmlString.Create(linkString);
-		}
-
-		public static string Of(this UrlHelper self, AppLocalUrl location)
-		{
-			return location.Resolved(self.RequestContext.HttpContext);
 		}
 
 		public static MvcForm BeginForm<U>(this HtmlHelper self, RequestPattern<U> route, Func<U, AppLocalUrl> instantiate, object htmlAttributes = null)
