@@ -13,7 +13,7 @@ It lets you:
 Oh and:
 
  * It all works at compile time. You don’t need to run a program to generate code or anything like that. Just include the assembly in your project and start using it.
-* You will write less code.
+ * You will write less code.
 
 I’ve used it so far in one commercial web project (small intranet system for an energy supplier). It’s already reached the stage where I’d much rather use it than the built-in, dynamically-typed MVC routing system.
 
