@@ -102,12 +102,14 @@ namespace Dysphoria.Net.UrlRouting
 		{
 			return (object)other != null
 				&& this.Path == other.Path
-				&& this.Querystring == other.Querystring;
+				&& this.Querystring == other.Querystring
+				&& this.FragmentIdentifier == other.FragmentIdentifier;
 		}
 
 		public override int GetHashCode()
 		{
-			return unchecked((this.Path.GetHashCode() * 41) ^ (this.Querystring ?? "").GetHashCode());
+			return unchecked(
+				(((this.Path.GetHashCode() * 41) ^ this.Querystring.GetHashCode()) * 41) ^ this.FragmentIdentifier.GetHashCode());
 		}
 	}
 }

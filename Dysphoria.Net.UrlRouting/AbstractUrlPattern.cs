@@ -134,7 +134,7 @@ namespace Dysphoria.Net.UrlRouting
 		{
 			try
 			{
-				var stringifier = p as PathComponent<T>;
+				var stringifier = p as SimpleUrlComponent<T>;
 				return stringifier != null
 					? stringifier.ToString(value)
 					: null;
