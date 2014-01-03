@@ -10,11 +10,14 @@
 // -----------------------------------------------------------------------
 namespace Dysphoria.Net.UrlRouting.PathComponents
 {
-	using System.Text.RegularExpressions;
 	using System;
+	using System.Text.RegularExpressions;
 
 	/// <summary>
-	/// TODO: Update summary.
+	/// Abstract base class of path components which are 'optional' and may have either a
+	/// 'null' value or an actual value. The two subclasses <see cref="NullableValueComponent"/>
+	/// and <see cref="NullableRefComponent"/> accommodate the type system inconsistancies between
+	/// ref and value types.
 	/// </summary>
 	public abstract class NullableComponent<BaseType, NullType> : PathComponent<NullType>
 	{
@@ -23,10 +26,8 @@ namespace Dysphoria.Net.UrlRouting.PathComponents
 		private readonly PathComponent<BaseType> basis;
 
 		public NullableComponent(PathComponent<BaseType> basis, string nullValueString, NullType nullValue)
-			: base(Regex.Escape(nullValueString) + "|" + basis.RegexString)
+			: base(Regex.Escape(nullValueString ?? "") + "|" + basis.RegexString)
 		{
-			if (nullValueString == null) throw new ArgumentNullException("nullValueString cannot be 'null'!");
-
 			this.basis = basis;
 			this.nullValueString = nullValueString;
 			this.nullValue = nullValue;
@@ -34,7 +35,7 @@ namespace Dysphoria.Net.UrlRouting.PathComponents
 
 		public override NullType FromString(string str)
 		{
-			return (str ?? "") == this.nullValueString
+			return (str ?? "") == (this.nullValueString ?? "")
 				? this.nullValue
 				: this.ToNullType(this.basis.FromString(str));
 		}

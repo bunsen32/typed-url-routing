@@ -10,11 +10,8 @@
 // -----------------------------------------------------------------------
 namespace Dysphoria.Net.UrlRouting.PathComponents
 {
-	using System.Text.RegularExpressions;
-	using System;
-
 	/// <summary>
-	/// TODO: Update summary.
+	/// Value type version of <seealso cref="NullableComponent"/>.
 	/// </summary>
 	public class NullableValueComponent<T> : NullableComponent<T, T?>
 		where T : struct

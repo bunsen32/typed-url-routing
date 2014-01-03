@@ -13,7 +13,7 @@ namespace Dysphoria.Net.UrlRouting.PathComponents
 	using System;
 
 	/// <summary>
-	/// TODO: Update summary.
+	/// Reference type version of <seealso cref="NullableComponent"/>.
 	/// </summary>
 	public class NullableRefComponent<T> : NullableComponent<T, T>
 		where T : class
