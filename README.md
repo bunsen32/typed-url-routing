@@ -15,7 +15,7 @@ Oh and:
  * It all works at compile time. You don’t need to run a program to generate code or anything like that. Just include the assembly in your project and start using it.
  * You will write less code.
 
-I’ve used it so far in one commercial web project (small intranet system for an energy supplier). It’s already reached the stage where I’d much rather use it than the built-in, dynamically-typed MVC routing system.
+I’ve used it so far in a couple of commercial web projects (one small intranet system for an energy supplier; and part of a business-to-business logistics website). It’s reached the stage where it’s much more comfortable to use than the built-in, dynamically-typed, MVC routing system.
 
 Here’s the original blog post which explains the project:
 > https://dysphoria.net/2013/03/14/strongly-typed-action-references-in-microsoft-mvc4/
