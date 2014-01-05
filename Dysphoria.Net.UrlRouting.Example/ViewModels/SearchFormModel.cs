@@ -1,7 +1,7 @@
-﻿namespace Dysphoria.Net.UrlRouting.Test.ViewModels
+﻿namespace Dysphoria.Net.UrlRouting.Example.ViewModels
 {
 	using System.Collections.Generic;
-	using Dysphoria.Net.UrlRouting.Test.Models;
+	using Dysphoria.Net.UrlRouting.Example.Models;
 
 	public class SearchFormModel
 	{

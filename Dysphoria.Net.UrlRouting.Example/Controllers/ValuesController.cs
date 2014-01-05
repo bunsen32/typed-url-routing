@@ -1,4 +1,4 @@
-﻿namespace Dysphoria.Net.UrlRouting.Test.Controllers
+﻿namespace Dysphoria.Net.UrlRouting.Example.Controllers
 {
 	using System.Collections.Generic;
 	using System.Web.Http;

@@ -1,4 +1,4 @@
-﻿namespace Dysphoria.Net.UrlRouting.Test
+﻿namespace Dysphoria.Net.UrlRouting.Example
 {
 	using System.Web.Mvc;
 	using System.Web.Routing;

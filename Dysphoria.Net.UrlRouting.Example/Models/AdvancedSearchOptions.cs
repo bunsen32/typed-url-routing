@@ -1,4 +1,4 @@
-﻿namespace Dysphoria.Net.UrlRouting.Test.Models
+﻿namespace Dysphoria.Net.UrlRouting.Example.Models
 {
 	public class AdvancedSearchOptions
 	{

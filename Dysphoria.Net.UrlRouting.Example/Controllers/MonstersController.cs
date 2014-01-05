@@ -1,11 +1,11 @@
-﻿namespace Dysphoria.Net.UrlRouting.Test.Controllers
+﻿namespace Dysphoria.Net.UrlRouting.Example.Controllers
 {
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Web.Mvc;
-	using Dysphoria.Net.UrlRouting.Test.Models;
-	using Dysphoria.Net.UrlRouting.Test.ViewModels;
+	using Dysphoria.Net.UrlRouting.Example.Models;
+	using Dysphoria.Net.UrlRouting.Example.ViewModels;
 
 	public class MonstersController : Controller
 	{

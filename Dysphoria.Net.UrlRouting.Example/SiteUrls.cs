@@ -1,9 +1,9 @@
-﻿namespace Dysphoria.Net.UrlRouting.Test
+﻿namespace Dysphoria.Net.UrlRouting.Example
 {
 	using System.Web.Routing;
 	using Dysphoria.Net.UrlRouting;
-	using Dysphoria.Net.UrlRouting.Test.Controllers;
-	using Dysphoria.Net.UrlRouting.Test.Models;
+	using Dysphoria.Net.UrlRouting.Example.Controllers;
+	using Dysphoria.Net.UrlRouting.Example.Models;
 
 	public class SiteUrls : Urls
 	{
@@ -30,7 +30,7 @@
 
 		public static readonly UrlPattern<string, AdvancedSearchOptions>
 			AdvancedSearch = Path(
-				"search+",
+				"search",
 				Arg("q", AnyString),
 				Query<AdvancedSearchOptions>());
 

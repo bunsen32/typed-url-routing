@@ -1,6 +1,6 @@
 @model Monster
-@using Dysphoria.Net.UrlRouting.Test
-@using Dysphoria.Net.UrlRouting.Test.Models
+@using Dysphoria.Net.UrlRouting.Example
+@using Dysphoria.Net.UrlRouting.Example.Models
 
 @Html.ValidationSummary(false, null, new { @class = "error" })
 @using(Html.BeginForm(SiteUrls.AddEditMonster, url => url[Model.IdOrNull]))

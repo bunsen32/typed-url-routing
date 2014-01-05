@@ -1,7 +1,7 @@
-﻿namespace Dysphoria.Net.UrlRouting.Test.Controllers
+﻿namespace Dysphoria.Net.UrlRouting.Example.Controllers
 {
 	using System.Web.Mvc;
-	using Dysphoria.Net.UrlRouting.Test.Models;
+	using Dysphoria.Net.UrlRouting.Example.Models;
 	using System;
 	using System.Collections.Generic;
 

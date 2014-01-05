@@ -1,36 +1,25 @@
 @model Tuple<IEnumerable<string>, IEnumerable<Monster>>
-@using Dysphoria.Net.UrlRouting.Test
-@using Dysphoria.Net.UrlRouting.Test.Models
+@using Dysphoria.Net.UrlRouting.Example
+@using Dysphoria.Net.UrlRouting.Example.Models
 
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<title>Internet Monster DataBase</title>
-		<link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
-	</head>
-	<body>
-		<h1>Monsters!</h1>
-		<p>We have these @Html.Link("monsters", SiteUrls.MonsterList):
-			@{var firstMonster = true; }
-			@foreach (var m in Model.Item2.OrderBy(m => m.Name).Take(3))
-			{
-				if (firstMonster) { firstMonster = false; }
-				else
-				{@(", ")}
-				@m.Name
-			}
-			@if (Model.Item2.Count() > 3){ @("...and many more") }
-			!
-			(@Html.Link("Add a monster", SiteUrls.NewMonster))
-		</p>
-		<p>These are the categories:
-			@{var firstCategory = true;}
-			@foreach(var c in Model.Item1.OrderBy(c => c))
-			{
-				if (firstCategory) { firstCategory = false; } else { @(", ") }
-				@Html.Link(c, SiteUrls.MonstersInCategory[c])
-			}
-		</p>
-	</body>
-</html>
+<p>We have these @Html.Link("monsters", SiteUrls.MonsterList):
+	@{var firstMonster = true; }
+	@foreach (var m in Model.Item2.OrderBy(m => m.Name).Take(3))
+	{
+		if (firstMonster) { firstMonster = false; }
+		else
+		{@(", ")}
+		@m.Name
+	}
+	@if (Model.Item2.Count() > 3){ @("...and many more") }
+	!
+	(@Html.Link("Add a monster", SiteUrls.NewMonster))
+</p>
+<p>These are the categories:
+	@{var firstCategory = true;}
+	@foreach(var c in Model.Item1.OrderBy(c => c))
+	{
+		if (firstCategory) { firstCategory = false; } else { @(", ") }
+		@Html.Link(c, SiteUrls.MonstersInCategory[c])
+	}
+</p>
