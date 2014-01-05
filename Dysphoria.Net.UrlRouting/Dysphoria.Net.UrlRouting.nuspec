@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>Andrew Forrest</authors>
+    <owners>Andrew Forrest</owners>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+    <projectUrl>http://url-routing.dysphoria.net</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>First public release on NuGet</releaseNotes>
+    <copyright>Copyright 2014</copyright>
+    <tags></tags>
+  </metadata>
+</package>
