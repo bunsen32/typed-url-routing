@@ -19,7 +19,6 @@ namespace Dysphoria.Net.UrlRouting.PathComponents
 	public class MvcQueryStringEncoding<T> : QueryStringEncoding<T>
 	{
 		public static readonly MvcQueryStringEncoding<T> Instance = new MvcQueryStringEncoding<T>();
-		private readonly MvcDecoder<T> encodeDecode = MvcDecoder<T>.Instance;
 
 		private MvcQueryStringEncoding()
 		{
@@ -32,7 +31,7 @@ namespace Dysphoria.Net.UrlRouting.PathComponents
 
 		public override T FromDictionary(ControllerContext cx)
 		{
-			return encodeDecode.FromDictionary(cx, cx.HttpContext.Request.QueryString);
+			return MvcDecoder<T>.Instance.FromQueryString(cx);
 		}
 	}
 }

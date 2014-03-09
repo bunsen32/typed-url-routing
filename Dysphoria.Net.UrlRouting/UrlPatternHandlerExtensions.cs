@@ -97,8 +97,7 @@ namespace Dysphoria.Net.UrlRouting
 		public static B DecodeBody<U, B>(this RequestPattern<U, B> pattern, ControllerContext req)
 			where U : AbstractUrlPattern
 		{
-			var form = req.HttpContext.Request.Form;
-			return MvcDecoder<B>.Instance.FromDictionary(req, form);
+			return MvcDecoder<B>.Instance.FromForm(req);
 		}
 	}
 }
