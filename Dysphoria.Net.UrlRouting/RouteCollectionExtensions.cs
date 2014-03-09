@@ -12,13 +12,12 @@ namespace Dysphoria.Net.UrlRouting
 {
 	using System;
 	using System.Linq;
-	using System.Web;
 	using System.Web.Mvc;
 	using System.Web.Routing;
 	using Dysphoria.Net.UrlRouting.Handlers;
 
 	/// <summary>
-	/// TODO: Update summary.
+	/// Extension method to get a ControllerRouteMapper for a RouteCollection.
 	/// </summary>
 	public static class RouteCollectionExtensions
 	{
@@ -27,28 +26,6 @@ namespace Dysphoria.Net.UrlRouting
 		{
 			return new ControllerRouteMapper<Ctrl>(routes);
 		}
-
-		/*
-		public static Route MapRoute(this RouteCollection routes, RequestPattern<UrlPattern> pattern, Func<HttpContextBase, ActionResult> handler)
-		{
-			return routes.AddRoute(pattern, FuncRouteHandler.Create(pattern, handler));
-		}
-
-		public static Route MapRoute<P1>(this RouteCollection routes, RequestPattern<UrlPattern<P1>> pattern, Func<HttpContextBase, P1, ActionResult> handler)
-		{
-			return routes.AddRoute(pattern, FuncRouteHandler.Create(pattern, handler));
-		}
-
-		public static Route MapRoute<P1, P2>(this RouteCollection routes, RequestPattern<UrlPattern<P1, P2>> pattern, Func<HttpContextBase, P1, P2, ActionResult> handler)
-		{
-			return routes.AddRoute(pattern, FuncRouteHandler.Create(pattern, handler));
-		}
-
-		public static Route MapRoute<P1, P2, P3>(this RouteCollection routes, RequestPattern<UrlPattern<P1, P2, P3>> pattern, Func<HttpContextBase, P1, P2, P3, ActionResult> handler)
-		{
-			return routes.AddRoute(pattern, FuncRouteHandler.Create(pattern, handler));
-		}
-		*/
 
 		internal static Route AddRoute(this RouteCollection routes, AbstractRequestPattern pattern, AbstractRouteHandler handler)
 		{

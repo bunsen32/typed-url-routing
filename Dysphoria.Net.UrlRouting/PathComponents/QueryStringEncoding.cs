@@ -22,6 +22,6 @@ namespace Dysphoria.Net.UrlRouting.PathComponents
 	{
 		public abstract RouteValueDictionary ToDictionary(T value);
 
-		public abstract T FromDictionary(ControllerContext cx, NameValueCollection dict);
+		public abstract T FromDictionary(ControllerContext cx);
 	}
 }

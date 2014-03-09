@@ -90,7 +90,7 @@ namespace Dysphoria.Net.UrlRouting
 			}
 			else
 			{
-				return queryParam.FromDictionary(req, req.HttpContext.Request.QueryString);
+				return queryParam.FromDictionary(req);
 			}
 		}
 
@@ -98,7 +98,7 @@ namespace Dysphoria.Net.UrlRouting
 			where U : AbstractUrlPattern
 		{
 			var form = req.HttpContext.Request.Form;
-			return MvcEncoderDecoder<B>.Instance.FromDictionary(req, form);
+			return MvcDecoder<B>.Instance.FromDictionary(req, form);
 		}
 	}
 }

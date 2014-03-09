@@ -10,9 +10,6 @@
 // -----------------------------------------------------------------------
 namespace Dysphoria.Net.UrlRouting.PathComponents
 {
-	using System;
-	using System.Collections.Specialized;
-	using System.Globalization;
 	using System.Web.Mvc;
 	using System.Web.Routing;
 
@@ -22,7 +19,7 @@ namespace Dysphoria.Net.UrlRouting.PathComponents
 	public class MvcQueryStringEncoding<T> : QueryStringEncoding<T>
 	{
 		public static readonly MvcQueryStringEncoding<T> Instance = new MvcQueryStringEncoding<T>();
-		private readonly MvcEncoderDecoder<T> encodeDecode = MvcEncoderDecoder<T>.Instance;
+		private readonly MvcDecoder<T> encodeDecode = MvcDecoder<T>.Instance;
 
 		private MvcQueryStringEncoding()
 		{
@@ -30,12 +27,12 @@ namespace Dysphoria.Net.UrlRouting.PathComponents
 
 		public override RouteValueDictionary ToDictionary(T value)
 		{
-			return encodeDecode.ToDictionary(value);
+			return (value as RouteValueDictionary) ?? new RouteValueDictionary(value);
 		}
 
-		public override T FromDictionary(ControllerContext cx, NameValueCollection dict)
+		public override T FromDictionary(ControllerContext cx)
 		{
-			return encodeDecode.FromDictionary(cx, dict);
+			return encodeDecode.FromDictionary(cx, cx.HttpContext.Request.QueryString);
 		}
 	}
 }

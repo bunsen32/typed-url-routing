@@ -4,22 +4,16 @@
 	using System.Collections.Specialized;
 	using System.Globalization;
 	using System.Web.Mvc;
-	using System.Web.Routing;
 
-	internal class MvcEncoderDecoder<T>
+	internal class MvcDecoder<T>
 	{
 		private static readonly ModelBinderDictionary binderDictionary = new ModelBinderDictionary();
-		public static readonly MvcEncoderDecoder<T> Instance = new MvcEncoderDecoder<T>();
+		public static readonly MvcDecoder<T> Instance = new MvcDecoder<T>();
 		private readonly IModelBinder binder;
 
-		private MvcEncoderDecoder()
+		private MvcDecoder()
 		{
 			this.binder = binderDictionary.GetBinder(typeof(T), fallbackToDefault: true);
-		}
-
-		public RouteValueDictionary ToDictionary(T value)
-		{
-			return (value as RouteValueDictionary) ?? new RouteValueDictionary(value);
 		}
 
 		public T FromDictionary(ControllerContext cx, NameValueCollection dict)
