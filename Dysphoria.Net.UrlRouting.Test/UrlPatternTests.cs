@@ -12,48 +12,53 @@ namespace Dysphoria.Net.UrlRouting.Test
 {
 	using System;
 	using Dysphoria.Net.UrlRouting.PathComponents;
-	using Microsoft.VisualStudio.TestTools.UnitTesting;
+	using Xunit;
 
-	[TestClass]
 	public class UrlPatternTests : Urls
 	{
-		[TestMethod, ExpectedException(typeof(ArgumentException))]
+		[Fact]
 		public void RejectsTooFewParameters()
 		{
-			new TestUrlPattern(1, "");
+			Assert.Throws<ArgumentException>(()=>
+				new TestUrlPattern(1, ""));
 		}
 
-		[TestMethod, ExpectedException(typeof(ArgumentException))]
+		[Fact]
 		public void RejectsTooManyParameters()
 		{
-			new TestUrlPattern(1, "", null, null);
+			Assert.Throws<ArgumentException>(() =>
+				new TestUrlPattern(1, "", null, null));
 		}
 
-		[TestMethod, ExpectedException(typeof(ArgumentException))]
+		[Fact]
 		public void RejectsPathStartingWithSlash()
 		{
-			new TestUrlPattern(0, "/bob");
+			Assert.Throws<ArgumentException>(() =>
+				new TestUrlPattern(0, "/bob"));
 		}
 
-		[TestMethod, ExpectedException(typeof(ArgumentException))]
+		[Fact]
 		public void RejectsPatternArityTooSmall()
 		{
-			new TestUrlPattern(1, "bob", Int);
+			Assert.Throws<ArgumentException>(() =>
+				new TestUrlPattern(1, "bob", Int));
 		}
 
-		[TestMethod, ExpectedException(typeof(ArgumentException))]
+		[Fact]
 		public void RejectsPatternArityTooLarge()
 		{
-			new TestUrlPattern(1, "bob{0}/{1}", Int);
+			Assert.Throws<ArgumentException>(() =>
+				new TestUrlPattern(1, "bob{0}/{1}", Int));
 		}
 
-		[TestMethod, ExpectedException(typeof(ArgumentException))]
+		[Fact]
 		public void RejectsWrongNumberOfPathComponents()
 		{
-			new TestUrlPattern(2, "bob{0}/{1}", Int, Arg("named", Int));
+			Assert.Throws<ArgumentException>(() =>
+				new TestUrlPattern(2, "bob{0}/{1}", Int, Arg("named", Int)));
 		}
 
-		[TestMethod]
+		[Fact]
 		public void AcceptsPatternWithCorrectParameters()
 		{
 			new TestUrlPattern(2, "bob/{0}", Int, Arg("named", Int));
