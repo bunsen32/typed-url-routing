@@ -39,6 +39,12 @@ namespace Dysphoria.Net.UrlRouting
 			return new StringComponent(regexPattern);
 		}
 
+		protected static EnumComponent<EnumType> Enum<EnumType>()
+			where EnumType : struct
+		{
+			return EnumComponent<EnumType>.Instance;
+		}
+
 		protected static UrlPattern Path(string pattern)
 		{
 			return new UrlPattern(pattern);
