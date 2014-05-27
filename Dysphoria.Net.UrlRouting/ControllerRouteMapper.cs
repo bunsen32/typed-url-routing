@@ -22,7 +22,7 @@ namespace Dysphoria.Net.UrlRouting
 	/// TODO: Update summary.
 	/// </summary>
 	public class ControllerRouteMapper<C>
-		where C : Controller
+		where C : ControllerBase
 	{
 		private readonly RouteCollection routes;
 		private readonly string controllerName;

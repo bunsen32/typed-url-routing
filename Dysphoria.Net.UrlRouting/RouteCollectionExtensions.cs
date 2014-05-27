@@ -22,7 +22,7 @@ namespace Dysphoria.Net.UrlRouting
 	public static class RouteCollectionExtensions
 	{
 		public static ControllerRouteMapper<Ctrl> ForController<Ctrl>(this RouteCollection routes)
-			where Ctrl : Controller
+			where Ctrl : ControllerBase
 		{
 			return new ControllerRouteMapper<Ctrl>(routes);
 		}
