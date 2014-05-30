@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractRequestPattern.cs" />
+    <Compile Include="UrlPatternRequestExtensions.cs" />
     <Compile Include="InvalidUrlArgumentException.cs" />
     <Compile Include="Handlers\AbstractRouteHandler.cs" />
     <Compile Include="AbstractUrlPattern.cs" />

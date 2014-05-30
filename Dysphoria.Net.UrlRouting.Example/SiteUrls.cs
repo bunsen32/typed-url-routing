@@ -22,11 +22,11 @@
 		public static readonly AppLocalUrl
 			NewMonster = MonsterDetail[null];
 
-		public static readonly RequestPattern<UrlPattern<int>> 
-			DoDeleteMonster = Post(Path("monsters/{0}/delete", Int));
+		public static readonly RequestPattern<UrlPattern<int>>
+			DoDeleteMonster = Path("monsters/{0}/delete", Int).Post();
 
-		public static readonly RequestPattern<UrlPattern<int?>, Monster> 
-			AddEditMonster = Post(Body<Monster>(), MonsterDetail);
+		public static readonly RequestPattern<UrlPattern<int?>, Monster>
+			AddEditMonster = MonsterDetail.Post(Body<Monster>);
 
 		public static readonly UrlPattern<string, AdvancedSearchOptions>
 			AdvancedSearch = Path(
@@ -37,15 +37,15 @@
 		public static void Register(RouteCollection routes)
 		{
 			routes.ForController<HomeController>()
-				.MapRoute(Get(Home), c => c.Index);
+				.MapRoute(Home.Get(), c => c.Index);
 
 			routes.ForController<MonstersController>()
-				.MapRoute(Get(MonsterList), c => c.List)
-				.MapRoute(Get(MonstersInCategory), c => c.ListCategory)
-				.MapRoute(Get(MonsterDetail), c => c.ShowNewOrExisting)
+				.MapRoute(MonsterList.Get(), c => c.List)
+				.MapRoute(MonstersInCategory.Get(), c => c.ListCategory)
+				.MapRoute(MonsterDetail.Get(), c => c.ShowNewOrExisting)
 				.MapRoute(AddEditMonster, c => c.SaveNewOrExisting)
 				.MapRoute(DoDeleteMonster, c => c.Delete)
-				.MapRoute(Get(AdvancedSearch), c => c.Search);
+				.MapRoute(AdvancedSearch.Get(), c => c.Search);
 		}
 	}
 }

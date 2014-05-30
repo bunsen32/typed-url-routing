@@ -49,7 +49,8 @@ namespace Dysphoria.Net.UrlRouting
 				DecodeLastParameter(url.Param2, p, 2, req));
 		}
 
-		public static Tuple<T0, T1, T2, T3> ExtractParameters<T0, T1, T2, T3>(this UrlPattern<T0, T1, T2, T3> url, ControllerContext req)
+		public static Tuple<T0, T1, T2, T3> ExtractParameters<T0, T1, T2, T3>(this UrlPattern<T0, T1, T2, T3> url,
+			ControllerContext req)
 		{
 			var p = UrlStringParameters(url, req.RequestContext);
 			return Tuple.Create(
@@ -68,7 +69,7 @@ namespace Dysphoria.Net.UrlRouting
 				parameters[i] = (values[url.ParameterName(i)] as string) ?? "";
 			}
 
-			var query =req.HttpContext.Request.QueryString;
+			var query = req.HttpContext.Request.QueryString;
 			for (int i = url.PathArity; i < url.SimpleParameterCount; i++)
 			{
 				parameters[i] = (query[url.ParameterName(i)] as string) ?? "";
@@ -77,12 +78,13 @@ namespace Dysphoria.Net.UrlRouting
 			return parameters;
 		}
 
-		private static T DecodeLastParameter<T>(UrlArgument<T> descriptor, string[] parameterStrings, int index, ControllerContext req)
+		private static T DecodeLastParameter<T>(UrlArgument<T> descriptor, string[] parameterStrings, int index,
+			ControllerContext req)
 		{
-			var query = req.HttpContext.Request.QueryString;
 			var simple = (descriptor as SimpleUrlComponent<T>);
 			var queryParam = (descriptor as QueryStringEncoding<T>);
-			if (simple == null && queryParam == null) throw new ArgumentException("Do not recognise UrlParameter subclass " + descriptor.GetType().Name);
+			if (simple == null && queryParam == null)
+				throw new ArgumentException("Do not recognise UrlParameter subclass " + descriptor.GetType().Name);
 			if (simple != null)
 			{
 				return simple.FromString(parameterStrings[index]);
