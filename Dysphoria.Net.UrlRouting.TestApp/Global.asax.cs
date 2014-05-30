@@ -16,7 +16,6 @@ namespace Dysphoria.Net.UrlRouting.TestApp
 		{
 			AreaRegistration.RegisterAllAreas();
 
-			WebApiConfig.Register(GlobalConfiguration.Configuration);
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 			Routes.RegisterRoutes(RouteTable.Routes);
 		}

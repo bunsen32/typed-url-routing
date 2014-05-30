@@ -33,6 +33,12 @@ namespace Dysphoria.Net.UrlRouting.TestApp
 		public static readonly RequestPattern<UrlPattern, DateRange>
 			PostDateRange = Post(Body<DateRange>(), Path("dates"));
 
+		public static readonly UrlPattern
+			UploadForm = Path("upload-form");
+
+		public static readonly RequestPattern<UrlPattern, UploadForm>
+			UploadAFile = Post(Body<UploadForm>(), Path("upload"));
+
 		public static void RegisterRoutes(RouteCollection routes)
 		{
 			routes.ForController<HomeController>()
@@ -43,6 +49,8 @@ namespace Dysphoria.Net.UrlRouting.TestApp
 				.MapRoute(Get(Path1String), c => c.OneString)
 				.MapRoute(Get(QueryDateRange), c => c.DateRange)
 				.MapRoute(PostDateRange, c => c.DateRange)
+				.MapRoute(Get(UploadForm), c => c.UploadForm)
+				.MapRoute(UploadAFile, c => c.UploadAFile)
 				;
 
 			// Always declare this last:

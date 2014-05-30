@@ -1,4 +1,6 @@
-﻿using Dysphoria.Net.UrlRouting.TestApp.Models;
+﻿using System.IO;
+using System.Text;
+using Dysphoria.Net.UrlRouting.TestApp.Models;
 
 namespace Dysphoria.Net.UrlRouting.TestApp.Controllers
 {
@@ -36,6 +38,24 @@ namespace Dysphoria.Net.UrlRouting.TestApp.Controllers
 		public ActionResult DateRange(DateRange r)
 		{
 			return this.Content(string.Format("from={0:yyyyMMdd};to={1:yyyyMMdd}", r.From, r.To));
+		}
+
+		public ActionResult UploadForm()
+		{
+			return View();
+		}
+
+		public ActionResult UploadAFile(UploadForm form)
+		{
+			var fileContents = GetContents(form.File);
+			return this.Content(string.Format("file-content={0};name={1}", fileContents, form.Name));
+		}
+
+		private string GetContents(System.Web.HttpPostedFileBase file)
+		{
+			if (file == null) return "null";
+			var s = new StreamReader(file.InputStream, Encoding.UTF8);
+			return s.ReadToEnd();
 		}
 
 		public ActionResult NotFound(string path)

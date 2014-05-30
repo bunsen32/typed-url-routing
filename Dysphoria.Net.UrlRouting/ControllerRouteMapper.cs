@@ -148,7 +148,7 @@ namespace Dysphoria.Net.UrlRouting
 
 		private ControllerRouteMapper<C> AddRouteHandler<FunctionType>(AbstractRequestPattern pattern, Expression<FunctionType> handler, Func<C, ControllerContext, ActionResult> handlerFunction)
 		{
-			var method = GetMethodInfo(handler);
+			var method = GetMethodInfo(typeof(C), handler);
 			var actionName = method.Name;
 			this.routes.AddRoute(
 				pattern,
@@ -167,7 +167,7 @@ namespace Dysphoria.Net.UrlRouting
 					: wholeName;
 		}
 
-		private static MethodInfo GetMethodInfo(Expression method)
+		private static MethodInfo GetMethodInfo(Type controllerClass, Expression method)
 		{
 			var lambda = method as LambdaExpression;
 			if (lambda == null) throw new ArgumentException("Argument is not a lambda expression (c => c.Thing)");
@@ -176,13 +176,35 @@ namespace Dysphoria.Net.UrlRouting
 				? ((UnaryExpression)convert).Operand as MethodCallExpression
 				: convert as MethodCallExpression;
 			if (body == null) throw new ArgumentException("Argument not in correct form (c => c.Thing)");
-			var methodInfoValue = body
-				.Arguments.OfType<ConstantExpression>()
-				.Where(exp => exp.Type == typeof(MethodInfo))
-				.Select(exp => (MethodInfo)exp.Value)
-				.FirstOrDefault();
-			if (methodInfoValue == null) throw new ArgumentException("Cannot find method name in expression.");
-			return methodInfoValue;
+
+			var visitor = new MethodGetter(controllerClass);
+			visitor.Visit(body);
+			if (visitor.Found == null) throw new ArgumentException("Expression does not contain a method reference.");
+			return visitor.Found;
+		}
+
+		private class MethodGetter : ExpressionVisitor
+		{
+			private readonly Type classType;
+			private MethodInfo found = null;
+
+			public MethodGetter(Type classType)
+			{
+				this.classType = classType;
+			}
+
+			public MethodInfo Found {get { return this.found; }}
+
+			protected override Expression VisitConstant(ConstantExpression node)
+			{
+				var method = node.Value as MethodInfo;
+				if (method != null && !method.IsStatic && method.DeclaringType == classType)
+				{
+					this.found = method;
+				}
+
+				return node;
+			}
 		}
 	}
 }

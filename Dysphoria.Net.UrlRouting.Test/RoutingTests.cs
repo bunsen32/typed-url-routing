@@ -1,7 +1,19 @@
-﻿namespace Dysphoria.Net.UrlRouting.Test
+﻿// -----------------------------------------------------------------------
+// <copyright file="RoutingTests.cs" company="Andrew Forrest">©2013 Andrew Forrest</copyright>
+//
+// Licensed under the Apache License, Version 2.0 (the "License"); you may
+// not use this file except in compliance with the License. Copy of
+// license at: http://www.apache.org/licenses/LICENSE-2.0
+//
+// This software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
+// OR CONDITIONS. See License for specific permissions and limitations.
+// -----------------------------------------------------------------------
+namespace Dysphoria.Net.UrlRouting.Test
 {
 	using System;
+	using System.Collections.Generic;
 	using System.Collections.Specialized;
+	using System.Text;
 	using Dysphoria.Net.UrlRouting;
 	using FakeHost;
 	using Xunit;
@@ -77,7 +89,19 @@
 		[Fact]
 		public void FileUploadWorks()
 		{
-			throw new NotImplementedException();
+			using (var browser = new Browser())
+			{
+				var form = new Dictionary<string, object>(2);
+				form["Name"] = "bob";
+				form["File"] = new FormUpload.FileParameter(
+					Encoding.UTF8.GetBytes("Hello World!"),
+					"filename.txt",
+					"text/plain");
+				var formBytes = FormUpload.GetMultipartFormData(form, "boundary");
+				var formString = Encoding.UTF8.GetString(formBytes);
+				var result = browser.Post("/upload", formString, FormUpload.HttpEncoding + "; boundary=boundary");
+				Assert.Equal("file-content=Hello World!;name=bob", result.ResponseText);
+			}
 		}
 
 		protected string GetStringResult(string relativePath)

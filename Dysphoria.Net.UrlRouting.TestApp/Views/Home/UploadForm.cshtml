@@ -1,0 +1,15 @@
+﻿@model Dysphoria.Net.UrlRouting.TestApp.Models.UploadForm
+@using Dysphoria.Net.UrlRouting.TestApp
+@{
+    ViewBag.Title = "UploadForm";
+}
+
+<h2>UploadForm</h2>
+@using (Html.BeginForm(Routes.UploadAFile, r => r.Url, new {enctype = "multipart/form-data"}))
+{
+	<fieldset>
+		@Html.TextBoxFor(m => m.Name)<br/>
+		<input type="file" name="File" /><br/>
+		<input type="submit" name="" value="Upload it."/>
+	</fieldset>
+}
