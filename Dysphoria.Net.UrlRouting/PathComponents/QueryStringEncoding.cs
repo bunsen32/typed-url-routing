@@ -10,7 +10,6 @@
 // -----------------------------------------------------------------------
 namespace Dysphoria.Net.UrlRouting.PathComponents
 {
-	using System.Collections.Specialized;
 	using System.Web.Mvc;
 	using System.Web.Routing;
 
