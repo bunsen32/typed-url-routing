@@ -10,7 +10,11 @@
     <projectUrl>http://url-routing.dysphoria.net</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>First public release on NuGet</releaseNotes>
+    <releaseNotes>
+		Now deals correctly with form submission, including file uploads.
+		Correctly parses querystring parameters (using invariant culture) and form parameters (using user's culture).
+		Adds more fluent API for specifying HTTP methods, via extension methods.
+	</releaseNotes>
     <copyright>Copyright 2014</copyright>
     <tags></tags>
   </metadata>
