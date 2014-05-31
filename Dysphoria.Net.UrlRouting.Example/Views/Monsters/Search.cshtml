@@ -2,6 +2,10 @@
 @model SearchFormModel
 @using Dysphoria.Net.UrlRouting.Example
 <h2>Search</h2>
+@{
+	ViewBag.Title = "Search";
+	ViewBag.SuppressHeaderSearch = true;
+}
 
 @using(Html.BeginForm(SiteUrls.AdvancedSearch[null, null], FormMethod.Get))
 {
@@ -9,7 +13,7 @@
 	<table>
 		<tr>
 			<th><label for="SearchString">Search for:</label></th>
-			<td><input type="text" id="SearchString" name="q" value="@Model.SearchString" /></td>
+			<td><input type="search" id="SearchString" name="q" value="@Model.SearchString" /></td>
 		</tr>
 		<tr>
 			<th><label for="IsDangerous">Only dangerous beasts?:</label></th>

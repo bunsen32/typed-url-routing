@@ -13,7 +13,7 @@
 		{
 			using (var db = MonstersRepository.Get())
 			{
-				return View("List", Tuple.Create(db.Monsters.AsEnumerable(), ""));
+				return View("List", Tuple.Create(db.Monsters.AsEnumerable(), (string)null));
 			}
 		}
 

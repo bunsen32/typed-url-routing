@@ -2,9 +2,13 @@
 @using Dysphoria.Net.UrlRouting.Example
 @using Dysphoria.Net.UrlRouting.Example.Models
 
-@if (!string.IsNullOrEmpty(Model.Item2))
+@{
+	var category = Model.Item2;
+	ViewBag.Title = category ?? "All";
+}
+@if (!string.IsNullOrEmpty(category))
 {
-	<h2>Category: @Model.Item2</h2>
+	<h2>Category: @category</h2>
 }
 
 (@Html.Link("Add a monster", SiteUrls.NewMonster))

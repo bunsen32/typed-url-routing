@@ -4,18 +4,20 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
-		<title>@ViewBag.Title</title>
+		<title>Monsters! @ViewBag.Title</title>
 		<link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
 	</head>
 	<body>
 		<header>
-			@Html.Link("<home>", SiteUrls.Home)
-			@using (Html.BeginForm(SiteUrls.AdvancedSearch[null, null], FormMethod.Get))
+			<h1>@Html.Link("Monsters!", SiteUrls.Home)</h1>
+			@if (!(ViewBag.SuppressHeaderSearch ?? false))
 			{
-				<input type="text" name="q" />
-				<input type="submit" value="Search" />
+				using (Html.BeginForm(SiteUrls.AdvancedSearch[null, null], FormMethod.Get))
+				 {
+					 <input type="search" name="q" />
+					 <input type="submit" value="Search" />
+				 }
 			}
-			<h1>Monsters!</h1>
 		</header>
 		@RenderBody()
 	</body>

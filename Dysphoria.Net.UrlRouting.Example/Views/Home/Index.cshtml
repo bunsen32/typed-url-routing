@@ -1,7 +1,9 @@
 @model Tuple<IEnumerable<string>, IEnumerable<Monster>>
 @using Dysphoria.Net.UrlRouting.Example
 @using Dysphoria.Net.UrlRouting.Example.Models
-
+@{
+	ViewBag.Title = "Home";
+}
 <p>We have these @Html.Link("monsters", SiteUrls.MonsterList):
 	@{var firstMonster = true; }
 	@foreach (var m in Model.Item2.OrderBy(m => m.Name).Take(3))

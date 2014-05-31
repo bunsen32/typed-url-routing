@@ -1,6 +1,10 @@
 @model Monster
+@using System.Web.UI.WebControls
 @using Dysphoria.Net.UrlRouting.Example
 @using Dysphoria.Net.UrlRouting.Example.Models
+@{
+	ViewBag.Title = Model.Name;
+}
 
 @Html.ValidationSummary(false, null, new { @class = "error" })
 @using(Html.BeginForm(SiteUrls.AddEditMonster, url => url[Model.IdOrNull]))
