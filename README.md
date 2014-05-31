@@ -14,15 +14,17 @@ The key things you need to know are:
 
  * It all works at compile time. You don’t need to run a program to generate code or anything like that. Just include the assembly in your project and start using it.
  * You will write less code.
- * You will spend less time debugging stupid runtime problems because an Action name is wrong.
 
 I’ve used it so far in a 3 commercial web projects:
 
  1. A small intranet system for an energy supplier;
- 2. A business-to-business logistics website and associated back-office systems;
+ 2. In the business-to-business website and associated back-office systems for a logistics company;
  3. Intranet system for an international electronics recycling company.
  
 It’s reached a level of maturity where it’s much more comfortable to use than the built-in, dynamically-typed, MVC routing system.
+
+It now has a website, including an introductory tutorial:
+> http://url-routing.dysphoria.net
 
 Here’s the original blog post which explains the project:
 > https://dysphoria.net/2013/03/14/strongly-typed-action-references-in-microsoft-mvc4/
