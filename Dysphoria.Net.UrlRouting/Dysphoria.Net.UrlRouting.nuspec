@@ -6,14 +6,14 @@
     <title>$title$</title>
     <authors>Andrew Forrest</authors>
     <owners>Andrew Forrest</owners>
-    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+    <license type="expression">Apache-2.0</license>
     <projectUrl>http://url-routing.dysphoria.net</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes>
-		Now deals correctly with form submission, including file uploads.
-		Correctly parses querystring parameters (using invariant culture) and form parameters (using user's culture).
-		Adds more fluent API for specifying HTTP methods, via extension methods.
+		Now targets .NET 4.7.2. Supports async Task&lt;ActionResult&gt; action methods on controllers.
+		Acquires Controller instances from DependencyConfig.Current instead of Activator. (Works as 
+		before, but also supports Dependency Injection frameworks like AutoFac and others.)
 	</releaseNotes>
     <copyright>Copyright 2014</copyright>
     <tags></tags>
