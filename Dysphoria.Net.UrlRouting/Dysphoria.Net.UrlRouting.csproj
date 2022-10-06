@@ -109,9 +109,6 @@
     <Compile Include="Urls.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Requests\" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
