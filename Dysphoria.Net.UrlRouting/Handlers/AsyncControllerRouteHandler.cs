@@ -54,7 +54,7 @@ namespace Dysphoria.Net.UrlRouting.Handlers
 
 		protected override async Task ProcessRequest(RequestContext context)
 		{
-			var controller = Activator.CreateInstance<C>();
+			var controller = DependencyResolver.Current.GetService<C>();
 			var disposable = controller as IDisposable;
 			try
 			{

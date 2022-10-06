@@ -52,7 +52,7 @@ namespace Dysphoria.Net.UrlRouting.Handlers
 
 		protected override void ProcessRequest(RequestContext context)
 		{
-			var controller = Activator.CreateInstance<C>();
+			var controller = DependencyResolver.Current.GetService<C>();
 			var disposable = controller as IDisposable;
 			try
 			{
