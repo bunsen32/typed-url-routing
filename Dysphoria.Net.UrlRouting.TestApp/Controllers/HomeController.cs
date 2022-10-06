@@ -1,12 +1,12 @@
 ﻿using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 using Dysphoria.Net.UrlRouting.TestApp.Models;
 
 namespace Dysphoria.Net.UrlRouting.TestApp.Controllers
 {
-	using System.Web.Mvc;
-
 	public class HomeController : Controller
 	{
 		public const string PlainText = "text/plain";
@@ -58,7 +58,7 @@ namespace Dysphoria.Net.UrlRouting.TestApp.Controllers
 			return this.Content(string.Format("file-content={0};name={1}", fileContents, form.Name));
 		}
 
-		private string GetContents(System.Web.HttpPostedFileBase file)
+		private string GetContents(HttpPostedFileBase file)
 		{
 			if (file == null) return "null";
 			var s = new StreamReader(file.InputStream, Encoding.UTF8);

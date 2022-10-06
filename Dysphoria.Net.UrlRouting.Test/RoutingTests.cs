@@ -39,6 +39,17 @@ namespace Dysphoria.Net.UrlRouting.Test
 			Assert.Equal("Hello async!", GetStringResultOrNull("async"));
 		}
 
+		[Theory]
+		[InlineData("async/0-args", "success")]
+		[InlineData("async/1-arg/hello", "args=hello")]
+		[InlineData("async/2-args/hello/world", "args=hello, world")]
+		[InlineData("async/3-args/hello/world/42", "args=hello, world, 42")]
+		[InlineData("async/4-args/my/name/is/slim", "args=my, name, is, slim")]
+		public void AsyncActionMethodsAreBoundCorrectly(string path, string expectedResult)
+		{
+			Assert.Equal(expectedResult, GetStringResultOrNull(path));
+		}
+	
 		[Fact]
 		public void NonExistantGives404()
 		{

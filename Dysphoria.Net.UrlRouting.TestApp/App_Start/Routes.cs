@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Policy;
 using Dysphoria.Net.UrlRouting.TestApp.Models;
 
 namespace Dysphoria.Net.UrlRouting.TestApp
@@ -42,6 +43,21 @@ namespace Dysphoria.Net.UrlRouting.TestApp
 		public static readonly RequestPattern<UrlPattern, UploadForm>
 			UploadAFile = Path("upload").Post(Body<UploadForm>);
 
+		public static readonly UrlPattern
+			Async0Args = Path("async/0-args");
+
+		public static readonly UrlPattern<string>
+			Async1Arg = Path("async/1-arg/{0}", Slug);
+		
+		public static readonly UrlPattern<string, string>
+			Async2Args = Path("async/2-args/{0}/{1}", Slug, Slug);
+		
+		public static readonly UrlPattern<string, string, string>
+			Async3Args = Path("async/3-args/{0}/{1}/{2}", Slug, Slug, Slug);
+		
+		public static readonly UrlPattern<string, string, string, string>
+			Async4Args = Path("async/4-args/{0}/{1}/{2}/{3}", Slug, Slug, Slug, Slug);
+
 		public static void RegisterRoutes(RouteCollection routes)
 		{
 			routes.ForController<HomeController>()
@@ -59,6 +75,14 @@ namespace Dysphoria.Net.UrlRouting.TestApp
 			routes.ForController<HomeController>()
 				.MapRoute(Async.Get(), c => c.Async);
 
+			routes.ForController<AsyncController>()
+				.MapRoute(Async0Args.Get(), c => c.Async0Arg)
+				.MapRoute(Async1Arg.Get(), c => c.Async1Arg)
+				.MapRoute(Async2Args.Get(), c => c.Async2Args)
+				.MapRoute(Async3Args.Get(), c => c.Async3Args)
+				.MapRoute(Async4Args.Get(), c => c.Async4Args)
+				;
+			
 			// Always declare this last:
 			routes.ForController<HomeController>()
 				.MapRoute(Get(CatchAll), c => c.NotFound);
