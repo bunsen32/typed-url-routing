@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using Dysphoria.Net.UrlRouting.TestApp.Models;
 
 namespace Dysphoria.Net.UrlRouting.TestApp.Controllers
@@ -13,6 +14,12 @@ namespace Dysphoria.Net.UrlRouting.TestApp.Controllers
 		public ActionResult Home()
 		{
 			return this.Content("Hello");
+		}
+
+		public async Task<ActionResult> Async()
+		{
+			await Task.CompletedTask;
+			return Content("Hello async!");
 		}
 
 		public ActionResult LiteralPath()

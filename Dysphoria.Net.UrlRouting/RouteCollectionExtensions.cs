@@ -27,7 +27,7 @@ namespace Dysphoria.Net.UrlRouting
 			return new ControllerRouteMapper<Ctrl>(routes);
 		}
 
-		internal static Route AddRoute(this RouteCollection routes, AbstractRequestPattern pattern, AbstractRouteHandler handler)
+		internal static Route AddRoute(this RouteCollection routes, AbstractRequestPattern pattern, IRouteHandler handler)
 		{
 			var route = new Route(
 				url: GetRouteUrl(pattern.Url),

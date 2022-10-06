@@ -34,6 +34,12 @@ namespace Dysphoria.Net.UrlRouting.Test
 		}
 
 		[Fact]
+		public void AsyncActionMethodsWork()
+		{
+			Assert.Equal("Hello async!", GetStringResultOrNull("async"));
+		}
+
+		[Fact]
 		public void NonExistantGives404()
 		{
 			Assert.Null(GetStringResultOrNull("non-existant/path"));

@@ -12,6 +12,9 @@ namespace Dysphoria.Net.UrlRouting.TestApp
 		public static readonly UrlPattern
 			Home = Path("");
 
+		public static readonly UrlPattern
+			Async = Path("async");
+
 		public static readonly UrlPattern<string>
 			CatchAll = Path("{0}", AnyString);
 
@@ -52,6 +55,9 @@ namespace Dysphoria.Net.UrlRouting.TestApp
 				.MapRoute(UploadForm.Get(), c => c.UploadForm)
 				.MapRoute(UploadAFile, c => c.UploadAFile)
 				;
+
+			routes.ForController<HomeController>()
+				.MapRoute(Async.Get(), c => c.Async);
 
 			// Always declare this last:
 			routes.ForController<HomeController>()

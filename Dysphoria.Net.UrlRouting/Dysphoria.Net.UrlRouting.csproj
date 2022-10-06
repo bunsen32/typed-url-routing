@@ -68,6 +68,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractRequestPattern.cs" />
+    <Compile Include="Handlers\AsyncAbstractRouteHandler.cs" />
+    <Compile Include="Handlers\AsyncControllerRouteHandler.cs" />
+    <Compile Include="Handlers\TaskAsyncHelper{T}.cs" />
     <Compile Include="UrlPatternRequestExtensions.cs" />
     <Compile Include="InvalidUrlArgumentException.cs" />
     <Compile Include="Handlers\AbstractRouteHandler.cs" />

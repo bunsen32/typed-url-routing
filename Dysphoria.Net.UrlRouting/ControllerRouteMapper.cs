@@ -8,6 +8,9 @@
 // This software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
 // OR CONDITIONS. See License for specific permissions and limitations.
 // -----------------------------------------------------------------------
+
+using System.Threading.Tasks;
+
 namespace Dysphoria.Net.UrlRouting
 {
 	using System;
@@ -38,6 +41,12 @@ namespace Dysphoria.Net.UrlRouting
 		// 0-argument URL patterns
 
 		public ControllerRouteMapper<C> MapRoute(RequestPattern<UrlPattern> pattern, Expression<Func<C, Func<ActionResult>>> handler)
+		{
+			var methodFunc = handler.Compile();
+			return this.AddRouteHandler(pattern, handler, (c, context) => methodFunc.Invoke(c).Invoke());
+		}
+
+		public ControllerRouteMapper<C> MapRoute(RequestPattern<UrlPattern> pattern, Expression<Func<C, Func<Task<ActionResult>>>> handler)
 		{
 			var methodFunc = handler.Compile();
 			return this.AddRouteHandler(pattern, handler, (c, context) => methodFunc.Invoke(c).Invoke());
@@ -153,6 +162,17 @@ namespace Dysphoria.Net.UrlRouting
 			this.routes.AddRoute(
 				pattern,
 				new ControllerRouteHandler<C>(pattern, this.controllerName, actionName, handlerFunction));
+
+			return this; // To allow for method chaining.
+		}
+
+		private ControllerRouteMapper<C> AddRouteHandler<FunctionType>(AbstractRequestPattern pattern, Expression<FunctionType> handler, Func<C, ControllerContext, Task<ActionResult>> handlerFunction)
+		{
+			var method = GetMethodInfo(typeof(C), handler);
+			var actionName = method.Name;
+			this.routes.AddRoute(
+				pattern,
+				new AsyncControllerRouteHandler<C>(pattern, this.controllerName, actionName, handlerFunction));
 
 			return this; // To allow for method chaining.
 		}
