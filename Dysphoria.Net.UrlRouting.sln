@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dysphoria.Net.UrlRouting", "Dysphoria.Net.UrlRouting\Dysphoria.Net.UrlRouting.csproj", "{493A9C73-319F-45C1-9B46-0DE1A8ABF0B1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dysphoria.Net.UrlRouting.Example", "Dysphoria.Net.UrlRouting.Example\Dysphoria.Net.UrlRouting.Example.csproj", "{C61534D8-B17D-4B87-9990-9F6CDB77A108}"
@@ -19,9 +21,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dysphoria.Net.UrlRouting.TestApp", "Dysphoria.Net.UrlRouting.TestApp\Dysphoria.Net.UrlRouting.TestApp.csproj", "{E6B2F0D7-ED51-4033-9DF5-A7FD0C9258EC}"
 EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = main.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -46,5 +45,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C40CDCEC-6AB4-4118-93A1-527EA8509CA9}
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = main.vsmdi
 	EndGlobalSection
 EndGlobal
