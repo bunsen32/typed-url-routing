@@ -8,23 +8,22 @@
 // This software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
 // OR CONDITIONS. See License for specific permissions and limitations.
 // -----------------------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Text;
+using FakeHost;
+using Xunit;
+using Xunit.Extensions;
+
 namespace Dysphoria.Net.UrlRouting.Test
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Collections.Specialized;
-	using System.Text;
-	using Dysphoria.Net.UrlRouting;
-	using FakeHost;
-	using Xunit;
-	using Xunit.Extensions;
-	using IO = System.IO;
-
 	public class RouteTests: Urls
 	{
 		static RouteTests()
 		{
-			Browser.InitializeAspNetRuntime(IO.Path.GetFullPath(@"..\..\..\Dysphoria.Net.UrlRouting.TestApp"));
+			Browser.InitializeAspNetRuntime(System.IO.Path.GetFullPath(@"..\..\..\Dysphoria.Net.UrlRouting.TestApp"));
 		}
 
 		[Fact]
@@ -48,6 +47,14 @@ namespace Dysphoria.Net.UrlRouting.Test
 		public void AsyncActionMethodsAreBoundCorrectly(string path, string expectedResult)
 		{
 			Assert.Equal(expectedResult, GetStringResultOrNull(path));
+		}
+
+		[Fact(Skip = "Manual test works, but test framework cannot handle (non-immediate) async requests.")]
+		public void AsyncActionWithViewGetsHttpContext()
+		{
+			var result = GetStringResult("async/withview");
+			
+			Assert.Equal("hello world", result.Trim());
 		}
 	
 		[Fact]

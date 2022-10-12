@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace Dysphoria.Net.UrlRouting.TestApp.Controllers
@@ -33,6 +34,14 @@ namespace Dysphoria.Net.UrlRouting.TestApp.Controllers
 		{
 			await Task.CompletedTask;
 			return Content($"args={a}, {b}, {c}, {d}");
+		}
+
+		public async Task<ActionResult> WithView()
+		{
+			// Ensure that it does not run synchronously:
+			await Task.Delay(TimeSpan.FromMilliseconds(1));
+			
+			return View("WithView", model: "hello world");
 		}
 	}
 }
