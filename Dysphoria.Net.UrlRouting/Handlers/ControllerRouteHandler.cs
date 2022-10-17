@@ -52,7 +52,7 @@ namespace Dysphoria.Net.UrlRouting.Handlers
 
 		protected override void ProcessRequest(RequestContext context)
 		{
-			var controller = Activator.CreateInstance<C>();
+			var controller = DependencyResolver.Current.GetService<C>();
 			var disposable = controller as IDisposable;
 			try
 			{
@@ -62,7 +62,7 @@ namespace Dysphoria.Net.UrlRouting.Handlers
 					fullController.ActionInvoker = new Invoker(this);
 					this.SetUpRouteData(context.RouteData);
 					var asyncController = (IAsyncController)fullController;
-					var handle = asyncController.BeginExecute(
+					asyncController.BeginExecute(
 						context,
 						(asyncResult) => { asyncController.EndExecute(asyncResult); },
 						null);
@@ -74,7 +74,7 @@ namespace Dysphoria.Net.UrlRouting.Handlers
 			}
 			finally
 			{
-				if (disposable != null) disposable.Dispose();
+				disposable?.Dispose();
 			}
 		}
 

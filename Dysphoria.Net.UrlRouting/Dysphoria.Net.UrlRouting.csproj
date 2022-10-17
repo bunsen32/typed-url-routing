@@ -10,10 +10,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Dysphoria.Net.UrlRouting</RootNamespace>
     <AssemblyName>Dysphoria.Net.UrlRouting</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <LangVersion>9</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -67,6 +68,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractRequestPattern.cs" />
+    <Compile Include="Handlers\AsyncAbstractRouteHandler.cs" />
+    <Compile Include="Handlers\AsyncControllerRouteHandler.cs" />
+    <Compile Include="Handlers\TaskAsyncHelper{T}.cs" />
     <Compile Include="UrlPatternRequestExtensions.cs" />
     <Compile Include="InvalidUrlArgumentException.cs" />
     <Compile Include="Handlers\AbstractRouteHandler.cs" />
@@ -106,9 +110,6 @@
     <Compile Include="UrlPattern.cs" />
     <Compile Include="UrlPatternHandlerExtensions.cs" />
     <Compile Include="Urls.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Requests\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
