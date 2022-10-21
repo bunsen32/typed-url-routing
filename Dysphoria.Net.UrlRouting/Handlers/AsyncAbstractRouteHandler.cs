@@ -46,8 +46,8 @@ namespace Dysphoria.Net.UrlRouting.Handlers
 
 			public override bool IsReusable => true;
 
-			public override async Task ProcessRequestAsync(HttpContext context)
-				=> await outer.ProcessRequest(requestContext);
+			public override Task ProcessRequestAsync(HttpContext context)
+				=> outer.ProcessRequest(requestContext);
 		}
 	}
 }

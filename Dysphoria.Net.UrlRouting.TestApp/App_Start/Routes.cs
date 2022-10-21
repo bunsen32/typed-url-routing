@@ -58,6 +58,9 @@ namespace Dysphoria.Net.UrlRouting.TestApp
 		public static readonly UrlPattern<string, string, string, string>
 			Async4Args = Path("async/4-args/{0}/{1}/{2}/{3}", Slug, Slug, Slug, Slug);
 
+		public static readonly UrlPattern
+			AsyncWithView = Path("async/withview");
+		
 		public static void RegisterRoutes(RouteCollection routes)
 		{
 			routes.ForController<HomeController>()
@@ -81,6 +84,7 @@ namespace Dysphoria.Net.UrlRouting.TestApp
 				.MapRoute(Async2Args.Get(), c => c.Async2Args)
 				.MapRoute(Async3Args.Get(), c => c.Async3Args)
 				.MapRoute(Async4Args.Get(), c => c.Async4Args)
+				.MapRoute(AsyncWithView.Get(), c=> c.WithView)
 				;
 			
 			// Always declare this last:

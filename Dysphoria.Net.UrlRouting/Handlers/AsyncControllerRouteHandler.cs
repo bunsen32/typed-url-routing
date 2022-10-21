@@ -14,6 +14,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Async;
 using System.Web.Routing;
@@ -52,24 +53,23 @@ namespace Dysphoria.Net.UrlRouting.Handlers
 			return GetControllerSessionBehavior(requestContext, _controllerType);
 		}
 
-		protected override async Task ProcessRequest(RequestContext context)
+		protected override Task ProcessRequest(RequestContext context)
 		{
 			var controller = DependencyResolver.Current.GetService<C>();
 			var disposable = controller as IDisposable;
 			try
 			{
-				var fullController = controller as Controller;
-				if (fullController != null)
-				{
-					fullController.ActionInvoker = new Invoker(this);
-					SetUpRouteData(context.RouteData);
-					var asyncController = (IAsyncController)fullController;
-					await Task.Factory.FromAsync(asyncController.BeginExecute, asyncController.EndExecute, context, TaskCreationOptions.None);
-				}
-				else
-				{
-					await ProcessRequestMinimally(new ControllerContext(context, controller), controller);
-				}
+				if (controller is not Controller fullController)
+					return ProcessRequestMinimally(new ControllerContext(context, controller), controller);
+
+				fullController.ActionInvoker = new Invoker(this);
+				SetUpRouteData(context.RouteData);
+				var asyncController = (IAsyncController)fullController;
+				return Task.Factory.FromAsync(
+					asyncController.BeginExecute,
+					asyncController.EndExecute,
+					context,
+					TaskCreationOptions.None);
 			}
 			finally
 			{
@@ -126,9 +126,14 @@ namespace Dysphoria.Net.UrlRouting.Handlers
 				AsyncCallback callback,
 				object state)
 			{
+				var httpContext = HttpContext.Current;
 				return TaskAsyncHelper<ActionResult>.BeginTask(
 					() => outer._handler.Invoke((C)controllerContext.Controller, controllerContext),
-					callback,
+					result =>
+					{
+						HttpContext.Current = httpContext;
+						callback(result);
+					},
 					state);
 			}
 
