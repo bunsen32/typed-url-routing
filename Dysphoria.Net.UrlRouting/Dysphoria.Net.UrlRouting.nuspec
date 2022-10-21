@@ -11,8 +11,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes>
-        Now passes through HttpContext.Current to the thread which executes the ActionResult.
-        (Fixes AutoFac in ASP.NET application.)
+        Now async Controller actions get Session state enabled by default, just like synchronous actions.
     </releaseNotes>
     <copyright>Copyright 2014</copyright>
     <tags></tags>
