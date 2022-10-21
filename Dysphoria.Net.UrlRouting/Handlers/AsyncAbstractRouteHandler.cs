@@ -33,7 +33,7 @@ namespace Dysphoria.Net.UrlRouting.Handlers
 
 		protected abstract Task ProcessRequest(RequestContext context);
 
-		private class ActionHandler : HttpTaskAsyncHandler
+		private class ActionHandler : HttpTaskAsyncHandler, IRequiresSessionState
 		{
 			private readonly AsyncAbstractRouteHandler outer;
 			private readonly RequestContext requestContext;
